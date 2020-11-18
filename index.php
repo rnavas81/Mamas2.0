@@ -48,7 +48,7 @@ if(isset($_SESSION['MSG_INFO'])){
                                 </div>                    
                                 <p>
                                 ¿No estás registrado?
-                                <a href="<?=WEB_REGISTRAR?>">Registrarse</a>
+                                <a href="<?=WEB_REGISTRAR?>?tipo=alumno">Registrarse</a>
                                 </p>
                             </form>                            
                         </div>
@@ -68,7 +68,7 @@ if(isset($_SESSION['MSG_INFO'])){
                                 </div>                    
                                 <p>
                                 ¿No estás registrado?
-                                <a href="<?=WEB_REGISTRAR?>">Registrarse</a>
+                                <a href="<?=WEB_REGISTRAR?>?tipo=profesor">Registrarse</a>
                                 </p>
                             </form>                            
                         </div>
