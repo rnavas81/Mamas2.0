@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
 require_once './configuracion.php';
+//Recupera un posible mensaje a mostrar
+$msg = null;
+if(isset($_SESSION['MSG_INFO'])){
+    
+}
 ?>
 <html>
     <head>
@@ -23,7 +28,10 @@ require_once './configuracion.php';
     </head>
     <body>
         <main class="py-5">
-            <div class="container-fluid">                
+            <div class="container-fluid">
+                <div class="row">
+                    <span class="col-12 text-center"><?=$msg?></span>
+                </div>
                 <div class="row">
                     <div class="col-lg-1"></div>
                     <div class="col-md-12 col-lg-5 pb-5">
@@ -32,15 +40,15 @@ require_once './configuracion.php';
                                 <p class="h4 mb-4">Inicio alumnos</p>
                                 <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
                                 <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
-                                <div class="d-flex justify-content-around">
-                                    <a href="">Recuperar contraseña</a>
-                                </div>
+<!--                                <div class="d-flex justify-content-around">
+                                    <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
+                                </div>-->
                                 <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="loginAlSubm">Sign in</button>
+                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederAlumnos">Sign in</button>
                                 </div>                    
                                 <p>
                                 ¿No estás registrado?
-                                <a href="">Registrarse</a>
+                                <a href="<?=WEB_REGISTRAR?>">Registrarse</a>
                                 </p>
                             </form>                            
                         </div>
@@ -52,15 +60,15 @@ require_once './configuracion.php';
                                 <p class="h4 mb-4">Inicio profesores</p>
                                 <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
                                 <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
-                                <div class="d-flex justify-content-around">
-                                    <a href="">Recuperar contraseña</a>
-                                </div>
+<!--                                <div class="d-flex justify-content-around">
+                                    <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
+                                </div>-->
                                 <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="loginPrSubm">Sign in</button>
+                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederProfesores">Sign in</button>
                                 </div>                    
                                 <p>
                                 ¿No estás registrado?
-                                <a href="">Registrarse</a>
+                                <a href="<?=WEB_REGISTRAR?>">Registrarse</a>
                                 </p>
                             </form>                            
                         </div>

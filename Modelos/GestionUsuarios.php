@@ -33,12 +33,18 @@ class GestionUsuarios extends GestionDatos {
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         } finally {
-            return $finally;
+            return $usuario;
         }        
     }
     
-    private function encriptarPassword($password){
-        return hash('sha256',$password);
+    private static function encriptarPassword($password){
+        try {
+            return hash('sha256',$password);    
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            return null;
+        }
+
     }
     
     /**
@@ -49,31 +55,32 @@ class GestionUsuarios extends GestionDatos {
      * @return boolean Devuelve true si el login es correcto
      */
     public static function canLogin($dni,$password) {
-        $usuario = false;
+        $response = false;
         if(!self::isAbierta()) {
             self::abrirConexion();
         }
         $query = "SELECT u.*,group_concat(r.idRol) AS roles "
                 . "FROM Usuarios u "
                 . "LEFT Join Usuarios_Roles r ON r.idUsuario=u.id "
-                . "WHERE u.dni = ? AND u.password = ?;"
-                . "GROUP BY u.id";
+                . "WHERE u.dni = ? AND u.password = ? "
+                . "GROUP BY u.id;";
         try {
-            $stmt = GestionDatos::$conexion->prepare($query);
-            $stmt->bind_param("ss",$dni, $this->encriptarPassword($password));
+            $password= self::encriptarPassword($password);
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("ss",$dni, $password);
             $stmt->execute();
             $resultado = $stmt->get_result();
             if($datos = $resultado->fetch_assoc()) {
-                $usuario = self::formarUsuario($datos);
+                $response = self::formarUsuario($datos);
             }
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();
-            $usuario = false;
+            $response = false;
         } finally {
             if(self::isAbierta()) {
                 self::cerrarConexion();
             }            
-            return $usuario;
+            return $response;
         }
     }
 

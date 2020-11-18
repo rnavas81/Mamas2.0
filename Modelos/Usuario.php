@@ -26,6 +26,7 @@ class Usuario {
         $this->dni = $dni;
         $this->fechaNacimiento = $fechaNacimiento;
         $this->email = $email;
+        $this->roles=$roles;
     }
     function getId() {
         return $this->id;
@@ -81,6 +82,14 @@ class Usuario {
 
     function setRoles($roles): void {
         $this->roles = $roles;
+    }
+    //Comprueba si el usuario tiene un rol determinado
+    function hasRol($rolBuscado=-1){
+        $has = false;
+        for ($index = 0;!$has && $index < count($this->roles); $index++) {
+            $has = $this->roles[$index] == $rolBuscado;
+        }
+        return $has;
     }
 
 }
