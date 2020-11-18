@@ -10,7 +10,7 @@ class GestionDatos {
     private const _PATH = 'localhost';
     private const _USER = 'mamas';
     private const _PASS = 'Chubaca2020';
-    private const _DEFAULT = 'mamas';
+    private const _DEFAULT = 'Mamas';
     public static $conexion=false;
     
     public static function abrirConexion()

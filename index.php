@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?php
+require_once './configuracion.php';
+?>
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -30,10 +28,10 @@ and open the template in the editor.
                     <div class="col-lg-1"></div>
                     <div class="col-md-12 col-lg-5 pb-5">
                         <div class="container">                            
-                            <form class="text-center border border-light p-5" action="Controladores/controladorVistas.php">
+                            <form class="text-center border border-light p-5" action="<?=CTRL_BASICO?>" method="POST">
                                 <p class="h4 mb-4">Inicio alumnos</p>
-                                <input type="text" id="loginDniAl" name="dniAl" class="form-control mb-4" placeholder="DNI" required />
-                                <input type="password" id="loginPassAl" name="pasAl" class="form-control mb-4" placeholder="Password" required/>
+                                <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
+                                <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
                                 <div class="d-flex justify-content-around">
                                     <a href="">Recuperar contraseña</a>
                                 </div>
@@ -50,10 +48,10 @@ and open the template in the editor.
 
                     <div class="col-md-12 col-lg-5 pb-5">
                         <div class="container">
-                            <form class="text-center border border-light p-5" action="#!">
+                            <form class="text-center border border-light p-5" action="<?=CTRL_BASICO?>" method="POST">
                                 <p class="h4 mb-4">Inicio profesores</p>
-                                <input type="text" id="loginDniAl" name="dniPr" class="form-control mb-4" placeholder="DNI" required />
-                                <input type="password" id="loginPassAl" name="pasPr" class="form-control mb-4" placeholder="Password" required/>
+                                <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
+                                <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
                                 <div class="d-flex justify-content-around">
                                     <a href="">Recuperar contraseña</a>
                                 </div>
