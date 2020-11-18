@@ -18,6 +18,7 @@ const ROL_PROFESOR = 2;
 const ROL_ALUMNO = 3;
 const TIPO_ALUMNO = "alumno";
 const TIPO_PROFESOR = "profesor";
+const TIPO_ADMINISTRADOR = "administrador";
 
 
 // Punto de redirección del controlador
@@ -35,6 +36,9 @@ if(isset($_REQUEST['accion'])){
 } elseif(isset ($_REQUEST['accederProfesores'])) {
     $accion = "accederUsuario";
     $aux = TIPO_PROFESOR;
+} elseif(isset ($_REQUEST['accederAdminstradores'])) {
+    $accion = "accederUsuario";
+    $aux = TIPO_ADMINISTRADOR;
 }
 /*
 if(isset($_REQUEST['loginAlSubm'])) {
@@ -43,7 +47,6 @@ if(isset($_REQUEST['loginAlSubm'])) {
     echo 'Login = '.$entra;;
 }
  * */
-
 switch ($accion) {
     //Comprueba el usuario y el tipo de acceso
     case "accederUsuario":
@@ -57,6 +60,9 @@ switch ($accion) {
                     $_SESSION['usuario']= $usuario;
                 } elseif($aux==TIPO_PROFESOR && $usuario->hasRol(ROL_PROFESOR)){
                     $redireccion = WEB_ENTRADA_PROFESORES;
+                    $_SESSION['usuario']= $usuario;
+                } elseif($aux==TIPO_ADMINISTRADOR && $usuario->hasRol(ROL_ADMINISTRADOR)){
+                    $redireccion = WEB_ENTRADA_ADMINISTRADORES;
                     $_SESSION['usuario']= $usuario;
                 } else {
                     $redireccion = WEB_INDEX;

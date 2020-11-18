@@ -11,7 +11,8 @@ require_once '../configuracion.php';
 function cerrarSesion() {
     $paginaSalir = WEB_INDEX;
     unset(
-        $_SESSION['usuario']
+        $_SESSION['usuario'],
+        $_SESSION['MSG_INFO']
     );
     return $paginaSalir;
 }
