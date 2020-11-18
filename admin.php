@@ -34,51 +34,33 @@ if(isset($_SESSION['MSG_INFO'])){
     </head>
     <body>
         <main class="">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-end mr-4">
-                    <a href="<?=WEB_ADMIN?>">Acceso para administradores</a>
-                </div>
-                <span class="col-12 text-center"><?=$msg?></span>
+            <div class="col-12 d-flex justify-content-end mr-4">
+                <a href="<?=WEB_INDEX?>">Acceso para alumnos/profesores</a>
             </div>
             <div class="container-fluid py-5">
                 <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-md-12 col-lg-5 pb-5">
+                    <span class="col-12 text-center"><?=$msg?></span>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-md-12 col-lg-6 pb-6">
                         <div class="container">                            
                             <form class="text-center border border-light p-5" action="<?=CTRL_BASICO?>" method="POST">
-                                <p class="h4 mb-4">Inicio alumnos</p>
+                                <p class="h4 mb-4">Inicio administrador</p>
                                 <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
                                 <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
-<!--                                <div class="d-flex justify-content-around">
+                                <!--                                
+                                <div class="d-flex justify-content-around">
                                     <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
-                                </div>-->
+                                </div>
+                                -->
                                 <div>
                                     <button class="btn btn-info btn-block my-4" type="submit" name="accederAdminstradores">Acceder</button>
-                                </div>  
+                                </div>
                             </form>                            
                         </div>
                     </div>
-
-                    <div class="col-md-12 col-lg-5 pb-5">
-                        <div class="container">
-                            <form class="text-center border border-light p-5" action="<?=CTRL_BASICO?>" method="POST">
-                                <p class="h4 mb-4">Inicio profesores</p>
-                                <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
-                                <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
-<!--                                <div class="d-flex justify-content-around">
-                                    <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
-                                </div>-->
-                                <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederProfesores">Acceder</button>
-                                </div>                    
-                                <p>
-                                ¿No estás registrado?
-                                <a href="<?=WEB_REGISTRAR?>">Registrarse</a>
-                                </p>
-                            </form>                            
-                        </div>
-                    </div>
-                    <div class="col-lg-1"></div>
+                    <div class="col-lg-3"></div>
                 </div>
             </div>
         </main>

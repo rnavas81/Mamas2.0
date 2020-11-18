@@ -26,6 +26,7 @@ const CSS_STYLE = WEB_CSS.DS.'style.css';
 */
 //VISTAS
 const WEB_INDEX = WEB_ROOT.DS.'index.php';
+const WEB_ADMIN= WEB_ROOT.DS.'admin.php';
 const WEB_VISTAS = WEB_ROOT.DS.'Vistas';
 const WEB_ENTRADA_ALUMNOS= WEB_VISTAS.DS.'entradaAlumnos.php';
 const WEB_ENTRADA_PROFESORES= WEB_VISTAS.DS.'entradaProfesores.php';
