@@ -56,15 +56,16 @@ class GestionUsuarios extends GestionDatos {
      */
     public static function canLogin($dni,$password) {
         $response = false;
-        if(!self::isAbierta()) {
-            self::abrirConexion();
-        }
+        $estabaAbierta=self::isAbierta();
         $query = "SELECT u.*,group_concat(r.idRol) AS roles "
                 . "FROM Usuarios u "
                 . "LEFT Join Usuarios_Roles r ON r.idUsuario=u.id "
                 . "WHERE u.dni = ? AND u.password = ? "
                 . "GROUP BY u.id;";
         try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
             $password= self::encriptarPassword($password);
             $stmt = self::$conexion->prepare($query);
             $stmt->bind_param("ss",$dni, $password);
@@ -77,35 +78,50 @@ class GestionUsuarios extends GestionDatos {
             echo $ex->getTraceAsString();
             $response = false;
         } finally {
-            if(self::isAbierta()) {
+            if(!$estabaAbierta) {
                 self::cerrarConexion();
             }            
             return $response;
         }
     }
 
-    public static function actualizarPasswords() {
-        $query="SELECT * FROM Usuarios";
-        try {;
-            if(!self::isAbierta()) {
+    /**
+     * Recupera los usuarios que contengan un rol determinado
+     * @param int $rol
+     */
+    public function getUsuarios($rol) {
+        $usuarios=[];
+        $estabaAbierta=self::isAbierta();
+        $query="SELECT u.*,GROUP_CONCAT(r.idRol) AS roles "
+                . "FROM Usuarios u "
+                . "RIGHT JOIN Usuarios_Roles r ON r.idUsuario=u.id AND r.idRol=? "
+                . "WHERE u.habilitado=1 "
+                . "GROUP BY u.id "
+                . "ORDER BY u.apellidos,u.nombre,u.dni;";
+        try {
+            if(!$estabaAbierta) {
                 self::abrirConexion();
             }
             $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param('i',$rol);
             $stmt->execute();
             $resultado = $stmt->get_result();
             while($datos = $resultado->fetch_assoc()) {
-                $queryUpdate="UPDATE Usuarios SET password='".hash('sha256',$datos['password'])."' WHERE id=$datos[id]";
-                echo $queryUpdate."<br>";
-                $stmt2 = self::$conexion->prepare($queryUpdate);
-                $stmt2->execute();
+                $usuario = self::formarUsuario($datos);
+                if($usuario)$usuarios[]=$usuario;
             }
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();
+            $usuarios = false;
         } finally {
-            if(self::isAbierta()) {
+            if(!$estabaAbierta) {
                 self::cerrarConexion();
-            }            
+            }
+            return $usuarios;
         }
+
+        
     }
+
 
 }
