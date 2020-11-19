@@ -38,12 +38,32 @@ switch ($accion) {
         $apellidos = $_REQUEST['apellidos'];
         $fecha = $_REQUEST['fechaNacimiento'];
         $email = $_REQUEST['email'];
-        try {
-            GestionUsuarios::registraUsuario($dni, $password, $nombre, $apellidos, $fecha, $email, $_SESSION['rolRegistro']);
-        } catch (Exception $ex) {
-            $redireccion = WEB_REGISTRAR;
-            $_SESSION['MSG_INFO']="Error en el registro";
+        $rol = [];   
+        if($_SESSION['rolRegistro'] === 'profesor') {
+            $rol[] = 2;
+        } elseif ($_SESSION['rolRegistro'] === 'alumno') {
+            $rol[] = 3;        
         }
+        $usuario = new Usuario(0, $dni, $nombre, $apellidos, $fecha, $email,$rol);
+        unset($_SESSION['rolRegistro']);
+        $duplicado = [
+            'dni'=> GestionUsuarios::isDuplicado("dni", $dni),
+            'email'=> GestionUsuarios::isDuplicado("email", $email)
+        ];
+        $valid = $duplicado['dni']==0 && $duplicado['email']==0;
+        if($valid) {
+            $response = GestionUsuarios::registraUsuario($usuario, $password);
+        } else {
+            $_SESSION['usuarioForm'] = $usuario;
+            if($duplicado['dni']>0) {
+                $_SESSION['MSG_INFO']="<br>Error en el DNI";
+                $redireccion = WEB_REGISTRAR;
+            }
+            if($duplicado['email']>0) {
+                $_SESSION['MSG_INFO'].="<br>Error en el email";
+                $redireccion = WEB_REGISTRAR;
+            }
+        }                                     
         
     break;
 }

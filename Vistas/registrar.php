@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <?php
 require_once '../configuracion.php';
+require_once '../Modelos/Usuario.php';
+
+if(session_status()!=PHP_SESSION_ACTIVE){
+        session_start();
+    }
+if(isset($_REQUEST['tipo'])){
+    $_SESSION['rolRegistro'] = $_REQUEST['tipo'];
+}
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){
-    
+   $msg= $_SESSION['MSG_INFO'];
+   unset($_SESSION['MSG_INFO']);
+}
+$usuario = null;
+if(!isset($_SESSION['usuarioForm'])){
+    $usuario = new Usuario(0, "");
+} else {
+    $usuario = $_SESSION['usuarioForm'];
 }
 ?>
 <html>
@@ -27,14 +42,7 @@ if(isset($_SESSION['MSG_INFO'])){
         <?php //Estilos propios ?>
         <link rel="stylesheet" href="../css/style.css" /> 
     </head>
-    
-    <?php 
-    if(session_status()!=PHP_SESSION_ACTIVE){
-        session_start();
-    }
-    $_SESSION['rolRegistro'] = $_REQUEST['tipo'];
-    ?>
-    
+
     <body>
         <main class="py-5">
             <div class="container-fluid">
@@ -48,17 +56,17 @@ if(isset($_SESSION['MSG_INFO'])){
                             <form class="text-center border border-light p-5" action="<?=CTRL_USUARIOS?>" method="POST">
                                 <p class="h4 mb-4">Registro</p>
                                 <p class="text-left">DNI</p>
-                                <input type="text" id="registroDni" name="dni" class="form-control mb-4" placeholder="12345678A" required />
+                                <input type="text" id="registroDni" name="dni" value="<?=$usuario->getDni()?>" class="form-control mb-4" placeholder="12345678A" required />
                                 <p class="text-left">Contraseña</p>
                                 <input type="password" id="registroPass" name="password" class="form-control mb-4" required />
                                 <p class="text-left">Nombre</p>
-                                <input type="text" id="registroNombre" name="nombre" class="form-control mb-4" required />
+                                <input type="text" id="registroNombre" name="nombre" value="<?=$usuario->getNombre()?>" class="form-control mb-4" required />
                                 <p class="text-left">Apellidos</p>
-                                <input type="text" id="registroApellidos" name="apellidos" class="form-control mb-4" required />
+                                <input type="text" id="registroApellidos" name="apellidos" value="<?=$usuario->getApellidos()?>" class="form-control mb-4" required />
                                 <p class="text-left">Fecha de nacimiento</p>
-                                <input type="date" id="registroFechaNac" name="fechaNacimiento" class="form-control mb-4" required />
+                                <input type="date" id="registroFechaNac" name="fechaNacimiento" value="<?=$usuario->getFechaNacimiento()?>"class="form-control mb-4" required />
                                 <p class="text-left">Email</p>
-                                <input type="email" id="registroEmail" name="email" class="form-control mb-4" placeholder="ejemplo@gmail.com" required />
+                                <input type="email" id="registroEmail" name="email" class="form-control mb-4" value="<?=$usuario->getEmail()?>" placeholder="ejemplo@gmail.com" required/>
                                 <div>
                                     <button class="btn btn-info btn-block my-4" type="submit" name="registro">
                                        Registrarse
