@@ -12,7 +12,8 @@ function cerrarSesion() {
     $paginaSalir = WEB_INDEX;
     unset(
         $_SESSION['usuario'],
-        $_SESSION['MSG_INFO']
+        $_SESSION['MSG_INFO'],
+        $_SESSION['administradorTipo']
     );
     return $paginaSalir;
 }
