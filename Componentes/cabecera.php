@@ -1,60 +1,79 @@
-<?php //Este componente incluye la cabecera y el sidebar?>
-<nav id="sidebar">
+<?php 
+/**
+ * @author Darío León
+ * Componenete para generar un menú lateral y una barra de herramientas superior 
+ * con un botón pàra desplegar el menú
+ * 
+ * Requerimientos:
+ * 
+ ** CSS
+ * css/sidebar.css
+ * 
+ ** Scripts
+ * ../js/jquery.min.js
+ * ../js/jquery/jquery.mCustomScrollbar.min.js
+ * ../js/sidebar.js
+ * 
+ */
+require_once '../configuracion.php';
+
+// Comprueba si la sesión está ya iniciada, si no la inicia
+if(session_status()!=PHP_SESSION_ACTIVE){
+    session_start();
+}
+$usuarioActivo = null;
+if(isset($_SESSION['usuario'])) {
+    $usuarioActivo = $_SESSION['usuario'];
+}
+$tituloMenu="Hola";
+if( $usuarioActivo ){
+    $tituloMenu.="<br>".$usuarioActivo->getNombre()." ".$usuarioActivo->getApellidos();
+}
+//Según el valor que recoja $tipoOpciones carga unos valores en el menú
+isset($tipoOpciones) OR $tipoOpciones=null;
+$opciones=[];
+switch ($tipoOpciones) {
+    case 'administradorDashboard':
+        $opciones = [
+          ['label'=>'Administradores','name'=>'datosAdministradores'],
+          ['label'=>'Profesores','name'=>'datosProfesores'],
+          ['label'=>'Alumnos','name'=>'datosAlumnos'],
+        ];
+        break;
+
+    default:
+        break;
+}
+
+?>
+<nav id="sidebar" class="sticky-top">
     <div id="dismiss">
         <i class="fas fa-arrow-left"></i>
     </div>
-
     <div class="sidebar-header">
-        <h3>Bootstrap Sidebar</h3>
+        <h3>Mamas 2.0</h3>
     </div>
-
-    <ul class="list-unstyled components">
-        <p>Dummy Heading</p>
-        <li class="active">
-            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#">Home 1</a>
-                </li>
-                <li>
-                    <a href="#">Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Home 3</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">About</a>
-            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
-                    <a href="#">Page 1</a>
-                </li>
-                <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">Portfolio</a>
-        </li>
-        <li>
-            <a href="#">Contact</a>
-        </li>
-    </ul>
-
+    <form action="<?=CTRL_ADMIN?>" method="POST">
+        <ul class="list-unstyled components">
+            <p><?=$tituloMenu?></p>
+            <?php 
+            foreach ($opciones as $opcion) {?>
+            <li class="d-flex justify-content-center">
+                <input class="btn btn-block my-2" type="submit" value="<?= $opcion['label'] ?>" name="<?= $opcion['name'] ?>" />
+            </li>
+            <?php }?>
+        </ul>        
+    </form>
+    <?php
+    if($usuarioActivo){?>
     <ul class="list-unstyled CTAs">
         <li>
-            <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-        </li>
-        <li>
-            <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+            <a href="<?=CTRL_BASICO?>?accion=salir" class="download">
+                Salir
+            </a>
         </li>
     </ul>
+    <?php }?>
 </nav>
 
 <div class="overlay"></div> 
@@ -67,31 +86,17 @@
         <div class="ml-auto" id="navbarSupportedContent-333">                                        
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-twitter"></i>
+                    <a class="nav-link waves-effect waves-light" href="<?=CTRL_BASICO?>?accion=editarPrefil" title="Editar perfil">
+                        <i class="fas fa-user-alt"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-google-plus-g"></i>
+                    <a class="nav-link waves-effect waves-light" href="<?=CTRL_BASICO?>?accion=salir" title="Salir">
+                        <i class="fas fa-sign-out-alt"></i>
                     </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
                 </li>
             </ul>
         </div>
     </nav>            
 </header>
 
-<!-- jQuery Custom Scroller CDN -->
-<script src="js/jquery.mCustomScrollbar.min.js"></script>
-<!-- Your custom scripts (optional) -->
-<script type="text/javascript" src="js/sidebar.js"></script>

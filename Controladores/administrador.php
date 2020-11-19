@@ -36,6 +36,12 @@ if(isset($_REQUEST['accion'])){
     $accion = "agregarUsuarioFormulario";
 } elseif(isset ($_REQUEST['eliminarUsuario'])) {
     $accion = "eliminarUsuario";
+} elseif(isset ($_REQUEST['datosAdministradores'])) {
+    $accion = "datosAdministradores";
+} elseif(isset ($_REQUEST['datosProfesores'])) {
+    $accion = "datosProfesores";
+} elseif(isset ($_REQUEST['datosAlumnos'])) {
+    $accion = "datosAlumnos";
 }
 
 switch ($accion) {
@@ -46,6 +52,18 @@ switch ($accion) {
     case "editarUsuarioFormulario":
         break;
     case "eliminarUsuario":
+        break;
+    case "datosAdministradores":
+        $_SESSION['administradorTipo']='administradores';
+        $redireccion=WEB_ENTRADA_ADMINISTRADORES;
+        break;
+    case "datosProfesores":
+        $_SESSION['administradorTipo']='profesores';
+        $redireccion=WEB_ENTRADA_ADMINISTRADORES;
+        break;
+    case "datosAlumnos":
+        $_SESSION['administradorTipo']='alumnos';
+        $redireccion=WEB_ENTRADA_ADMINISTRADORES;
         break;
     // Salir del sistema
     case "salir":

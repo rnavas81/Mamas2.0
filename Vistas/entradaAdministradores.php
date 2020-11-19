@@ -25,15 +25,20 @@ $tipo = 'administradores';
 if(isset($_SESSION['administradorTipo'])){
     $tipo = $_SESSION['administradorTipo'];
 }
+$tipoOpciones="administradorDashboard";
+$tituloTabla="";
 switch ($tipo){
     case 'administradores':
         $data = GestionUsuarios::getUsuarios(1);
+        $tituloTabla="Administradores";
         break;
     case 'profesores':
         $data = GestionUsuarios::getUsuarios(2);
+        $tituloTabla="Profesores";
         break;
     case 'alumnos':
         $data = GestionUsuarios::getUsuarios(3);
+        $tituloTabla="Alumnos";
         break;
 }
 ?>
@@ -53,25 +58,32 @@ switch ($tipo){
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
         <!-- mdBootstrap css -->
         <link rel="stylesheet" href="../css/mdb.min.css" />
+        <!-- Para la cabecera -->
+        <link rel="stylesheet" href="../css/sidebar.css" />
         <!-- Estilos propios -->
         <link rel="stylesheet" href="../css/style.css" /> 
+        
     </head>
     <body>
+        <?php
+        require_once '../Componentes/cabecera.php';
+        ?>
         <main>
             <div class="container-fluid">
                 <div class="row">
                     <span class="col-12"><?=$msg?></span>
                 </div>
                 <div class="row">
-                    <form action="<?=CTRL_ADMIN?>" method="POST">
-                    </form>
                     <div class="btn-toolbar justify-content-between col-12" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group " role="group" aria-label="Botones izquierda">
+                        <div class="align-items-center btn-group" role="group" aria-label="Botones izquierda">
+                            <span class="align-self-center h3 mb-0"><?=$tituloTabla?></span>
                         </div>
                         <div class="btn-group" role="group" aria-label="Botones derecha">
-                            <button name="agregarUsuarioFormulario" type="button" class="btn btn-primary">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <form action="<?=CTRL_ADMIN?>" method="POST">
+                                <button name="agregarUsuarioFormulario" type="button" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>                
@@ -81,10 +93,10 @@ switch ($tipo){
                     <!--Table head-->
                       <thead>
                           <tr class="row">
-                            <th class="col-2">DNI</th>
-                            <th class="col-3">Nombre</th>
-                            <th class="col-5">Apellidos</th>
-                            <th class="col-2">Opciones</th>
+                            <th class="col-sm-2 text-center font-weight-bold">DNI</th>
+                            <th class="col-sm-3 text-center font-weight-bold">Nombre</th>
+                            <th class="col-sm-5 text-center font-weight-bold">Apellidos</th>
+                            <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
                         </tr>
                       </thead>
                       <!--Table head-->
@@ -93,16 +105,16 @@ switch ($tipo){
                         <?php 
                         foreach ($data as $value) {?>
                         <tr class="row">
-                          <th class="col-2" scope="row"><?=$value->getDni()?></th>
-                          <td class="col-3"><?=$value->getNombre()?></td>
-                          <td class="col-5"><?=$value->getApellidos()?></td>
-                          <td class="col-2">
-                            <form action="<?=CTRL_ADMIN?>" method="POST">
+                          <th class="col-sm-2 text-uppercase" scope="row"><?=$value->getDni()?></th>
+                          <td class="col-sm-3"><?=$value->getNombre()?></td>
+                          <td class="col-sm-5"><?=$value->getApellidos()?></td>
+                          <td class="col-sm-2">
+                              <form class="d-flex justify-content-end" action="<?=CTRL_ADMIN?>" method="POST">
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />
-                                <button name="editarUsuarioFormulario" type="submit" class="btn btn-primary btn-dark-green">
+                                <button name="editarUsuarioFormulario" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Editar">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button name="eliminarUsuario" type="submit" class="btn btn-primary btn-danger">
+                                <button name="eliminarUsuario" type="submit" class="btn btn-sm btn-danger mx-1 my-0" title="Eliminar">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>  
                             </form>
@@ -116,5 +128,10 @@ switch ($tipo){
                 </div>
             </div>
         </main>
+        <script src="../js/jquery.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/sidebar.js"></script>
     </body>
 </html>
