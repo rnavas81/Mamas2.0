@@ -53,8 +53,12 @@ if(isset($_SESSION['MSG_INFO'])){
                                     <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
                                 </div>-->
                                 <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederAdminstradores">Acceder</button>
-                                </div>  
+                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederAlumnos">Sign in</button>
+                                </div>                    
+                                <p>
+                                ¿No estás registrado?
+                                <a href="<?=WEB_REGISTRAR?>?tipo=alumno">Registrarse</a>
+                                </p>
                             </form>                            
                         </div>
                     </div>
@@ -73,7 +77,7 @@ if(isset($_SESSION['MSG_INFO'])){
                                 </div>                    
                                 <p>
                                 ¿No estás registrado?
-                                <a href="<?=WEB_REGISTRAR?>">Registrarse</a>
+                                <a href="<?=WEB_REGISTRAR?>?tipo=profesor">Registrarse</a>
                                 </p>
                             </form>                            
                         </div>
