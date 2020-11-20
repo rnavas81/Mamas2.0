@@ -55,6 +55,7 @@ switch ($accion) {
         $usuario = GestionUsuarios::canLogin($dni, $password);
         if($usuario){
             try {
+                $_SESSION['usuarioAcceso'] = $aux;
                 if($aux==TIPO_ALUMNO && $usuario->hasRol(ROL_ALUMNO)){
                     $redireccion = WEB_ENTRADA_ALUMNOS;
                     $_SESSION['usuario']= $usuario;
@@ -66,9 +67,11 @@ switch ($accion) {
                     $_SESSION['usuario']= $usuario;
                 } else {
                     $redireccion = WEB_INDEX;
+                    unset($_SESSION['usuarioAcceso']);
                     $_SESSION['MSG_INFO']="No tiene permisos para acceder";
                 }                
             } catch (Exception $exc) {
+                unset($_SESSION['usuarioAcceso']);
                 $redireccion = WEB_INDEX;
                 $_SESSION['MSG_INFO']="Error en el acceso";
             }

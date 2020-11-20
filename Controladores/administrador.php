@@ -47,11 +47,58 @@ if(isset($_REQUEST['accion'])){
 switch ($accion) {
     //Abre el formulario para crear un nuevo usuario
     case "agregarUsuarioFormulario":
+        $_SESSION['accesoFormulario']='crear';
+        $_SESSION['datosFormulario']=new Usuario(-1, "");
+        $redireccion = WEB_USUARIO_FORMULARIO;
         break;
     //Recupera el usuario y abre el formulario para editarlo
     case "editarUsuarioFormulario":
+        $id = $_REQUEST['id'];
+        $datos = GestionUsuarios::getUsuarioById($id);
+        if($datos){
+            $_SESSION['accesoFormulario']='modificar';
+            $_SESSION['datosFormulario']=$datos;
+            $redireccion = WEB_USUARIO_FORMULARIO;
+        } else {
+            $_SESSION['MSG_INFO']="Error al recuperar al usuario";
+            if($_SESSION['usuarioAcceso']=='alumno'){
+                $redireccion = WEB_ENTRADA_ALUMNOS;
+            } elseif($_SESSION['usuarioAcceso']=='profesor'){
+                $redireccion = WEB_ENTRADA_PROFESORES;
+            } elseif($_SESSION['usuarioAcceso']=='administrador'){
+                $redireccion = WEB_ENTRADA_ADMINISTRADORES;
+            } else {
+                $redireccion = WEB_INDEX;
+            }
+        }
         break;
     case "eliminarUsuario":
+        $id = $_REQUEST['id'];
+        $usuario = $_SESSION['usuario'];
+        if($id != $usuario->getId()) {
+            $datos = GestionUsuarios::getUsuarioById($id);
+            if($datos){
+                if(GestionUsuarios::eliminarUsuario($id)){
+                    $_SESSION['MSG_INFO']="Usuario eliminado";
+                } else {
+                    $_SESSION['MSG_INFO']="Error al eliminar el usuario";
+                }
+            } else {
+                $_SESSION['MSG_INFO']="Error al recuperar al usuario";
+            }
+            if($_SESSION['usuarioAcceso']=='alumno'){
+                $redireccion = WEB_ENTRADA_ALUMNOS;
+            } elseif($_SESSION['usuarioAcceso']=='profesor'){
+                $redireccion = WEB_ENTRADA_PROFESORES;
+            } elseif($_SESSION['usuarioAcceso']=='administrador'){
+                $redireccion = WEB_ENTRADA_ADMINISTRADORES;
+            } else {
+                $redireccion = WEB_INDEX;
+            }
+        } else {
+            $_SESSION['MSG_INFO']="No puedes eliminar tu propio usuario";
+            $redireccion = WEB_ENTRADA_ADMINISTRADORES;
+        }
         break;
     case "datosAdministradores":
         $_SESSION['administradorTipo']='administradores';

@@ -33,12 +33,12 @@ const WEB_ENTRADA_PROFESORES= WEB_VISTAS.DS.'entradaProfesores.php';
 const WEB_ENTRADA_ADMINISTRADORES= WEB_VISTAS.DS.'entradaAdministradores.php';
 const WEB_RECUPERAR = WEB_VISTAS.DS.'recuperar.php';
 const WEB_REGISTRAR = WEB_VISTAS.DS.'registrar.php';
+const WEB_USUARIO_FORMULARIO = WEB_VISTAS.DS.'usuarioFormulario.php';
 /*
 const WEB_ADMIN = WEB_ROOT.DS.'admin.php';
 const WEB_VALIDAR_USUARIO = WEB_ROOT.DS.'validar.php';
 const WEB_ENTRADA_ADMINISTRADOR = WEB_VISTAS.DS.'entradaAdministrador.php';
 const WEB_TAREA_FORMULARIO = WEB_VISTAS.DS.'TareaFormulario.php';
-const WEB_USUARIO_FORMULARIO = WEB_VISTAS.DS.'UsuarioFormulario.php';
 */
 
 
