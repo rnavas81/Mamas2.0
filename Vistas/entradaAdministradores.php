@@ -29,15 +29,15 @@ $tipoOpciones="administradorDashboard";
 $tituloTabla="";
 switch ($tipo){
     case 'administradores':
-        $data = GestionUsuarios::getUsuarios(1);
+        $data = GestionUsuarios::getUsuariosByRol(1);
         $tituloTabla="Administradores";
         break;
     case 'profesores':
-        $data = GestionUsuarios::getUsuarios(2);
+        $data = GestionUsuarios::getUsuariosByRol(2);
         $tituloTabla="Profesores";
         break;
     case 'alumnos':
-        $data = GestionUsuarios::getUsuarios(3);
+        $data = GestionUsuarios::getUsuariosByRol(3);
         $tituloTabla="Alumnos";
         break;
 }
@@ -71,16 +71,16 @@ switch ($tipo){
         <main>
             <div class="container-fluid">
                 <div class="row">
-                    <span class="col-12"><?=$msg?></span>
-                </div>
-                <div class="row">
                     <div class="btn-toolbar justify-content-between col-12" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="align-items-center btn-group" role="group" aria-label="Botones izquierda">
                             <span class="align-self-center h3 mb-0"><?=$tituloTabla?></span>
                         </div>
+                        <div class="btn-group">
+                            <span class="align-self-center"><?=$msg?></span>
+                        </div>
                         <div class="btn-group" role="group" aria-label="Botones derecha">
                             <form action="<?=CTRL_ADMIN?>" method="POST">
-                                <button name="agregarUsuarioFormulario" type="button" class="btn btn-primary btn-sm">
+                                <button name="agregarUsuarioFormulario" type="submit" class="btn btn-primary btn-sm" title="Agregar">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </form>

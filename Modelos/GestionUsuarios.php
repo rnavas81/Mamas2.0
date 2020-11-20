@@ -63,9 +63,7 @@ class GestionUsuarios extends GestionDatos {
                 . "WHERE u.dni = ? AND u.password = ? "
                 . "GROUP BY u.id;";
         try {
-            if(!$estabaAbierta) {
-                self::abrirConexion();
-            }
+            if(!$estabaAbierta) self::abrirConexion();
             $password= self::encriptarPassword($password);
             $stmt = self::$conexion->prepare($query);
             $stmt->bind_param("ss",$dni, $password);
@@ -78,9 +76,7 @@ class GestionUsuarios extends GestionDatos {
             echo $ex->getTraceAsString();
             $response = false;
         } finally {
-            if(!$estabaAbierta) {
-                self::cerrarConexion();
-            }            
+            if(!$estabaAbierta) self::cerrarConexion();
             return $response;
         }
     }
@@ -89,7 +85,7 @@ class GestionUsuarios extends GestionDatos {
      * Recupera los usuarios que contengan un rol determinado
      * @param int $rol
      */
-    public function getUsuarios($rol) {
+    public function getUsuariosByRol($rol) {
         $usuarios=[];
         $estabaAbierta=self::isAbierta();
         $query="SELECT u.*,GROUP_CONCAT(r.idRol) AS roles "
@@ -99,9 +95,7 @@ class GestionUsuarios extends GestionDatos {
                 . "GROUP BY u.id "
                 . "ORDER BY u.apellidos,u.nombre,u.dni;";
         try {
-            if(!$estabaAbierta) {
-                self::abrirConexion();
-            }
+            if(!$estabaAbierta) self::abrirConexion();
             $stmt = self::$conexion->prepare($query);
             $stmt->bind_param('i',$rol);
             $stmt->execute();
@@ -114,9 +108,7 @@ class GestionUsuarios extends GestionDatos {
             echo $ex->getTraceAsString();
             $usuarios = false;
         } finally {
-            if(!$estabaAbierta) {
-                self::cerrarConexion();
-            }
+            if(!$estabaAbierta) self::cerrarConexion();
             return $usuarios;
         }
 
@@ -128,17 +120,21 @@ class GestionUsuarios extends GestionDatos {
      * @param $valor Valor que se quiere comprobar
      * @return int Devuelve 0 si no esta duplicado
      */
-    public static function isDuplicado($campo, $valor) {
-        if(!self::isAbierta()) {
-            self::abrirConexion();
-        }
+    public static function isDuplicado($campo, $valor,$id=null) {        
+        $estabaAbierta=self::isAbierta();
         $response = false;
+        $condiciones = $campo."=? ";
+        if($id!=null) $condiciones.=" AND id<>?";
+        $condiciones.=" AND habilitado=1";
         $query = "SELECT count(*) AS contar "
                 . "FROM usuarios "
-                . "WHERE ".$campo."=? AND habilitado = 1;";
+                . "WHERE ".$condiciones.";";
+        
         try {
+            if(!$estabaAbierta) self::abrirConexion();
             $stmt = self::$conexion->prepare($query);
-            $stmt->bind_param("s",$valor);
+            if($id==null)$stmt->bind_param("s",$valor);
+            else $stmt->bind_param("si",$valor,$id);
             $stmt->execute();
             $resultado = $stmt->get_result();
             if($datos = $resultado->fetch_assoc()) {
@@ -147,9 +143,7 @@ class GestionUsuarios extends GestionDatos {
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();            
         } finally {
-            if(self::isAbierta()) {
-                self::cerrarConexion();
-            }
+            if(!$estabaAbierta) self::cerrarConexion();
             return $response;
         }         
     }
@@ -159,35 +153,157 @@ class GestionUsuarios extends GestionDatos {
      * @param type $usuario Objeto usuario con los datos a registrar
      * @param type $password Contraseña del usuario a registrar
      */
-    public static function registraUsuario($usuario,$password="") {
-        if(!self::isAbierta()) {
-            self::abrirConexion();
-        }
+    public static function insertUsuario($usuario,$password="") {
+        $estabaAbierta=self::isAbierta();
         $response = false;        
         $password = self::encriptarPassword($password);
         $date = date_create($usuario->getFechaNacimiento());
         $date = date_format($date, 'Y-m-d');  
-        $query1 = "INSERT INTO usuarios (nombre, apellidos, dni, password, fechaNacimiento, email) "
+        $query1 = "INSERT INTO Usuarios (nombre, apellidos, dni, password, fechaNacimiento, email) "
                 . "VALUES ('".$usuario->getNombre()."', '".$usuario->getApellidos()."', '".$usuario->getDni()."', '".$password."', '".$date."', '".$usuario->getEmail()."')";              
-        try {                       
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
             if (self::$conexion->query($query1)) {        
                 $id = self::$conexion->insert_id;
-                $query2= "INSERT INTO usuarios_roles (idUsuario, idRol) VALUES ";
+                $query2= "INSERT INTO Usuarios_Roles (idUsuario, idRol) VALUES ";
                 foreach ($usuario->getRoles() as $key=>$rol) {
                     if($key>0){
                         $query2.=",";
                     }
                     $query2.= "(".$id.",".$rol.")";
                 }                                                                        
-                self::$conexion->query($query2);                
+                self::$conexion->query($query2);
+                $response=true;
             }            
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();            
         } finally {
-            if(self::isAbierta()) {
-                self::cerrarConexion();
-            }
+            if(!$estabaAbierta) self::cerrarConexion();
             return $response;
         }        
     }
+    /**
+     * Recupera un usuario por su id
+     * @param Number $id
+     * @return false/Usuario
+     */
+    public static function getUsuarioById($id=0) {
+        $estabaAbierta=self::isAbierta();
+        $usuario = false;
+        $query = "SELECT u.*,group_concat(r.idRol) AS roles "
+                . "FROM Usuarios u "
+                . "LEFT Join Usuarios_Roles r ON r.idUsuario=u.id "
+                . "WHERE u.id = ? "
+                . "GROUP BY u.id;";
+        try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            if($datos = $resultado->fetch_assoc()) {
+                $usuario = self::formarUsuario($datos);
+            }
+            
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $usuario;
+        }            
+    }
+    /**
+     * Recupera los roles para los usuarios
+     */
+    public static function getRoles() {
+        $estabaAbierta=self::isAbierta();
+        $roles = [];
+        $query = "SELECT * FROM Roles WHERE habilitado=1;";
+        try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
+            $stmt = self::$conexion->prepare($query);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $roles[] = [
+                    'id'=>$datos['id'],
+                    'nombre'=>$datos['nombre']
+                ];
+            }
+            
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            $roles=[];
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return json_encode($roles);
+        }   
+        
+    }
+
+    public static function eliminarUsuario($id=0) {
+        $estabaAbierta=self::isAbierta();
+        $hecho = false;
+        $query = "UPDATE Usuarios SET habilitado=0 WHERE id=?;";
+        try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $hecho = $stmt->affected_rows > 0;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $hecho;
+        }        
+        
+    }
+
+    public static function updateUsuario($usuario,$password="") {
+        $estabaAbierta=self::isAbierta();
+        $hecho = false;
+        if(!empty($password))$password =  self::encriptarPassword($password);
+        $date = date_create($usuario->getFechaNacimiento());
+        $date = date_format($date, 'Y-m-d');  
+        $queryUpdate = "UPDATE Usuarios SET "
+                . "nombre='".$usuario->getNombre()."', "
+                . "apellidos='".$usuario->getApellidos()."', "
+                . "dni='".$usuario->getDni()."', "
+                . "fechaNacimiento='".$date."', "
+                . "email='".$usuario->getEmail()."' "; 
+        if(!empty($password)){
+            $queryUpdate.=",password='".$password."' ";
+        }
+        $queryUpdate.="WHERE id=".$usuario->getId();
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            if (self::$conexion->query($queryUpdate)) {
+                $queryBorrarRoles = "DELETE FROM Usuarios_Roles WHERE idUsuario=".$usuario->getId();
+                self::$conexion->query($queryBorrarRoles);
+                $queryRoles= "INSERT INTO Usuarios_Roles (idUsuario, idRol) VALUES ";
+                foreach ($usuario->getRoles() as $key=>$rol) {
+                    if($key>0){
+                        $queryRoles.=",";
+                    }
+                    $queryRoles.= "(".$usuario->getId().",".$rol.")";
+                }                                                                        
+                self::$conexion->query($queryRoles);
+                $hecho = true;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();            
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $hecho;
+        } 
+        
+    }
+
 }
