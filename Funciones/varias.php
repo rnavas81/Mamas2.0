@@ -11,7 +11,7 @@ require_once '../configuracion.php';
 function cerrarSesion() {
     $paginaSalir = WEB_INDEX;
     unset(
-        $_SESSION['rolRegistro']
+        $_SESSION['rolRegistro'],
         $_SESSION['usuario'],
         $_SESSION['MSG_INFO'],
         $_SESSION['administradorTipo']
