@@ -40,10 +40,10 @@ if(!isset($_SESSION['usuarioForm'])){
         <?php //mdBootstrap css ?>
         <link rel="stylesheet" href="../css/mdb.min.css" />
         <?php //Estilos propios ?>
-        <link rel="stylesheet" href="../css/style.css" /> 
+        <link rel="stylesheet" href="../css/validacion.css" /> 
     </head>
 
-    <body>
+    <body onload="validacion()">
         <main class="py-5">
             <div class="container-fluid">
                 <div class="row">
@@ -53,20 +53,26 @@ if(!isset($_SESSION['usuarioForm'])){
                     <div class="col-lg-3"></div>
                     <div class="col-md-12 col-lg-6 pb-5">
                         <div class="container">
-                            <form class="text-center border border-light p-5" action="<?=CTRL_USUARIOS?>" method="POST">
+                            <form class="text-center border border-light p-5" id="formRegistro" name="formRegistro" action="<?=CTRL_USUARIOS?>" method="POST">
                                 <p class="h4 mb-4">Registro</p>
                                 <p class="text-left">DNI</p>
-                                <input type="text" id="registroDni" name="dni" value="<?=$usuario->getDni()?>" class="form-control mb-4" placeholder="12345678A" required />
+                                <input type="text" id="registroDni" name="dni" value="<?=$usuario->getDni()?>" class="form-control mb-4" placeholder="12345678A" pattern="[0-9]{8}[A-Za-z]{1}" minlength="9" maxlength="9" required />
+                                <span class="errorDni" aria-live="polite"></span>
                                 <p class="text-left">Contraseña</p>
-                                <input type="password" id="registroPass" name="password" class="form-control mb-4" required />
+                                <input type="password" id="registroPass" name="password" class="form-control mb-4" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" minlength="6" required />
+                                <span class="errorPassword" aria-live="polite"></span>
                                 <p class="text-left">Nombre</p>
-                                <input type="text" id="registroNombre" name="nombre" value="<?=$usuario->getNombre()?>" class="form-control mb-4" required />
+                                <input type="text" id="registroNombre" name="nombre" value="<?=$usuario->getNombre()?>" class="form-control mb-4" pattern="[a-zA-Z0-9]+" required />
+                                <span class="errorNombre" aria-live="polite"></span>
                                 <p class="text-left">Apellidos</p>
-                                <input type="text" id="registroApellidos" name="apellidos" value="<?=$usuario->getApellidos()?>" class="form-control mb-4" required />
+                                <input type="text" id="registroApellidos" name="apellidos" value="<?=$usuario->getApellidos()?>" class="form-control mb-4" pattern="[a-zA-Z0-9]+" required />
+                                <span class="errorApellidos" aria-live="polite"></span>
                                 <p class="text-left">Fecha de nacimiento</p>
                                 <input type="date" id="registroFechaNac" name="fechaNacimiento" value="<?=$usuario->getFechaNacimiento()?>"class="form-control mb-4" required />
+                                <span class="errorFechaNac" aria-live="polite"></span>
                                 <p class="text-left">Email</p>
                                 <input type="email" id="registroEmail" name="email" class="form-control mb-4" value="<?=$usuario->getEmail()?>" placeholder="ejemplo@gmail.com" required/>
+                                <span class="errorEmail" aria-live="polite"></span>
                                 <div>
                                     <button class="btn btn-info btn-block my-4" type="submit" name="registro">
                                        Registrarse
@@ -80,6 +86,7 @@ if(!isset($_SESSION['usuarioForm'])){
             </div>                        
         </main>
         
+        <script type = "text/javascript" src="../js/validacion.js"></script>  
         <?php //jQuery ?>
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <?php //Bootstrap tooltips ?>
