@@ -71,6 +71,41 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
+    /**
+     * Recupera los examenes de un alumno segun se indique si están habilitados o no
+     * @param type $activo estado de los examenes a buscar
+     * @return Examen[] Devuelve un array de examenes
+     */
+    public function getExamenAlumno($activo,$idAlumno) {
+        $examenes=[];
+        $estaAbierta= self::isAbierta();
+        $query = "SELECT e.* "
+                . "FROM Examenes e "
+                . "LEFT Join Alumnos_examenes r ON r.idExamen=e.id "
+                . "WHERE r.idAlumno =? AND r.activo=? AND e.habilitado=1 ";
+        try {
+            if(!$estaAbierta) {
+                self::abrirConexion();
+            }
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param('ii',$idAlumno,$activo);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $examen = self::formaExamen($datos);
+                if($examen)$examenes[]=$examen;                
+            }            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();
+            $examenes = false;
+        } finally {
+            if(!$estaAbierta) {
+                self::cerrarConexion();
+            }
+            return $examenes;
+        }
+    }
+    
     public function deleteExamen() {
         
     }
