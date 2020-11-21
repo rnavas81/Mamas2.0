@@ -159,7 +159,7 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
             </div>                        
         </main>
         
-        <script type = "text/javascript" src="../js/validacion.js"></script>  
+        <script type = "text/javascript" src="../js/usuariosValidacion.js"></script>  
         <?php //jQuery ?>
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <?php //Bootstrap tooltips ?>
