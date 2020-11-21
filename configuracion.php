@@ -14,6 +14,7 @@ const WEB_CTRL = WEB_ROOT.DS.'Controladores';
 const CTRL_BASICO = WEB_CTRL.DS.'basico.php';
 const CTRL_USUARIOS = WEB_CTRL.DS.'usuarios.php';
 const CTRL_ADMIN = WEB_CTRL.DS.'administrador.php';
+const CTRL_EXAMENES = WEB_CTRL.DS.'examenes.php';
 /*
 const CTRL_TAREAS = WEB_CTRL.DS.'tareas.php';
 */
