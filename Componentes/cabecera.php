@@ -32,15 +32,23 @@ if( $usuarioActivo ){
 //Según el valor que recoja $tipoOpciones carga unos valores en el menú
 isset($tipoOpciones) OR $tipoOpciones=null;
 $opciones=[];
+$controladorAct="";
 switch ($tipoOpciones) {
     case 'administradorDashboard':
+        $controladorAct = CTRL_ADMIN;
         $opciones = [
           ['label'=>'Administradores','name'=>'datosAdministradores'],
           ['label'=>'Profesores','name'=>'datosProfesores'],
           ['label'=>'Alumnos','name'=>'datosAlumnos'],
         ];
         break;
-
+    case 'profesorDashboard':
+        $controladorAct = CTRL_PROFESORES;
+        $opciones = [
+          ['label'=>'Examenes activos','name'=>'examenesAct'],
+          ['label'=>'Examenes desactivados','name'=>'examenesDes'],          
+        ];
+        break;
     default:
         break;
 }
@@ -53,7 +61,7 @@ switch ($tipoOpciones) {
     <div class="sidebar-header">
         <h3>Mamas 2.0</h3>
     </div>
-    <form action="<?=CTRL_ADMIN?>" method="POST">
+    <form action="<?=$controladorAct?>" method="POST">
         <ul class="list-unstyled components">
             <p><?=$tituloMenu?></p>
             <?php 
