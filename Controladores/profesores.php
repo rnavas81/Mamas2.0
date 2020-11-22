@@ -1,6 +1,7 @@
 <?php
 
 require_once '../Modelos/GestionUsuarios.php';
+require_once '../Modelos/GestionExamenes.php';
 require_once '../Funciones/varias.php';
 
 if(session_status()!=PHP_SESSION_ACTIVE){
@@ -21,6 +22,12 @@ if(isset($_REQUEST['accion'])){
     $accion = "examenesAct";
 } elseif (isset ($_REQUEST['examenesDes'])) {
     $accion = "examenesDes";
+} elseif (isset ($_REQUEST['activarExamen'])) {
+    $accion = "activacionExamen";
+    $aux=1;
+} elseif (isset ($_REQUEST['desactivarExamen'])) {
+    $accion = "activacionExamen";
+    $aux=0;
 }
 
 switch ($accion) {
@@ -30,6 +37,10 @@ switch ($accion) {
         break;
     case "examenesDes":
         $_SESSION['profesorTipo']= 'desactivados';
+        $redireccion=WEB_ENTRADA_PROFESORES;
+        break;
+    case "activacionExamen":
+        GestionExamenes::activacionExamen($_REQUEST['id'],$aux);
         $redireccion=WEB_ENTRADA_PROFESORES;
         break;
     default:

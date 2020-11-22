@@ -12,7 +12,7 @@ if(isset($_SESSION['MSG_INFO'])){
     $msg = $_SESSION['MSG_INFO'];
     unset($_SESSION['MSG_INFO']);
 }
-
+$usuario = $_SESSION['usuario'];
 $data = [];
 //Comprueba la sesión para cargar datos de administradores,profesores o alumnos
 $tipo = 'activos';
@@ -20,16 +20,19 @@ if(isset($_SESSION['profesorTipo'])){
     $tipo = $_SESSION['profesorTipo'];
 }
 $tipoOpciones="profesorDashboard";
+/*
 switch ($tipo){
     case 'activos':
-        $data = GestionExamenes::getExamen(1);
+        $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
         $tituloTabla="Activos";
         break;
     case 'desactivados':
-        $data = GestionExamenes::getExamen(0);
+        $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
         $tituloTabla="Desactivados";
         break;    
-}
+}*/
+$tituloTabla = 'Exámenes';
+$data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
 ?>
 <html>
     <head>
@@ -82,11 +85,10 @@ switch ($tipo){
                     <!--Table head-->
                       <thead>
                           <tr class="row">                            
-                            <th class="col-sm-3 text-center font-weight-bold">Nombre</th>
-                            <th class="col-sm-3 text-center font-weight-bold">Descripcion</th>
+                            <th class="col-sm-4 text-center font-weight-bold">Nombre</th>                            
                             <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
                             <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
-                            <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
+                            <th class="col-sm-4 text-center font-weight-bold">Opciones</th>
                         </tr>
                       </thead>
                       <!--Table head-->
@@ -96,15 +98,30 @@ switch ($tipo){
                         foreach ($data as $value) {
                             if($value->getIdProfesor()===$_SESSION['usuario']->getId()){  
                         ?>
-                        <tr class="row">
-                          <th class="col-sm-3 text-uppercase" scope="row"><?=$value->getNombre()?></th>
-                          <th class="col-sm-3 text-uppercase" scope="row"><?=$value->getDescripcion()?></th>
-                          <td class="col-sm-2"><?=$value->getFechaInicio()?></td>
-                          <td class="col-sm-2"><?=$value->getFechaFin()?></td>
-                          <td class="col-sm-2">
-                              <form class="d-flex justify-content-end" action="<?=CTRL_EXAMENES?>" method="POST">
+                          <tr class="row <?=$value->getActivo()==0?'desactivado':''?>">
+                          <th class="col-sm-4 text-center text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
+                          <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
+                          <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
+                          <td class="col-sm-4">
+                              <form class="d-flex justify-content-center" action="<?=CTRL_PROFESORES?>" method="POST">
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />
-                                <button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Editar">
+                                <input type="hidden" value="<?=$value->getActivo()?>" name="activo"/>
+                                <?php 
+                                if($value->getActivo()==0) {
+                                ?>
+                                <button name="activarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Activar">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <?php
+                                } else {
+                                ?>
+                                <button name="desactivarExamen" type="submit" class="btn btn-sm btn-danger mx-1 my-0" title="Desactivar">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                                <?php                                
+                                }
+                                ?>
+                                <button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Activar">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
                                 <button name="eliminarExamen" type="submit" class="btn btn-sm btn-danger mx-1 my-0" title="Eliminar">
