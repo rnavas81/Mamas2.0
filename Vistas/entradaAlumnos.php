@@ -83,11 +83,10 @@ switch ($tipo){
                     <!--Table head-->
                       <thead>
                           <tr class="row">                            
-                            <th class="col-sm-3 text-center font-weight-bold">Nombre</th>
-                            <th class="col-sm-3 text-center font-weight-bold">Descripcion</th>
+                            <th class="col-sm-4 text-center font-weight-bold">Nombre</th>                            
                             <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
                             <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
-                            <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
+                            <th class="col-sm-4 text-center font-weight-bold">Opciones</th>
                         </tr>
                       </thead>
                       <!--Table head-->
@@ -97,12 +96,11 @@ switch ($tipo){
                         foreach ($data as $value) {                              
                         ?>
                         <tr class="row">
-                          <th class="col-sm-3 text-uppercase" scope="row"><?=$value->getNombre()?></th>
-                          <th class="col-sm-3 text-uppercase" scope="row"><?=$value->getDescripcion()?></th>
-                          <td class="col-sm-2"><?=$value->getFechaInicio()?></td>
-                          <td class="col-sm-2"><?=$value->getFechaFin()?></td>
-                          <td class="col-sm-2">
-                              <form class="d-flex justify-content-end" action="<?=CTRL_EXAMENES?>" method="POST">
+                          <th class="col-sm-4 text-center text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
+                          <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
+                          <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
+                          <td class="col-sm-4">
+                              <form class="d-flex justify-content-center" action="<?=CTRL_EXAMENES?>" method="POST">
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />
                                 <button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Empezar">
                                     <i class="fas fa-play-circle"></i>
