@@ -130,8 +130,27 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
-    public function deleteExamen() {
-        
+    /**
+     * Funcion que borra el examen seleccionado (no se borra de la BBDD)
+     * @param int $id Id del examen a borrar
+     */
+    public function deleteExamen($id) {
+        $estabaAbierta=self::isAbierta();
+        $query="UPDATE Examenes "
+                . "SET habilitado = 0 "
+                . "WHERE id = ".$id.";";
+        try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
+            self::$conexion->query($query);
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }
     }
     
 }

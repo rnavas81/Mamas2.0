@@ -16,6 +16,7 @@ const CTRL_USUARIOS = WEB_CTRL.DS.'usuarios.php';
 const CTRL_ADMIN = WEB_CTRL.DS.'administrador.php';
 const CTRL_EXAMENES = WEB_CTRL.DS.'examenes.php';
 const CTRL_PROFESORES = WEB_CTRL.DS.'profesores.php';
+const CTRL_EXAMENFORM = WEB_CTRL.DS.'examenFormulario.php';
 /*
 const CTRL_TAREAS = WEB_CTRL.DS.'tareas.php';
 */

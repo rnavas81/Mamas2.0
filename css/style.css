@@ -1,3 +1,4 @@
 tr.desactivado {
     background-color: #d0d0e1;
+    transition: 0.5s;
 }

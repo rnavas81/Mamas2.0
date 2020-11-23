@@ -28,6 +28,8 @@ if(isset($_REQUEST['accion'])){
 } elseif (isset ($_REQUEST['desactivarExamen'])) {
     $accion = "activacionExamen";
     $aux=0;
+} elseif (isset ($_REQUEST['eliminarExamen'])) {
+    $accion = "eliminarExamen";
 }
 
 switch ($accion) {
@@ -41,6 +43,10 @@ switch ($accion) {
         break;
     case "activacionExamen":
         GestionExamenes::activacionExamen($_REQUEST['id'],$aux);
+        $redireccion=WEB_ENTRADA_PROFESORES;
+        break;
+    case "eliminarExamen":
+        GestionExamenes::deleteExamen($_REQUEST['id']);
         $redireccion=WEB_ENTRADA_PROFESORES;
         break;
     default:
