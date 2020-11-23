@@ -104,7 +104,7 @@ switch ($tipo){
                       <tbody>
                         <?php 
                         foreach ($data as $value) {?>
-                        <tr class="row <?=$value->getActivo()==0?'desactivado':''?>">
+                        <tr class="row">
                           <th class="col-sm-2 text-uppercase" scope="row"><?=$value->getDni()?></th>
                           <td class="col-sm-3"><?=$value->getNombre()?></td>
                           <td class="col-sm-5"><?=$value->getApellidos()?></td>
