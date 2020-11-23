@@ -46,7 +46,7 @@ class GestionExamenes extends GestionDatos {
         $examenes=[];
         $estaAbierta= self::isAbierta();
         $query = "SELECT * "
-                . "FROM examenes "
+                . "FROM Examenes "
                 . "WHERE idProfesor =? AND habilitado = 1;";
         try {
             if(!$estaAbierta) {

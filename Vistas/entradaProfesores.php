@@ -41,18 +41,18 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Mamas 2.0</title>
         <!-- Icono -->
-        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
-        <!-- Google Fonts Roboto -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-        <!-- Font Awesome -->
+        <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
+        <?php //Font Awesome ?>
         <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
-        <!-- Bootstrap core CSS -->
+        <?php  //Google Fonts Roboto ?>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <?php  //Bootstrap core ?>
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
-        <!-- mdBootstrap css -->
+        <?php //mdBootstrap css ?>
         <link rel="stylesheet" href="../css/mdb.min.css" />
         <!-- Para la cabecera -->
         <link rel="stylesheet" href="../css/sidebar.css" />
-        <!-- Estilos propios -->
+        <?php //Estilos propios ?>
         <link rel="stylesheet" href="../css/style.css" /> 
         
     </head>
@@ -71,8 +71,8 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
                             <span class="align-self-center h3 mb-0"><?=$tituloTabla?></span>
                         </div>
                         <div class="btn-group" role="group" aria-label="Botones derecha">
-                            <form action="<?=CTRL_EXAMENFORM?>" method="POST">
-                                <button name="agregarExamenFormulario" type="submit" class="btn btn-primary btn-sm" title="Nuevo examen">
+                            <form action="<?=CTRL_EXAMENES?>" method="POST">
+                                <button name="nuevo" type="submit" class="btn btn-primary btn-sm" title="Nuevo examen">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </form>
@@ -108,13 +108,13 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
                                 <?php 
                                 if($value->getActivo()==0) {
                                 ?>
-                                <button name="activarExamen" type="submit" class="btn btn-sm btn-danger mx-1 my-0" title="Activar">
+                                <button name="activarExamen" type="submit" class="btn btn-sm btn-blue-grey mx-1 my-0" title="Activar">
                                     <i class="far fa-square"></i>
                                 </button>
                                 <?php
                                 } else {
                                 ?>
-                                <button name="desactivarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Desactivar">
+                                <button name="desactivarExamen" type="submit" class="btn btn-sm btn-blue-grey mx-1 my-0" title="Desactivar">
                                     <i class="fas fa-check-square"></i>
                                 </button>
                                 <?php                                
@@ -160,15 +160,18 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
                     <!--Table-->
                 </div>
             </div>
-        </main>        
-    <script type = "text/javascript" src="../js/validacion.js"></script>  
-    <?php //jQuery ?>
+        </main>
+<?php //jQuery ?>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <?php //Bootstrap tooltips ?>
+<?php //Bootstrap tooltips ?>
     <script type="text/javascript" src="../js/popper.min.js"></script>
-    <?php //Bootstrap core JavaScript ?>
+<?php //Bootstrap core JavaScript ?>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <?php //MDB core JavaScript ?>
+<?php //MDB core JavaScript ?>
     <script type="text/javascript" src="../js/mdb.min.js"></script>
+<?php //jQuery Custom Scroller CDN ?>
+    <script type="text/javascript" src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
+<?php //Your custom scripts (optional) ?>
+    <script type="text/javascript" src="../js/sidebar.js"></script>
     </body>
 </html>
