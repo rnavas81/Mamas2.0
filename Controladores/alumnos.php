@@ -17,18 +17,18 @@ $aux=null;
 
 if(isset($_REQUEST['accion'])){
     $accion = $_REQUEST['accion'];
-} elseif(isset ($_REQUEST['examenesAct'])) {
-    $accion = "examenesAct";
-} elseif (isset ($_REQUEST['examenesDes'])) {
-    $accion = "examenesDes";
+} elseif(isset ($_REQUEST['examenesPendientes'])) {
+    $accion = "examenesPendientes";
+} elseif (isset ($_REQUEST['examenesRealizados'])) {
+    $accion = "examenesRealizados";
 }
 
 switch ($accion) {
-    case "examenesAct":
+    case "examenesPendientes":
         $_SESSION['alumnoTipo']= 'activos';
         $redireccion=WEB_ENTRADA_ALUMNOS;
         break;
-    case "examenesDes":
+    case "examenesRealizados":
         $_SESSION['alumnoTipo']= 'desactivados';
         $redireccion=WEB_ENTRADA_ALUMNOS;
         break;

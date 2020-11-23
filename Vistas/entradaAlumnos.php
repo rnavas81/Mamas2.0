@@ -24,11 +24,11 @@ $tipoOpciones="alumnosDashboard";
 switch ($tipo){
     case 'activos':
         $data = GestionExamenes::getExamenAlumno(1,$_SESSION['usuario']->getId());
-        $tituloTabla="Examenes actuales";
+        $tituloTabla="Examenes pendientes";
         break;
     case 'desactivados':
         $data = GestionExamenes::getExamenAlumno(0,$_SESSION['usuario']->getId());
-        $tituloTabla="Examenes antiguos";
+        $tituloTabla="Examenes realizados";
         break;    
 }
 ?>
@@ -69,9 +69,12 @@ switch ($tipo){
                             <span class="align-self-center h3 mb-0"><?=$tituloTabla?></span>
                         </div>
                         <div class="btn-group" role="group" aria-label="Botones derecha">
-                            <form action="" method="POST">
-                                <button name="agregarExamenFormulario" type="button" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-plus"></i>
+                            <form action="<?=CTRL_ALUMNOS?>" method="POST">
+                                <button name="examenesPendientes" type="submit" class="btn btn-primary btn-sm">
+                                    Pendientes
+                                </button>
+                                <button name="examenesRealizados" type="submit" class="btn btn-primary btn-sm">
+                                    Realizados
                                 </button>
                             </form>
                         </div>
@@ -81,39 +84,48 @@ switch ($tipo){
                     <!--Table-->
                     <table id="usuarios" class="table table-hover table-sm col-12">
                     <!--Table head-->
-                      <thead>
-                          <tr class="row">                            
-                            <th class="col-sm-4 text-center font-weight-bold">Nombre</th>                            
-                            <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
-                            <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
-                            <th class="col-sm-4 text-center font-weight-bold">Opciones</th>
-                        </tr>
-                      </thead>
-                      <!--Table head-->
-                      <!--Table body-->
-                      <tbody>
+                        <thead>
+                            <tr class="row">                            
+                                <th class="col-sm-6 text-center font-weight-bold">Nombre</th>                            
+                                <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
+                                <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
+                                <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+                        <!--Table body-->
+                        <tbody>
                         <?php 
                         foreach ($data as $value) {                              
                         ?>
-                        <tr class="row">
-                          <th class="col-sm-4 text-center text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
-                          <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
-                          <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
-                          <td class="col-sm-4">
-                              <form class="d-flex justify-content-center" action="<?=CTRL_EXAMENES?>" method="POST">
-                                <input type="hidden" value="<?=$value->getId()?>" name="id" />
-                                <button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Empezar">
-                                    <i class="fas fa-play-circle"></i>
-                                </button>
-                                <!--<button name="eliminarExamen" type="submit" class="btn btn-sm btn-danger mx-1 my-0" title="Eliminar">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>-->
-                            </form>
-                          </td>                          
+                        <tr class="row <?=$tipo=="desactivados"?'desactivado':''?>">
+                            <th class="col-sm-6 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
+                            <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
+                            <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
+                            <td class="col-sm-2">
+                                <form class="d-flex justify-content-end" action="<?=CTRL_EXAMENES?>" method="POST">
+                                    <input type="hidden" value="<?=$value->getId()?>" name="id" />
+                                    <?php 
+                                    if($tipo=="activos"){
+                                    ?>
+                                    <button name="empezarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Empezar">
+                                        <i class="fas fa-play-circle"></i>
+                                    </button> 
+                                    <?php 
+                                    } else {
+                                    ?>
+                                    <!--<button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Empezar">
+                                        <i class="fas fa-play-circle"></i>
+                                    </button> -->
+                                    <?php 
+                                    }
+                                    ?>
+                                </form>
+                            </td>                          
                         </tr>
                         <?php } ?>
-                      </tbody>
-                      <!--Table body-->
+                        </tbody>
+                        <!--Table body-->
                     </table>
                     <!--Table-->
                 </div>
