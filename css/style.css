@@ -2,3 +2,24 @@ tr.desactivado {
     background-color: #d0d0e1;
     transition: 0.5s;
 }
+/**
+    Estilos propios
+*/
+:root{
+    --primary:#717e94;
+    --secondary:#007bff;
+}
+
+#mensaje-popup{
+    position: relative;
+    width: 100%;
+    top: 5%;
+    right: 5%;
+}
+
+.primary-color, ul.stepper li.active a .circle, ul.stepper li.completed a .circle {
+    background-color: var(--primary) !important;
+}
+#sidebar.primary-color {
+    background: var(--primary) !important;
+}
