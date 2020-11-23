@@ -229,6 +229,10 @@ window.onload = () => {
     });
 
     $("#formExamen").on("submit",function(event){
+        console.log(event);
+        if(event.originalEvent.submitter.name=='volver'){
+            return true;
+        }
         try {
             var validacion = validarExamen();
             if(validacion.state==0){

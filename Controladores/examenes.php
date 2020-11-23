@@ -34,6 +34,8 @@ if(isset($_REQUEST['accion'])){
     $accion = "crear";
 }elseif(isset ($_REQUEST['modificar'])) {
     $accion = "modificar";
+}elseif(isset ($_REQUEST['nuevo'])) {
+    $accion = "nuevo";
 }
 
 switch ($accion) {
@@ -53,7 +55,7 @@ switch ($accion) {
     //Crea un nuevo examen
     case 'crear':
         $usuario = $_SESSION['usuario'];
-        $data = json_decode($_REQUEST['datos'],true);;
+        $data = json_decode($_REQUEST['datos'],true);
         if(GestionExamenes::insertExamen($data,$usuario->getId())){
             $_SESSION['MSG_INFO']="Examen creado";
             unset($_SESSION['datosFormulario']);
@@ -92,6 +94,10 @@ switch ($accion) {
             $_SESSION['datosFormulario']=$data;
             $_SESSION['MSG_INFO'] = "Error al crear el examen";
         }
+        break;
+    case 'nuevo':
+        $_SESSION['accesoFormulario']='crear';
+        $redireccion = WEB_EXAMEN_FORMULARIO;
         break;
 }
 

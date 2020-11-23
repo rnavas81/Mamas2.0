@@ -15,7 +15,6 @@ const CTRL_USUARIOS = WEB_CTRL.DS.'usuarios.php';
 const CTRL_ADMIN = WEB_CTRL.DS.'administrador.php';
 const CTRL_EXAMENES = WEB_CTRL.DS.'examenes.php';
 const CTRL_PROFESORES = WEB_CTRL.DS.'profesores.php';
-const CTRL_EXAMENFORM = WEB_CTRL.DS.'examenFormulario.php';
 const CTRL_ALUMNOS = WEB_CTRL.DS.'alumnos.php';
 /*
   const CTRL_TAREAS = WEB_CTRL.DS.'tareas.php';
@@ -37,6 +36,8 @@ const WEB_ENTRADA_ADMINISTRADORES = WEB_VISTAS . DS . 'entradaAdministradores.ph
 const WEB_RECUPERAR = WEB_VISTAS . DS . 'recuperar.php';
 const WEB_REGISTRAR = WEB_VISTAS . DS . 'registrar.php';
 const WEB_USUARIO_FORMULARIO = WEB_VISTAS . DS . 'usuarioFormulario.php';
+const WEB_EXAMEN_FORMULARIO = WEB_VISTAS . DS . 'examenFormulario.php';
+
 /*
   const WEB_ADMIN = WEB_ROOT.DS.'admin.php';
   const WEB_VALIDAR_USUARIO = WEB_ROOT.DS.'validar.php';
