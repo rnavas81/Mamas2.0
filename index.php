@@ -34,7 +34,7 @@ if(isset($_SESSION['MSG_INFO'])){
     </head>
     <body>
         <main class="">
-            <div class="row">
+            <div class="">
                 <div class="col-12 d-flex justify-content-end mr-4">
                     <a href="<?=WEB_ADMIN?>">Acceso para administradores</a>
                 </div>
@@ -53,7 +53,7 @@ if(isset($_SESSION['MSG_INFO'])){
                                     <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
                                 </div>-->
                                 <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederAlumnos">Sign in</button>
+                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederAlumnos">Acceder</button>
                                 </div>                    
                                 <p>
                                 ¿No estás registrado?
