@@ -32,6 +32,8 @@ if( $usuarioActivo ){
 //Según el valor que recoja $tipoOpciones carga unos valores en el menú
 isset($tipoOpciones) OR $tipoOpciones=null;
 $opciones=[];
+//Acción del formulario, se determina por el tipo de opciones, por defecto basico
+$accion = CTRL_BASICO;
 switch ($tipoOpciones) {
     case 'administradorDashboard':
         $opciones = [
@@ -39,6 +41,14 @@ switch ($tipoOpciones) {
           ['label'=>'Profesores','name'=>'datosProfesores'],
           ['label'=>'Alumnos','name'=>'datosAlumnos'],
         ];
+        $accion = CTRL_ADMIN;
+        break;
+    case 'profesorDashboard':
+        $opciones = [
+          ['label'=>'Examenes','name'=>'datosExamenes'],
+          ['label'=>'Alumnos','name'=>'datosAlumnos'],
+        ];
+        $accion = CTRL_EXAMENES;
         break;
 
     default:
@@ -46,20 +56,20 @@ switch ($tipoOpciones) {
 }
 
 ?>
-<nav id="sidebar" class="sticky-top">
+<nav id="sidebar" class="sticky-top primary-color">
     <div id="dismiss">
         <i class="fas fa-arrow-left"></i>
     </div>
     <div class="sidebar-header">
         <h3>Mamas 2.0</h3>
     </div>
-    <form action="<?=CTRL_ADMIN?>" method="POST">
+    <form action="<?=$accion?>" method="POST">
         <ul class="list-unstyled components">
             <p><?=$tituloMenu?></p>
             <?php 
             foreach ($opciones as $opcion) {?>
-            <li class="d-flex justify-content-center">
-                <input class="btn btn-block my-2" type="submit" value="<?= $opcion['label'] ?>" name="<?= $opcion['name'] ?>" />
+            <li class="d-flex justify-content-center btn btn-block my-2">
+                <input class="btn btn-sm shadow-none" type="submit" value="<?= $opcion['label'] ?>" name="<?= $opcion['name'] ?>" />
             </li>
             <?php }?>
         </ul>        
@@ -78,10 +88,10 @@ switch ($tipoOpciones) {
 
 <div class="overlay"></div> 
 
-<header>            
-    <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-dark default-color">                  
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
-            <i class="fas fa-align-left"></i>                               
+<header class="sticky-top">            
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark primary-color">                  
+        <button type="button" id="sidebarCollapse" class="btn btn-info btn-sm">
+            <i class="fas fa-bars"></i>                               
         </button>             
         <div class="ml-auto" id="navbarSupportedContent-333">                                        
             <ul class="navbar-nav ml-auto nav-flex-icons">

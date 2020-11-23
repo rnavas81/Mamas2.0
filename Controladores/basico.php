@@ -3,7 +3,7 @@
  * @author 
  * @create 
  */
-
+require_once '../configuracion.php';
 require_once '../Modelos/GestionUsuarios.php';
 require_once '../Modelos/Usuario.php';
 require_once '../Funciones/varias.php';
