@@ -85,10 +85,10 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
                     <!--Table head-->
                       <thead>
                           <tr class="row">                            
-                            <th class="col-sm-4 text-center font-weight-bold">Nombre</th>                            
+                            <th class="col-sm-6 text-center font-weight-bold">Nombre</th>                            
                             <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
                             <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
-                            <th class="col-sm-4 text-center font-weight-bold">Opciones</th>
+                            <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
                         </tr>
                       </thead>
                       <!--Table head-->
@@ -99,11 +99,11 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
                             if($value->getIdProfesor()===$_SESSION['usuario']->getId()){  
                         ?>
                           <tr class="row <?=$value->getActivo()==0?'desactivado':''?>">
-                          <th class="col-sm-4 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
+                          <th class="col-sm-6 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
                           <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
                           <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
-                          <td class="col-sm-4">
-                              <form class="d-flex justify-content-center" action="<?=CTRL_PROFESORES?>" method="POST">
+                          <td class="col-sm-2">
+                              <form class="d-flex justify-content-end" action="<?=CTRL_PROFESORES?>" method="POST">
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />                                
                                 <?php 
                                 if($value->getActivo()==0) {
