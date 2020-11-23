@@ -48,6 +48,12 @@ switch ($tipoOpciones) {
           ['label'=>'Examenes activos','name'=>'examenesAct'],
           ['label'=>'Examenes desactivados','name'=>'examenesDes'],          
         ];
+    case 'alumnosDashboard':
+        $controladorAct = CTRL_ALUMNOS;
+        $opciones = [
+          ['label'=>'Examenes','name'=>'examenesPendientes'],
+          ['label'=>'Progresion','name'=>''],          
+        ];
         break;
     default:
         break;

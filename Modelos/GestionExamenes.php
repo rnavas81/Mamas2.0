@@ -76,19 +76,20 @@ class GestionExamenes extends GestionDatos {
      * @param type $activo estado de los examenes a buscar
      * @return Examen[] Devuelve un array de examenes
      */
-    public function getExamenAlumno($activo,$idAlumno) {
+    public function getExamenAlumno($realizado,$idAlumno) {
         $examenes=[];
         $estaAbierta= self::isAbierta();
         $query = "SELECT e.* "
                 . "FROM Examenes e "
                 . "LEFT Join Alumnos_examenes r ON r.idExamen=e.id "
-                . "WHERE r.idAlumno =? AND r.activo=? AND e.habilitado=1 ";
+                . "WHERE r.idAlumno =? AND r.realizado=? AND e.habilitado=1 "
+                . "ORDER BY e.fechaInicio DESC";
         try {
             if(!$estaAbierta) {
                 self::abrirConexion();
             }
             $stmt = self::$conexion->prepare($query);
-            $stmt->bind_param('ii',$idAlumno,$activo);
+            $stmt->bind_param('ii',$idAlumno,$realizado);
             $stmt->execute();
             $resultado = $stmt->get_result();
             while($datos = $resultado->fetch_assoc()) {
@@ -104,6 +105,10 @@ class GestionExamenes extends GestionDatos {
             }
             return $examenes;
         }
+    }
+    
+    public function deleteExamen() {
+        
     }
     
     /**
