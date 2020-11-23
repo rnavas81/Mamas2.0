@@ -1,6 +1,6 @@
 <?php
 /**
- * Classe que se encarga de gestionar los examenes en la base de datos
+ * Clase que se encarga de gestionar los examenes en la base de datos
  *
  * @author dario
  */
@@ -38,22 +38,22 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
-     * Recupera los examenes segun se indique si están habilitados o no
-     * @param type $activo estado de los examenes a buscar
+     * 
+     * @param int $idProfesor id del profesor
      * @return Examen[] Devuelve un array de examenes
      */
-    public function getExamen($activo) {
+    public function getExamen($idProfesor) {
         $examenes=[];
         $estaAbierta= self::isAbierta();
         $query = "SELECT * "
                 . "FROM examenes "
-                . "WHERE habilitado = 1 AND activo =?";
+                . "WHERE idProfesor =? AND habilitado = 1;";
         try {
             if(!$estaAbierta) {
                 self::abrirConexion();
             }
             $stmt = self::$conexion->prepare($query);
-            $stmt->bind_param('i',$activo);
+            $stmt->bind_param('i',$idProfesor);            
             $stmt->execute();
             $resultado = $stmt->get_result();
             while($datos = $resultado->fetch_assoc()) {
@@ -71,8 +71,86 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
-    public function deleteExamen() {
-        
+    /**
+     * Recupera los examenes de un alumno segun se indique si están habilitados o no
+     * @param type $activo estado de los examenes a buscar
+     * @return Examen[] Devuelve un array de examenes
+     */
+    public function getExamenAlumno($activo,$idAlumno) {
+        $examenes=[];
+        $estaAbierta= self::isAbierta();
+        $query = "SELECT e.* "
+                . "FROM Examenes e "
+                . "LEFT Join Alumnos_examenes r ON r.idExamen=e.id "
+                . "WHERE r.idAlumno =? AND r.activo=? AND e.habilitado=1 ";
+        try {
+            if(!$estaAbierta) {
+                self::abrirConexion();
+            }
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param('ii',$idAlumno,$activo);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $examen = self::formaExamen($datos);
+                if($examen)$examenes[]=$examen;                
+            }            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();
+            $examenes = false;
+        } finally {
+            if(!$estaAbierta) {
+                self::cerrarConexion();
+            }
+            return $examenes;
+        }
+    }
+    
+    /**
+     * Activa o desactiva el examen indicado por id
+     * @param int $activar 0 para desactivar, 1 para activar
+     * @param int $id id del examen a cambiar
+     */
+    public function activacionExamen($id,$activar) {
+        $estabaAbierta=self::isAbierta();
+        $query="UPDATE Examenes "
+                . "SET activo = ".$activar." "
+                . "WHERE id = ".$id.";";
+        try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
+            self::$conexion->query($query);
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }
+    }
+    
+    /**
+     * Funcion que borra el examen seleccionado (no se borra de la BBDD)
+     * @param int $id Id del examen a borrar
+     */
+    public function deleteExamen($id) {
+        $estabaAbierta=self::isAbierta();
+        $query="UPDATE Examenes "
+                . "SET habilitado = 0 "
+                . "WHERE id = ".$id.";";
+        try {
+            if(!$estabaAbierta) {
+                self::abrirConexion();
+            }
+            self::$conexion->query($query);
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }
     }
     
 }
