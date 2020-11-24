@@ -40,7 +40,16 @@ if(!isset($_SESSION['usuarioForm'])){
         <?php //mdBootstrap css ?>
         <link rel="stylesheet" href="../css/mdb.min.css" />
         <?php //Estilos propios ?>
-        <link rel="stylesheet" href="../css/validacion.css" /> 
+        <link rel="stylesheet" href="../css/validacion.css" />
+        <script src='https://www.google.com/recaptcha/api.js?render=6LdBcesZAAAAAIZ6eQ7GdfTZLlhxNewBZ676jmfX'></script>
+        <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LdBcesZAAAAAIZ6eQ7GdfTZLlhxNewBZ676jmfX', {action: 'formulario'}).then(function(token) {
+                var recaptchaResponse = document.getElementById('recaptchaResponse');
+                recaptchaResponse.value = token;
+            });
+        });
+        </script>
     </head>
 
     <body>
@@ -81,6 +90,7 @@ if(!isset($_SESSION['usuarioForm'])){
                                     </button>
                                     <a class="text-left" href="<?=WEB_INDEX?>"><i class="fas fa-arrow-left"></i> Volver<a/>
                                 </div>
+                                <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             </form>
                         </div>
                     </div>
@@ -89,7 +99,7 @@ if(!isset($_SESSION['usuarioForm'])){
             </div>                        
         </main>
         
-        <script type = "text/javascript" src="../js/validacion.js"></script>  
+        <script type = "text/javascript" src="../js/usuariosValidacion.js"></script>  
         <?php //jQuery ?>
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <?php //Bootstrap tooltips ?>

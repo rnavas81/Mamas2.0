@@ -23,11 +23,21 @@ $redireccion = null;
 $accion = null;
 //Variable de datos auxiliares
 $aux=null;
+
+#Recaptcha
+$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'; 
+$recaptcha_secret = '6LdBcesZAAAAACuTrhSImmOX_76-e9rQSRQsG2BC'; 
+$recaptcha_response = $_POST['recaptcha_response']; 
+$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response); 
+$recaptcha = json_decode($recaptcha); 
+
 if(isset($_REQUEST['accion'])){
     $accion = $_REQUEST['accion'];
-}elseif(isset ($_REQUEST['registro'])) {
+}elseif(isset ($_REQUEST['registro']) && $recaptcha->score >= 0.5 && $recaptcha->success === true) {
     $accion = "registro";
 }
+
+echo $recaptcha->score.' '.$recaptcha->success;
 
 switch ($accion) {
     //Registro de usuario
