@@ -1,4 +1,12 @@
+/**
+Inicializa la base de datos necesaria para la aplicación Mamas 2.0
+*/
+CREATE DATABASE IF NOT EXISTS Mamas
+    CHARACTER SET utf8
+    COLLATE utf8_spanish_ci;
+    
 USE Mamas;
+
 CREATE TABLE `Roles` (
   `habilitado` tinyint NOT NULL DEFAULT '1',
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -21,9 +29,35 @@ CREATE TABLE `Usuarios` (
   `fechaNacimiento` date,
   `email` varchar(500)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 CREATE TABLE `Usuarios_Roles` (
     `idUsuario` int NOT NULL,
     `idRol` int NOT NULL,
     
     PRIMARY KEY (idUsuario,idRol)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+CREATE TABLE `Examenes` ( 
+    `id` INT NOT NULL AUTO_INCREMENT , 
+    `idProfesor` INT NOT NULL ,
+    `habilitado` TINYINT NOT NULL DEFAULT '1' ,
+    `activo` TINYINT NOT NULL DEFAULT '0' ,
+    `nombre` VARCHAR(500) NOT NULL,
+    `descripcion` VARCHAR(1000), 
+    `fechaInicio` TIMESTAMP , 
+    `fechaFin` TIMESTAMP ,    
+    PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
+
+CREATE TABLE `Examenes_Preguntas` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idExamen` int NOT NULL ,
+  `enunciado` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  `tipo` tinyint DEFAULT 0 NOT NULL,
+  `opciones` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE TABLE `Alumnos_examenes` ( 
+    `idAlumno` INT NOT NULL , 
+    `idExamen` INT NOT NULL , 
+    `nota` INT NULL DEFAULT NULL , 
+    `realizado` INT NOT NULL DEFAULT '0' , 
+    PRIMARY KEY (`idAlumno`, `idExamen`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
