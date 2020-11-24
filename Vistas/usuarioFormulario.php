@@ -48,19 +48,27 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
         <title>Mamas 2.0</title>
         <?php  //Icono ?>
         <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <?php //Font Awesome ?>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
         <?php  //Google Fonts Roboto ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <?php //Font Awesome ?>
+        <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <?php  //Bootstrap core ?>
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
         <?php //mdBootstrap css ?>
         <link rel="stylesheet" href="../css/mdb.min.css" />
+        <!-- Para la cabecera -->
+        <link rel="stylesheet" href="../css/sidebar.css" />
         <?php //Estilos propios ?>
         <link rel="stylesheet" href="../css/validacion.css" /> 
+        <link rel="stylesheet" href="../css/style.css" /> 
+        
     </head>
 
     <body onload="validacion()">
+        <?php
+        $tipoOpciones="administradorDashboard";
+        require_once '../Componentes/cabecera.php';
+        ?>
         <main class="py-5">
             <div class="container-fluid">
                 <div class="row">
@@ -118,33 +126,33 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
                                     <?php
                                     switch ($accesoFormulario) {
                                         case "leer":?>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text btn-block my-4" type="submit" name="volver">
                                        Volver
                                     </button>
                                     <?php 
                                         break;
                                         case "crear":?>
-                                    <button class="btn btn-primary   my-4" type="submit" name="crear">
+                                    <button class="btn primary-color my-4" type="submit" name="crear">
                                        Crear
                                     </button>
-                                    <button class="btn btn-danger my-4" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text my-4" type="submit" name="volver">
                                        Cancelar
                                     </button>
                                     <?php 
                                         break;
                                         //La acción para leer será volver
                                         case "modificar":?>
-                                    <button class="btn btn-primary my-4" type="submit" name="modificar">
+                                    <button class="btn primary-color my-4" type="submit" name="modificar">
                                        Modificar
                                     </button>
-                                    <button class="btn btn-danger my-4" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text my-4" type="submit" name="volver">
                                        Cancelar
                                     </button>
                                     <?php 
                                         break;
                                         //La acción por defecto será volver.
                                         default:?>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="volver">
+                                    <button class="btn secondary-color secondary-color primary-dark-color-text btn-block my-4" type="submit" name="volver">
                                        Volver
                                     </button>
                                     <?php 
@@ -159,14 +167,19 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
             </div>                        
         </main>
         
-        <script type = "text/javascript" src="../js/usuariosValidacion.js"></script>  
         <?php //jQuery ?>
-        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/jquery/jquery.min.js"></script>
         <?php //Bootstrap tooltips ?>
-        <script type="text/javascript" src="../js/popper.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/popper.min.js"></script>
         <?php //Bootstrap core JavaScript ?>
-        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
         <?php //MDB core JavaScript ?>
-        <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/mdb.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
+        <!-- Script de validación -->        
+        <script type = "text/javascript" src="../js/usuariosValidacion.js"></script>  
     </body>
 </html>

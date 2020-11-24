@@ -1,15 +1,28 @@
-tr.desactivado {
-    background-color: #d0d0e1;
-    transition: 0.5s;
-}
 /**
     Estilos propios
 */
+@import url('https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap');
 :root{
-    --primary:#717e94;
-    --secondary:#007bff;
+    --primary:#fa8165;
+    --primary-light: #ffb293;
+    --primary-dark: #9c4431;
+    --secondary:#fac765;
+    --secondary-light: #fffa95;
+    --secondary-dark: #c49736;
+}
+* {
+    font-family: 'Xanh Mono', monospace,'Roboto' !important;
 }
 
+.fondo-pantalla{
+    background-image: url('../img/fondo_letras.jpg');
+}
+.login-top {
+    height: 50px;
+}
+.login-center {
+    height: calc(100vh - 50px);
+}
 #mensaje-popup{
     position: relative;
     width: 100%;
@@ -20,6 +33,50 @@ tr.desactivado {
 .primary-color, ul.stepper li.active a .circle, ul.stepper li.completed a .circle {
     background-color: var(--primary) !important;
 }
+.primary-light-color {
+    background-color: var(--primary-light) !important;    
+}
+.primary-dark-color {
+    background-color: var(--primary-dark) !important;    
+}
+.primary-color-text{
+    color: var(--primary) !important;
+}
+.primary-light-color-text {
+    color: var(--primary-light) !important;    
+}
+.primary-dark-color-text {
+    color: var(--primary-dark) !important;    
+}
+.secondary-color {
+    background-color: var(--secondary) !important;
+}
+.secondary-light-color {
+    background-color: var(--secondary-light) !important;    
+}
+.secondary-dark-color {
+    background-color: var(--secondary-dark) !important;    
+}
+.secondary-color-text{
+    color: var(--secondary) !important;
+}
+.secondary-light-color-text {
+    color: var(--secondary-light) !important;    
+}
+.secondary-dark-color-text {
+    color: var(--secondary-dark) !important;    
+}
 #sidebar.primary-color {
     background: var(--primary) !important;
+}
+.msg-info {
+    background: #fac76524;
+    color: var(--primary-dark);
+}
+tr.desactivado {
+    background-color: #d0d0e1;
+    transition: 0.5s;
+}
+button,input[type='submit'],.btn {
+    font-size: 1.2em !important;
 }

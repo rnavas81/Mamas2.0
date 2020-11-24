@@ -31,16 +31,18 @@ if(!isset($_SESSION['usuarioForm'])){
         <title>Mamas 2.0</title>
         <?php  //Icono ?>
         <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <?php //Font Awesome ?>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
-        <?php  //Google Fonts Roboto ?>
+            <?php  //Google Fonts Roboto ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <?php //Font Awesome ?>
+        <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <?php  //Bootstrap core ?>
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
         <?php //mdBootstrap css ?>
         <link rel="stylesheet" href="../css/mdb.min.css" />
         <?php //Estilos propios ?>
         <link rel="stylesheet" href="../css/validacion.css" /> 
+        <link rel="stylesheet" href="../css/style.css" /> 
+        
     </head>
 
     <body>
@@ -76,10 +78,10 @@ if(!isset($_SESSION['usuarioForm'])){
                                 <input type="email" id="registroEmail" name="email" class="form-control mb-4" value="<?=$usuario->getEmail()?>" placeholder="ejemplo@gmail.com" maxlength="500" required/>
                                 <div class="invalid-feedback" id="errorEmail" aria-live="polite"></div>
                                 <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="registro">
+                                    <button class="btn primary-color white-text btn-block my-4" type="submit" name="registro">
                                        Registrarse
                                     </button>
-                                    <a class="text-left" href="<?=WEB_INDEX?>"><i class="fas fa-arrow-left"></i> Volver<a/>
+                                    <a class="btn btn-block primary-color white-text" href="<?=WEB_INDEX?>"><i class="fas fa-arrow-left"></i> Volver<a/>
                                 </div>
                             </form>
                         </div>
@@ -87,16 +89,16 @@ if(!isset($_SESSION['usuarioForm'])){
                     <div class="col-lg-3"></div>
                 </div>
             </div>                        
-        </main>
-        
-        <script type = "text/javascript" src="../js/validacion.js"></script>  
+        </main>        
         <?php //jQuery ?>
-        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/jquery/jquery.min.js"></script>
         <?php //Bootstrap tooltips ?>
-        <script type="text/javascript" src="../js/popper.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/popper.min.js"></script>
         <?php //Bootstrap core JavaScript ?>
-        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
         <?php //MDB core JavaScript ?>
-        <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/mdb.min.js"></script>
+        <!-- Validación propia -->
+        <script type = "text/javascript" src="../js/usuariosValidacion.js"></script>  
     </body>
 </html>

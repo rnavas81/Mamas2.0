@@ -42,10 +42,10 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
         <title>Mamas 2.0</title>
         <!-- Icono -->
         <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <?php //Font Awesome ?>
-        <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <?php  //Google Fonts Roboto ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <?php //Font Awesome ?>
+        <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <?php  //Bootstrap core ?>
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
         <?php //mdBootstrap css ?>
@@ -161,17 +161,20 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
                 </div>
             </div>
         </main>
-<?php //jQuery ?>
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script src="../js/jquery/jquery.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
 <?php //Bootstrap tooltips ?>
-    <script type="text/javascript" src="../js/popper.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/popper.min.js"></script>
 <?php //Bootstrap core JavaScript ?>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
 <?php //MDB core JavaScript ?>
-    <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/mdb.min.js"></script>
 <?php //jQuery Custom Scroller CDN ?>
-    <script type="text/javascript" src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
+        <script type="text/javascript" src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
 <?php //Your custom scripts (optional) ?>
-    <script type="text/javascript" src="../js/sidebar.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
     </body>
 </html>
