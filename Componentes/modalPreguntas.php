@@ -4,6 +4,7 @@
  */
 
 require_once '../configuracion.php';
+require_once '../Modelos/GestionExamenes.php';
 
 // Comprueba si la sesión está ya iniciada, si no la inicia
 if(session_status()!=PHP_SESSION_ACTIVE){
@@ -13,15 +14,15 @@ $usuarioActivo = null;
 if(isset($_SESSION['usuario'])) {
     $usuarioActivo = $_SESSION['usuario'];
 }
-$datosPreguntas = [];
+$datosPreguntas = GestionExamenes::getPreguntasByIdUsuario($usuarioActivo->getId());
 ?>
 <div class="modal" id="modalPreguntas" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header primary-color white-text">
         <h5 class="modal-title">Listado de preguntas</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="close secondary-color" data-dismiss="modal" aria-label="Close">
+            <span class="h3-responsive font-weight-bolder primary-dark-color-text" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">

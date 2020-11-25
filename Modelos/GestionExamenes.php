@@ -153,4 +153,36 @@ class GestionExamenes extends GestionDatos {
         
     }
 
+    public static function getPreguntasByIdUsuario($id) {
+        $estabaAbierta=self::isAbierta();
+        $response = []; 
+        $query = "SELECT p.* "
+                . "FROM Examenes_Preguntas p "
+                . "LEFT JOIN Examenes e ON e.id=p.idExamen AND e.idProfesor=?;";
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("i",$id);
+            if ($stmt->execute()) {
+                $resultado = $stmt->get_result();
+                while($pregunta = $resultado->fetch_assoc()){
+                    $response[]=[
+                        "id"=>$pregunta["id"],
+                        "enunciado"=>$pregunta["enunciado"],
+                        "tipo"=>$pregunta["tipo"],
+                        "opciones"=> json_decode($pregunta["opciones"],true)
+                    ];
+                }
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }
 }
