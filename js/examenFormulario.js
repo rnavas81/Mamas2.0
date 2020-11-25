@@ -173,8 +173,8 @@ function validarExamen(){
             if(tipo==2 || tipo==3){
                 var opciones = $(pregunta).find(".opciones div");
                 var hayCorrecta=false;
-                for (var i = 0; i < opciones.length; i++) {
-                    var opcion = opciones[i];
+                for (var j = 0; j < opciones.length; j++) {
+                    var opcion = opciones[j];
                     var texto = opcion.children[0].value.trim();
                     //Comprueba si la opción esta vacía
                     if(texto.length==0){
