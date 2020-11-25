@@ -2,7 +2,7 @@
 Este fichero inserta datos de prueba para la aplicación Mamas 2.0
 
 */
--- Usuarios
+/*Usuarios*/
 insert into Usuarios (nombre, apellidos, email, dni, password) values ('Rodrigo', 'Navas', 'rodrigo@nomail.com', '00000000A', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3');
 insert into Usuarios (nombre, apellidos, email, dni, password) values ('Darío', 'León', 'dario@nomail.com', '00000000B', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3');
 insert into Usuarios (nombre, apellidos, email, dni, fechaNacimiento) values ('Hyacinthie', 'Cheshire', 'hcheshire0@house.gov', '42567846g', '1982/02/07');
@@ -55,7 +55,7 @@ insert into Usuarios (nombre, apellidos, email, dni, fechaNacimiento) values ('H
 insert into Usuarios (nombre, apellidos, email, dni, fechaNacimiento) values ('Bank', 'Ticic', 'bticic1b@goo.ne.jp', '69263717x', '1993/08/15');
 insert into Usuarios (nombre, apellidos, email, dni, fechaNacimiento) values ('Didi', 'Artiss', 'dartiss1c@biblegateway.com', '60075008d', '1996/05/22');
 insert into Usuarios (nombre, apellidos, email, dni, fechaNacimiento) values ('Nona', 'Dodshon', 'ndodshon1d@php.net', '14602600b', '2001/10/26');
---Roles
+/*Roles*/
 insert into Usuarios_Roles (idUsuario, idRol) values (1, 1);
 insert into Usuarios_Roles (idUsuario, idRol) values (1, 2);
 insert into Usuarios_Roles (idUsuario, idRol) values (1, 3);
@@ -112,7 +112,7 @@ insert into Usuarios_Roles (idUsuario, idRol) values (49, 2);
 insert into Usuarios_Roles (idUsuario, idRol) values (50, 3);
 insert into Usuarios_Roles (idUsuario, idRol) values (51, 3);
 insert into Usuarios_Roles (idUsuario, idRol) values (52, 1);
---Examenes
+/*Examenes*/
 insert into Examenes (idProfesor, nombre, descripcion, fechaInicio, fechaFin, habilitado, activo) values (6, 'Trippledex', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.
 
 Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2019-10-27', '2020-08-21', 1, 1);
@@ -274,7 +274,7 @@ Phasellus in felis. Donec semper sapien a libero. Nam dui.', '2019-11-23', '2020
 insert into Examenes (idProfesor, nombre, descripcion, fechaInicio, fechaFin, habilitado, activo) values (12, 'Flexidy', 'Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', '2019-09-11', '2020-09-07', 1, 1);
 insert into Examenes (idProfesor, nombre, descripcion, fechaInicio, fechaFin, habilitado, activo) values (20, 'Fixflex', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2019-03-02', '2020-11-29', 1, 0);
 
---Datos Alumnos_examen
+/*Datos Alumnos_examen*/
 insert into Alumnos_examenes (idAlumno, idExamen, realizado) values (1, 1, 0);
 insert into Alumnos_examenes (idAlumno, idExamen, realizado) values (47, 2, 1);
 insert into Alumnos_examenes (idAlumno, idExamen, realizado) values (1, 3, 0);
