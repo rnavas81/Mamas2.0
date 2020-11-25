@@ -131,28 +131,28 @@ if(isset($_SESSION['accesoFormulario'])){
                                                     <input class="form-control" name="opcion_1" type="text" placeholder="Opción 1"
                                                            value="<?= isset($pregunta['opciones'][0])?$pregunta['opciones'][0]['texto']:""?>"/>
                                                     <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][0]) && $pregunta['opciones'][0]['correcta']?'success':'danger'?>" opcion="1">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>                                                    
+                                                        <i class="fas fa-<?=isset($pregunta['opciones'][0]) && $pregunta['opciones'][0]['correcta']?'check':'times'?>"></i>
+                                                    </button>
                                                 </div>
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_2" type="text" placeholder="Opción 2"
                                                         value="<?=isset($pregunta['opciones'][1])?$pregunta['opciones'][1]['texto']:""?>"/>
                                                     <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][1]) && $pregunta['opciones'][1]['correcta']?'success':'danger'?>" opcion="2">
-                                                        <i class="fas fa-times"></i>
+                                                        <i class="fas fa-<?=isset($pregunta['opciones'][1]) && $pregunta['opciones'][1]['correcta']?'check':'times'?>"></i>
                                                     </button>                                                    
                                                 </div>
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_3" type="text" placeholder="Opción 3"
                                                         value="<?=isset($pregunta['opciones'][2])?$pregunta['opciones'][2]['texto']:""?>"/>
                                                     <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][2]) && $pregunta['opciones'][2]['correcta']?'success':'danger'?>" opcion="3">
-                                                        <i class="fas fa-times"></i>
+                                                        <i class="fas fa-<?=isset($pregunta['opciones'][2]) && $pregunta['opciones'][2]['correcta']?'check':'times'?>"></i>
                                                     </button>                                                    
                                                 </div>
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_4" type="text" placeholder="Opción 4"
                                                         value="<?=isset($pregunta['opciones'][3])?$pregunta['opciones'][3]['texto']:""?>"/>
                                                     <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][3]) && $pregunta['opciones'][3]['correcta']?'success':'danger'?>" opcion="4">
-                                                        <i class="fas fa-times"></i>
+                                                        <i class="fas fa-<?=isset($pregunta['opciones'][3]) && $pregunta['opciones'][3]['correcta']?'check':'times'?>"></i>
                                                     </button>                                                    
                                                 </div>
                                             </div>
@@ -176,17 +176,17 @@ if(isset($_SESSION['accesoFormulario'])){
                                 switch ($accesoFormulario) {
                                         case "leer":?>
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn btn-info" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text" type="submit" name="volver">
                                        Volver
                                     </button>
                                 <?php 
                                         break;
                                         case "crear":?>
                                 <div class="d-flex justify-content-center">
-                                    <button class="btn btn-dark-green  " type="submit" name="crear">
+                                    <button class="btn primary-color" type="submit" name="crear">
                                        Crear
                                     </button>
-                                    <button class="btn btn-danger" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text" type="submit" name="volver">
                                        Cancelar
                                     </button>
                                     <?php 
@@ -194,10 +194,10 @@ if(isset($_SESSION['accesoFormulario'])){
                                         //La acción para leer será volver
                                         case "modificar":?>
                                 <div class="d-flex justify-content-center">
-                                    <button class="btn btn-dark-green" type="submit" name="modificar">
+                                    <button class="btn primary-color" type="submit" name="modificar">
                                        Modificar
                                     </button>
-                                    <button class="btn btn-danger" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text" type="submit" name="volver">
                                        Cancelar
                                     </button>
                                     <?php 
@@ -205,7 +205,7 @@ if(isset($_SESSION['accesoFormulario'])){
                                         //La acción por defecto será volver.
                                         default:?>
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn btn-info" type="submit" name="volver">
+                                    <button class="btn secondary-color primary-dark-color-text" type="submit" name="volver">
                                        Volver
                                     </button>
                                     <?php 
