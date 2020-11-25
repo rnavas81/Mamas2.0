@@ -63,10 +63,10 @@ switch ($tipoOpciones) {
 
 ?>
 <nav id="sidebar" class="sticky-top primary-color">
-    <div id="dismiss">
+    <div id="dismiss" class="primary-dark-color pt-2">
         <i class="fas fa-arrow-left"></i>
     </div>
-    <div class="sidebar-header">
+    <div class="sidebar-header primary-light-color">
         <h3>Mamas 2.0</h3>
     </div>
     <form action="<?=$controladorAct?>" method="POST">
@@ -96,7 +96,7 @@ switch ($tipoOpciones) {
 
 <header class="sticky-top">            
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark primary-color">                  
-        <button type="button" id="sidebarCollapse" class="btn btn-info btn-sm">
+        <button type="button" id="sidebarCollapse" class="btn primary-dark-color btn-sm">
             <i class="fas fa-bars"></i>                               
         </button>             
         <div class="ml-auto" id="navbarSupportedContent-333">                                        

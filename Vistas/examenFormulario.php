@@ -81,7 +81,7 @@ if(isset($_SESSION['accesoFormulario'])){
                     <div class="col-lg-10 col-md-10 col-sm-10 py-3">
                         <div class="container">
                             <form class="text-center" id="formExamen" name="formExamen" action="<?=CTRL_EXAMENES?>" method="POST" novalidate>
-                                <input type="hidden" name="id" value="<?=$datos['id']?>"/>
+                                <input type="hidden" id="id" name="id" value="<?=$datos['id']?>"/>
                                 <input type="hidden" id="datos" name="datos" value="<?=json_encode($datos)?>"/>
                                 <div class="form-group">
                                     <input class="form-control" type="text" name="nombre" placeholder="Nombre" required value="<?=$datos['nombre']?>"/>

@@ -12,7 +12,8 @@ require_once '../Modelos/GestionUsuarios.php';
 if(session_status()!=PHP_SESSION_ACTIVE){
     session_start();
 }
-
+//Comprueba que hay un usuario logueado y tiene permisos de administrador
+isset($_SESSION['usuario']) && ($_SESSION['usuario']->hasRol(1)) OR header("Location: ".CTRL_BASICO);
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){

@@ -58,7 +58,7 @@ if(isset($_SESSION['MSG_INFO'])){
                             </p>                  
                             <p>
                             ¿Has olvidado tu contraseña?
-                            <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
+                            <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>?tipo=alumno">Recuperar contraseña</a>
                             </p>
                         </form>                            
                     </div>
@@ -82,7 +82,7 @@ if(isset($_SESSION['MSG_INFO'])){
                             </p>                
                             <p>
                             ¿Has olvidado tu contraseña?
-                            <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
+                            <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>?tipo=profesor">Recuperar contraseña</a>
                             </p>
                         </form>                            
                     </div>

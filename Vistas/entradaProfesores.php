@@ -5,7 +5,8 @@ require_once '../Modelos/GestionExamenes.php';
 if(session_status()!=PHP_SESSION_ACTIVE){
     session_start();
 }
-
+//Comprueba que hay un usuario logueado y tiene permisos de administrador o profesor
+isset($_SESSION['usuario']) && ($_SESSION['usuario']->hasRol(1) || $_SESSION['usuario']->hasRol(2)) OR header("Location: ".CTRL_BASICO);
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){
@@ -41,18 +42,18 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Mamas 2.0</title>
         <!-- Icono -->
-        <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <?php  //Google Fonts Roboto ?>
+        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+        <!-- Google Fonts Roboto -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-        <?php //Font Awesome ?>
+        <!-- Font Awesome -->
         <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
-        <?php  //Bootstrap core ?>
+        <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
-        <?php //mdBootstrap css ?>
+        <!-- mdBootstrap css -->
         <link rel="stylesheet" href="../css/mdb.min.css" />
         <!-- Para la cabecera -->
         <link rel="stylesheet" href="../css/sidebar.css" />
-        <?php //Estilos propios ?>
+        <!-- Estilos propios -->
         <link rel="stylesheet" href="../css/style.css" /> 
         
     </head>
@@ -165,16 +166,6 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
         <!-- jQuery Custom Scroller CDN -->
         <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
         <!-- Your custom scripts (optional) -->
-        <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
-<?php //Bootstrap tooltips ?>
-        <script type="text/javascript" src="../js/bootstrap/popper.min.js"></script>
-<?php //Bootstrap core JavaScript ?>
-        <script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
-<?php //MDB core JavaScript ?>
-        <script type="text/javascript" src="../js/bootstrap/mdb.min.js"></script>
-<?php //jQuery Custom Scroller CDN ?>
-        <script type="text/javascript" src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
-<?php //Your custom scripts (optional) ?>
         <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
     </body>
 </html>

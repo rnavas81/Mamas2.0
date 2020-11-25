@@ -12,6 +12,8 @@ if(isset($_SESSION['MSG_INFO'])){
     $msg = $_SESSION['MSG_INFO'];
     unset($_SESSION['MSG_INFO']);
 }
+$tipo = isset($_REQUEST['tipo'])?$_REQUEST['tipo']:'';
+
 ?>
 <html>
     <head>
@@ -40,13 +42,13 @@ if(isset($_SESSION['MSG_INFO'])){
             <div class="container-fluid login-center d-flex align-items-center justify-content-center">
                     <div class="col-md-12 col-lg-6 pb-6">
                         <div class="container">                            
-                            <form class="text-center border border-light p-5 white" action="<?=CTRL_BASICO?>" method="POST">
+                            <form class="text-center border border-light p-5 white needs-validation" action="<?=CTRL_BASICO?>" method="POST" novalidate>
                                 <p class="h4 mb-4">Recuperar contraseña</p>
                                 <input type="email" id="email" name="email" class="form-control mb-4" placeholder="email" required />
                                <div class="invalid-feedback" id="errorEmail" aria-live="polite"></div> <p>
                                 <div>
                                     <button class="btn primary-color white-text btn-block my-4" type="submit" name="recuperarPass">Recuperar</button>
-                                    <button class="btn primary-color white-text btn-block my-4" type="submit" name="volver">Volver</button>
+                                    <a class="btn primary-color white-text btn-block my-4" href="<?=$tipo=='admin'?WEB_ADMIN:WEB_INDEX?>">Volver</a>
                                 </div>
                             </form>                            
                         </div>

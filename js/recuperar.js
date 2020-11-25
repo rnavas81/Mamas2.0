@@ -13,7 +13,9 @@ const emailError = document.getElementById('errorEmail');
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
-                console.log(event);
+                if(event.submitter.name=='volver'){
+                    return;
+                }
                 event.preventDefault();
                 if (form.checkValidity() === false) {
                     event.preventDefault();

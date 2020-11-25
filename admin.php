@@ -49,7 +49,7 @@ if(isset($_SESSION['MSG_INFO'])){
                                 <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>         
                                 <p>
                                 ¿Has olvidado tu contraseña?
-                                <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
+                                <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>?tipo=admin">Recuperar contraseña</a>
                                 </p>
                                 <div>
                                     <button class="btn primary-color white-text btn-block my-4" type="submit" name="accederAdminstradores">Acceder</button>
