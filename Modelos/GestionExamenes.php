@@ -82,7 +82,7 @@ class GestionExamenes extends GestionDatos {
         $query = "SELECT e.* "
                 . "FROM Examenes e "
                 . "LEFT Join Alumnos_examenes r ON r.idExamen=e.id "
-                . "WHERE r.idAlumno =? AND r.realizado=? AND e.habilitado=1 "
+                . "WHERE r.idAlumno =? AND r.realizado=? AND e.habilitado=1 AND e.activo = 1 "
                 . "ORDER BY e.fechaInicio DESC";
         try {
             if(!$estaAbierta) {
@@ -222,6 +222,7 @@ class GestionExamenes extends GestionDatos {
                         $resultado2 = $stmt2->get_result();
                         while($pregunta= $resultado2->fetch_assoc()){
                             $response['preguntas'][]=[
+                                "id"=>$pregunta["id"],
                                 "enunciado"=>$pregunta["enunciado"],
                                 "tipo"=>$pregunta["tipo"],
                                 "opciones"=> json_decode($pregunta["opciones"],true)

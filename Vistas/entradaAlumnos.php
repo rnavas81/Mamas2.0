@@ -106,7 +106,7 @@ switch ($tipo){
                             <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
                             <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
                             <td class="col-sm-2">
-                                <form class="d-flex justify-content-end" action="<?=CTRL_EXAMENES?>" method="POST">
+                                <form class="d-flex justify-content-end" action="<?=CTRL_ALUMNOS?>" method="POST">
                                     <input type="hidden" value="<?=$value->getId()?>" name="id" />
                                     <?php 
                                     if($tipo=="activos"){

@@ -37,6 +37,7 @@ const WEB_RECUPERAR = WEB_VISTAS . DS . 'recuperar.php';
 const WEB_REGISTRAR = WEB_VISTAS . DS . 'registrar.php';
 const WEB_USUARIO_FORMULARIO = WEB_VISTAS . DS . 'usuarioFormulario.php';
 const WEB_EXAMEN_FORMULARIO = WEB_VISTAS . DS . 'examenFormulario.php';
+const WEB_EXAMEN_ALUMNO_REALIZA = WEB_VISTAS . DS . 'realizarExamen.php';
 
 /*
   const WEB_ADMIN = WEB_ROOT.DS.'admin.php';
