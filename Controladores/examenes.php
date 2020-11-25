@@ -75,7 +75,7 @@ switch ($accion) {
     case 'modificar':
         $usuario = $_SESSION['usuario'];
         $id = $_REQUEST["id"];
-        $data = json_decode($_REQUEST['datos'],true);;
+        $data = json_decode($_REQUEST['datos'],true);
         if(GestionExamenes::updateExamen($data,$id,$usuario->getId())){
             $_SESSION['MSG_INFO']="Examen creado";
             unset($_SESSION['datosFormulario']);
