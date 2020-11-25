@@ -32,36 +32,31 @@ if(isset($_SESSION['MSG_INFO'])){
         <!-- Estilos propios -->
         <link rel="stylesheet" href="css/style.css" /> 
     </head>
-    <body>
-        <main class="">
-            <div class="col-12 d-flex justify-content-end mr-4">
-                <a href="<?=WEB_INDEX?>">Acceso para alumnos/profesores</a>
-            </div>
-            <div class="container-fluid py-5">
-                <div class="row">
-                    <span class="col-12 text-center"><?=$msg?></span>
+    <body class="fondo-pantalla">
+        <main class="vw-100 vh-100">
+            <div class="login-top">
+                <div class="col-12 d-flex justify-content-end mr-4">
+                    <a class="primary-dark-color-text white" href="<?=WEB_INDEX?>">Acceso para alumnos/profesores</a>
                 </div>
-                <div class="row">
-                    <div class="col-lg-3"></div>
+                <span class="col-12 text-center"><?=$msg?></span>
+            </div>
+            <div class="container-fluid login-center d-flex align-items-center justify-content-center">
                     <div class="col-md-12 col-lg-6 pb-6">
                         <div class="container">                            
-                            <form class="text-center border border-light p-5" action="<?=CTRL_BASICO?>" method="POST">
+                            <form class="text-center border border-light p-5 white" action="<?=CTRL_BASICO?>" method="POST">
                                 <p class="h4 mb-4">Inicio administrador</p>
                                 <input type="text" id="loginDniAl" name="dni" class="form-control mb-4" placeholder="DNI" required />
-                                <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>
-                                <!--                                
-                                <div class="d-flex justify-content-around">
-                                    <a href="<?=WEB_RECUPERAR?>">Recuperar contraseña</a>
-                                </div>
-                                -->
+                                <input type="password" id="loginPassAl" name="password" class="form-control mb-4" placeholder="Password" required/>         
+                                <p>
+                                ¿Has olvidado tu contraseña?
+                                <a class="primary-dark-color-text" href="<?=WEB_RECUPERAR?>?tipo=admin">Recuperar contraseña</a>
+                                </p>
                                 <div>
-                                    <button class="btn btn-info btn-block my-4" type="submit" name="accederAdminstradores">Acceder</button>
+                                    <button class="btn primary-color white-text btn-block my-4" type="submit" name="accederAdminstradores">Acceder</button>
                                 </div>
                             </form>                            
                         </div>
                     </div>
-                    <div class="col-lg-3"></div>
-                </div>
             </div>
         </main>
     </body>

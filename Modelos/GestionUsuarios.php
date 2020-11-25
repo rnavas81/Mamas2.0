@@ -306,4 +306,29 @@ class GestionUsuarios extends GestionDatos {
         
     }
 
+    public static function setUsuarioPasswordByEmail($email, $nueva) {
+        $persona = false;
+        $estabaAbierta= GestionDatos::isAbierta();
+        $query = 'UPDATE Usuarios SET password=? WHERE email=?';
+        try {
+            if (!$estabaAbierta) {
+                GestionDatos::abrirConexion();
+            }
+            $stmt = GestionDatos::$conexion->prepare($query);
+            $stmt->bind_param("ss", $password,$email);
+            $password = self::encriptarPassword($nueva);
+            $persona = $stmt->execute();
+            $stmt->close();
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            $persona=false;
+        } finally {
+            if(!$estabaAbierta){
+                GestionDatos::cerrarConexion();
+            }
+            return $persona;
+        }    
+        
+    }
+
 }

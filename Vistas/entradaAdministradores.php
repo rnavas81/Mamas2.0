@@ -12,7 +12,8 @@ require_once '../Modelos/GestionUsuarios.php';
 if(session_status()!=PHP_SESSION_ACTIVE){
     session_start();
 }
-
+//Comprueba que hay un usuario logueado y tiene permisos de administrador
+isset($_SESSION['usuario']) && ($_SESSION['usuario']->hasRol(1)) OR header("Location: ".CTRL_BASICO);
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){
@@ -25,7 +26,6 @@ $tipo = 'administradores';
 if(isset($_SESSION['administradorTipo'])){
     $tipo = $_SESSION['administradorTipo'];
 }
-$tipoOpciones="administradorDashboard";
 $tituloTabla="";
 switch ($tipo){
     case 'administradores':
@@ -66,6 +66,7 @@ switch ($tipo){
     </head>
     <body>
         <?php
+        $tipoOpciones="administradorDashboard";
         require_once '../Componentes/cabecera.php';
         ?>
         <main>
@@ -128,10 +129,10 @@ switch ($tipo){
                 </div>
             </div>
         </main>
-        <script src="../js/jquery.min.js"></script>
+        <script src="../js/jquery/jquery.min.js"></script>
         <!-- jQuery Custom Scroller CDN -->
         <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
         <!-- Your custom scripts (optional) -->
-        <script type="text/javascript" src="../js/sidebar.js"></script>
+        <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
     </body>
 </html>

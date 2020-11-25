@@ -6,7 +6,10 @@ require_once '../Modelos/Usuario.php';
 if(session_status()!=PHP_SESSION_ACTIVE){
     session_start();
 }
+isset($_SESSION['usuario']) OR header("Location ".CTRL_BASICO);
 
+//Comprueba que hay un usuario logueado y tiene permisos de alumno
+isset($_SESSION['usuario']) && ($_SESSION['usuario']->hasRol(3)) OR header("Location: ".CTRL_BASICO);
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){
@@ -131,10 +134,10 @@ switch ($tipo){
                 </div>
             </div>
         </main>        
-    <script src="../js/jquery.min.js"></script>
-    <!-- jQuery Custom Scroller CDN -->
-    <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
-    <!-- Your custom scripts (optional) -->
-    <script type="text/javascript" src="../js/sidebar.js"></script>
+        <script src="../js/jquery/jquery.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="../js/jquery/jquery.mCustomScrollbar.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
     </body>
 </html>

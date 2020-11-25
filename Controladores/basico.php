@@ -5,6 +5,7 @@
  */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionUsuarios.php';
+require_once '../Modelos/Correo.php';
 require_once '../Modelos/Usuario.php';
 require_once '../Funciones/varias.php';
 // Comprueba si la sesión está ya iniciada, si no la inicia
@@ -39,6 +40,8 @@ if(isset($_REQUEST['accion'])){
 } elseif(isset ($_REQUEST['accederAdminstradores'])) {
     $accion = "accederUsuario";
     $aux = TIPO_ADMINISTRADOR;
+} elseif(isset ($_REQUEST['recuperarPass'])) {
+    $accion = "recuperarPass";
 }
 /*
 if(isset($_REQUEST['loginAlSubm'])) {
@@ -79,6 +82,19 @@ switch ($accion) {
             $_SESSION['MSG_INFO']="Error al acceder al sistema";
             $redireccion = WEB_INDEX;
         }
+        break;
+    // Genera una nueva contraseña y la envia al usuario
+    case "recuperarPass":
+        $email = $_REQUEST['email'];
+        $nueva = aleatorioAlphanumerico(16);
+        GestionUsuarios::setUsuarioPasswordByEmail($email,$nueva);
+        $asunto = "Cambio de contraseña en el gestor de tareas";
+        $cuerpo = "<h2>Se ha cambiado su contraseña en la plataforma</h2>"
+                . "<p>Si usted no ha solicitado un cambio de contraseña pongase en contacto con el administrador de la plataforma</p>"
+                . "<h3>Su nueva contraseña es: $nueva</h3>";
+        Correo::enviar($email,$asunto,$cuerpo);
+        $_SESSION['MSG_INFO']="Nueva clave generada y enviada";
+        $redireccion = WEB_INDEX;
         break;
     // Salir del sistema
     case "salir":

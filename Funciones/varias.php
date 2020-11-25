@@ -31,3 +31,17 @@ function cerrarSesion() {
     return $paginaSalir;
 }
 
+/**
+ * Genera una cadena alfanumérica de longitud determinada
+ * @param Number $length Longitud de la cadena
+ * @return String Cadena alfanumérica
+ */
+function aleatorioAlphanumerico($length=8) {
+    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+    $random = "";
+    for ($index = 0; $index < $length; $index++) {
+        $i = random_int(0, strlen($permitted_chars)-1);
+        $random.= substr($permitted_chars,$i,1);
+    }
+    return $random;    
+}
