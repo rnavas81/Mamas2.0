@@ -47,9 +47,10 @@ switch ($tipoOpciones) {
     case 'profesorDashboard':
         $controladorAct = CTRL_PROFESORES;
         $opciones = [
-          ['label'=>'Examenes activos','name'=>'examenesAct'],
-          ['label'=>'Examenes desactivados','name'=>'examenesDes'],          
+          ['label'=>'Examenes','name'=>'examenes'],
+          ['label'=>'Preguntas','name'=>'preguntas'],          
         ];
+        break;
     case 'alumnosDashboard':
         $controladorAct = CTRL_ALUMNOS;
         $opciones = [
@@ -63,7 +64,7 @@ switch ($tipoOpciones) {
 
 ?>
 <nav id="sidebar" class="sticky-top primary-color">
-    <div id="dismiss" class="primary-dark-color pt-2">
+    <div id="dismiss" class="primary-dark-color">
         <i class="fas fa-arrow-left"></i>
     </div>
     <div class="sidebar-header primary-light-color">

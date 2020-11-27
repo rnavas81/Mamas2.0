@@ -18,10 +18,6 @@ $aux=null;
 
 if(isset($_REQUEST['accion'])){
     $accion = $_REQUEST['accion'];
-} elseif(isset ($_REQUEST['examenesAct'])) {
-    $accion = "examenesAct";
-} elseif (isset ($_REQUEST['examenesDes'])) {
-    $accion = "examenesDes";
 } elseif (isset ($_REQUEST['activarExamen'])) {
     $accion = "activacionExamen";
     $aux=1;
@@ -32,16 +28,19 @@ if(isset($_REQUEST['accion'])){
     $accion = "eliminarExamen";
 } elseif (isset ($_REQUEST['editarExamen'])) {
     $accion = "editarExamen";
+} elseif (isset ($_REQUEST['examenes'])) {
+    $accion = "examenes";
+} elseif (isset ($_REQUEST['preguntas'])) {
+    $accion = "preguntas";
 }
 
 switch ($accion) {
-    case "examenesAct":
-        $_SESSION['profesorTipo']= 'activos';
+    case "examenes":
         $redireccion=WEB_ENTRADA_PROFESORES;
         break;
-    case "examenesDes":
+    case "preguntas":
         $_SESSION['profesorTipo']= 'desactivados';
-        $redireccion=WEB_ENTRADA_PROFESORES;
+        $redireccion=WEB_PREGUNTAS;
         break;
     case "activacionExamen":
         GestionExamenes::activacionExamen($_REQUEST['id'],$aux);

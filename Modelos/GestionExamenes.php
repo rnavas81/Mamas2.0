@@ -42,12 +42,13 @@ class GestionExamenes extends GestionDatos {
      * @param int $idProfesor id del profesor
      * @return Examen[] Devuelve un array de examenes
      */
-    public function getExamen($idProfesor) {
+    public function getExamenesByProfesor($idProfesor) {
         $examenes=[];
         $estaAbierta= self::isAbierta();
         $query = "SELECT * "
                 . "FROM Examenes "
-                . "WHERE idProfesor =? AND habilitado = 1;";
+                . "WHERE idProfesor =? AND habilitado = 1 "
+                . "ORDER BY fechaInicio DESC";
         try {
             if(!$estaAbierta) {
                 self::abrirConexion();
@@ -153,45 +154,6 @@ class GestionExamenes extends GestionDatos {
             }
         }
     }
-    
-    public static function insertExamen($data,$idProfesor=0) {
-        $estabaAbierta=self::isAbierta();
-        $response = false; 
-        $queryInsert = "INSERT INTO Examenes (idProfesor,nombre,descripcion,fechaInicio,fechaFin,activo) "
-                . "VALUES (?,?,?,?,?,?)";
-        $nombre = $data['nombre'];
-        $descripcion = $data['descripcion'];
-        $fechaInicio = empty($data['fechaInicio'])?null:$data['fechaInicio'];
-        $fechaFin = empty($data['fechaFin'])?null:$data['fechaFin'];
-        $activo = $data['activo'];
-        try {   
-            if(!$estabaAbierta) self::abrirConexion();
-            $stmt = self::$conexion->prepare($queryInsert);
-            $stmt->bind_param("issssi",$idProfesor,$nombre,$descripcion,$fechaInicio,$fechaFin,$activo);
-            if ($stmt->execute()) {        
-                $id = self::$conexion->insert_id;
-                $query2= "INSERT INTO Examenes_Preguntas(idExamen,enunciado,tipo,opciones) VALUES ";
-                $valores = [];
-                foreach ($data['preguntas'] as $index=>$pregunta) {
-                    $valores[]= "(".$id.",'"
-                            . "".$pregunta['enunciado']."',"
-                            . "".$pregunta['tipo'].""
-                            . ",'". json_encode($pregunta['opciones'])."'   )";
-                }
-                $query2.= implode(",", $valores);
-                $stmt = self::$conexion->prepare($query2);
-                $response=$stmt->execute();
-            }
-            $stmt->close();
-            
-        } catch (Exception $ex) {
-            echo $ex->getTraceAsString();   
-            $response = false;
-        } finally {
-            if(!$estabaAbierta) self::cerrarConexion();
-            return $response;
-        }
-    }
 
     public static function getExamenById($id) {
         $estabaAbierta=self::isAbierta();
@@ -222,6 +184,7 @@ class GestionExamenes extends GestionDatos {
                         $resultado2 = $stmt2->get_result();
                         while($pregunta= $resultado2->fetch_assoc()){
                             $response['preguntas'][]=[
+                                "id"=>$pregunta["id"],
                                 "enunciado"=>$pregunta["enunciado"],
                                 "tipo"=>$pregunta["tipo"],
                                 "opciones"=> json_decode($pregunta["opciones"],true)
@@ -240,7 +203,41 @@ class GestionExamenes extends GestionDatos {
             return $response;
         }
     }
-
+    
+    public static function insertExamen($data,$idProfesor=0) {
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $queryInsert = "INSERT INTO Examenes (idProfesor,nombre,descripcion,fechaInicio,fechaFin,activo) "
+                . "VALUES (?,?,?,?,?,?)";
+        $nombre = $data['nombre'];
+        $descripcion = $data['descripcion'];
+        $fechaInicio = empty($data['fechaInicio'])?null:$data['fechaInicio'];
+        $fechaFin = empty($data['fechaFin'])?null:$data['fechaFin'];
+        $activo = $data['activo'];
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($queryInsert);
+            $stmt->bind_param("issssi",$idProfesor,$nombre,$descripcion,$fechaInicio,$fechaFin,$activo);
+            if ($stmt->execute()) {        
+                $idExamen = self::$conexion->insert_id;
+                foreach ($data['preguntas'] as $pregunta) {
+                    self::insertExamenPregunta($pregunta, $idExamen);
+                    if($pregunta['almacenar']==1){
+                        self::insertPreguntaAlmacen($pregunta, $idProfesor);
+                    }
+                }
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+    }
+    
     public static function updateExamen($data,$id=0, $idProfesor=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -261,21 +258,78 @@ class GestionExamenes extends GestionDatos {
             $stmt = self::$conexion->prepare($queryInsert);
             $stmt->bind_param("ssssiii",$nombre,$descripcion,$fechaInicio,$fechaFin,$activo,$id,$idProfesor);
             if ($stmt->execute()) {
-                $queryBorraPreguntas = "DELETE FROM Examenes_Preguntas WHERE idExamen=?";
-                $stmt = self::$conexion->prepare($queryBorraPreguntas);
+                $ids = [];
+                foreach ($data['preguntas'] as $pregunta) {
+                    if($pregunta["id"]==0){//Guardar pregunta
+                        self::insertExamenPregunta($pregunta, $id);
+                    } else {
+                        self::UpdateExamenPregunta($pregunta, $id);
+                        $ids[]=$pregunta['id'];
+                    }
+                    if($pregunta['almacenar']==1){
+                        self::insertPreguntaAlmacen($pregunta, $idProfesor);
+                    }
+                }
+                $queryDelete="DELETE FROM Examenes_Preguntas WHERE id NOT IN(".implode(",", $ids).") AND idExamen=?;";
+                $stmt = self::$conexion->prepare($queryDelete);
                 $stmt->bind_param("i",$id);
                 $response=$stmt->execute();
-                $query2= "INSERT INTO Examenes_Preguntas(idExamen,enunciado,tipo,opciones) VALUES ";
-                $valores = [];
-                foreach ($data['preguntas'] as $index=>$pregunta) {
-                    $valores[]= "(".$id.",'"
-                            . "".$pregunta['enunciado']."',"
-                            . "".$pregunta['tipo'].""
-                            . ",'". json_encode($pregunta['opciones'])."'   )";
-                }
-                $query2.= implode(",", $valores);
-                $stmt = self::$conexion->prepare($query2);
-                $response=$stmt->execute();
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+            exit;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }
+    
+    public static function insertExamenPregunta($data,$idExamen=0){
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $queryInsert = "INSERT INTO Examenes_Preguntas (idExamen,enunciado,tipo,opciones) "
+                . "VALUES (?,?,?,?)";
+        $enunciado = $data['enunciado'];
+        $tipo = $data['tipo'];
+        $opciones = json_encode($data['opciones']);
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($queryInsert);
+            $stmt->bind_param("isis",$idExamen,$enunciado,$tipo,$opciones);
+            if ($stmt->execute()) { 
+                $response = self::$conexion->affected_rows>0;
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }    
+    public static function UpdateExamenPregunta($data,$idExamen=0){
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $queryInsert = "UPDATE Examenes_Preguntas "
+                . "enunciado=?,tipo=?,opciones=? "
+                . "WHERE id=? AND idExamen=?";
+        $id = $data['id'];
+        $enunciado = $data['enunciado'];
+        $tipo = $data['tipo'];
+        $opciones = json_encode($data['opciones']);
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($queryInsert);
+            $stmt->bind_param("sisii",$enunciado,$tipo,$opciones,$id,$idExamen);
+            if ($stmt->execute()) { 
+                $response = self::$conexion->affected_rows>0;
             }
             $stmt->close();
             
@@ -288,7 +342,7 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-
+    
     public static function getPreguntasByIdUsuario($id) {
         $estabaAbierta=self::isAbierta();
         $response = []; 
@@ -304,7 +358,7 @@ class GestionExamenes extends GestionDatos {
                 while($pregunta = $resultado->fetch_assoc()){
                     $response[]=[
                         "id"=>$pregunta["id"],
-                        "enunciado"=>$pregunta["enunciado"],
+                        "enunciado"=>trim($pregunta["enunciado"]),
                         "tipo"=>$pregunta["tipo"],
                         "opciones"=> json_decode($pregunta["opciones"],true)
                     ];
@@ -321,4 +375,149 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
+    
+    public static function getPreguntasAlmacenByProfesor($idProfesor) {
+        $estabaAbierta=self::isAbierta();
+        $response = []; 
+        $query = "SELECT * "
+                . "FROM Examenes_Preguntas_Almacen p "
+                . "WHERE idProfesor=? AND habilitado=1;";
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("i",$idProfesor);
+            if ($stmt->execute()) {
+                $resultado = $stmt->get_result();
+                while($pregunta = $resultado->fetch_assoc()){
+                    $response[]=[
+                        "id"=>$pregunta["id"],
+                        "enunciado"=>trim($pregunta["enunciado"]),
+                        "tipo"=>$pregunta["tipo"],
+                        "opciones"=> json_decode($pregunta["opciones"],true)
+                    ];
+                }
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }
+
+    public static function getPreguntaById($id) {
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $query = "SELECT * "
+                . "FROM Examenes_Preguntas_Almacen "
+                . "WHERE id=?;";
+        try {   
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("i",$id);
+            if ($stmt->execute()) {
+                $resultado = $stmt->get_result();
+                if($pregunta = $resultado->fetch_assoc()){
+                    $response=[
+                        "id"=>$pregunta["id"],
+                        "enunciado"=>trim($pregunta["enunciado"]),
+                        "tipo"=>$pregunta["tipo"],
+                        "opciones"=> json_decode($pregunta["opciones"],true)
+                    ];
+                }
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }
+
+    public static function insertPreguntaAlmacen($data, $idProfesor=0) {
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $queryInsert = "INSERT INTO Examenes_Preguntas_Almacen "
+                . "(idProfesor,enunciado,tipo,opciones) "
+                . "VALUES (?,?,?,?)";
+        try {   
+            $enunciado = $data['enunciado'];
+            $tipo= $data['tipo'];
+            $opciones=json_encode($data['opciones']);
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($queryInsert);
+            $stmt->bind_param("isis",$idProfesor,$enunciado,$tipo,$opciones);
+            $response = $stmt->execute();
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+    }
+
+    public static function updatePreguntaAlmacen($id,$data, $idProfesor=0) {
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $queryInsert = "UPDATE Examenes_Preguntas_Almacen SET "
+                . "enunciado=?,tipo=?,opciones=? "
+                . "WHERE id=? AND idProfesor=?";
+        try {   
+            $enunciado = $data['enunciado'];
+            $tipo= $data['tipo'];
+            $opciones=json_encode($data['opciones']);
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($queryInsert);
+            $stmt->bind_param("sisii",$enunciado,$tipo,$opciones,$id,$idProfesor);
+            if($stmt->execute()){
+                $response = self::$conexion->affected_rows==1;
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }
+
+    public static function deletePreguntaAlmacen($id, $idProfesor=0) {
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $query= "UPDATE Examenes_Preguntas_Almacen SET "
+                . "habilitado=0 "
+                . "WHERE id=? AND idProfesor=?;";
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("ii",$id,$idProfesor);
+            if($stmt->execute()){
+                $response = self::$conexion->affected_rows==1;
+            }
+            $stmt->close();
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+        
+    }
+
 }

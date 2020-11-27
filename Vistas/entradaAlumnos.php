@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';

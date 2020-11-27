@@ -37,12 +37,15 @@ const WEB_RECUPERAR = WEB_VISTAS . DS . 'recuperar.php';
 const WEB_REGISTRAR = WEB_VISTAS . DS . 'registrar.php';
 const WEB_USUARIO_FORMULARIO = WEB_VISTAS . DS . 'usuarioFormulario.php';
 const WEB_EXAMEN_FORMULARIO = WEB_VISTAS . DS . 'examenFormulario.php';
+const WEB_PREGUNTA_FORMULARIO= WEB_VISTAS . DS . 'preguntaFormulario.php';
+const WEB_PREGUNTAS = WEB_VISTAS . DS . 'preguntas.php';
 
-/*
-  const WEB_ADMIN = WEB_ROOT.DS.'admin.php';
-  const WEB_VALIDAR_USUARIO = WEB_ROOT.DS.'validar.php';
-  const WEB_ENTRADA_ADMINISTRADOR = WEB_VISTAS.DS.'entradaAdministrador.php';
-  const WEB_TAREA_FORMULARIO = WEB_VISTAS.DS.'TareaFormulario.php';
- */
-//
+
 const HASH_CODE = "Esta es nuestra clave de encriptacion";
+//CONSTANTES DE USUARIOS
+const ROL_ADMINISTRADOR = 1;
+const ROL_PROFESOR = 2;
+const ROL_ALUMNO = 3;
+const TIPO_ALUMNO = "alumno";
+const TIPO_PROFESOR = "profesor";
+const TIPO_ADMINISTRADOR = "admin";

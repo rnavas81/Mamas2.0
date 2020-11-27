@@ -39,6 +39,15 @@ $datos = [
 ];
 if(isset($_SESSION['datosFormulario'])){
     $datos = $_SESSION['datosFormulario'];
+    if($datos['fechaInicio']!=null){
+       $fechaInicio=new DateTime($datos['fechaInicio']);
+        $datos['fechaInicio']=$fechaInicio->format("Y-m-d\Th:i");
+    }
+    if($datos['fechaFin']!=null){
+       $fechaFin=new DateTime($datos['fechaFin']);
+        $datos['fechaFin']=$fechaFin->format("Y-m-d\Th:i");
+    }
+            
 }
 $accesoFormulario = 'leer';
 if(isset($_SESSION['accesoFormulario'])){
@@ -109,17 +118,17 @@ if(isset($_SESSION['accesoFormulario'])){
                                         <?php
                                         if(count($datos['preguntas'])>0){
                                         foreach ($datos['preguntas'] as $index=>$pregunta) {?>
-                                        <li class="list-group-item border p-2 mb-3" name="pregunta" id="<?=$index+1?>">
+                                        <li class="list-group-item border p-2 mb-3" name="pregunta" data-id="<?=$pregunta['id']?>" data-almacenar="0">
                                             <div class="d-flex mb-2">
                                                 <p name="titulo" class="h5 col text-left">Pregunta <?=$index+1?></p>
                                                 <p class="h6 align-self-center mr-2">Tipo</p>
-                                                <select name="tipo">
+                                                <select class="form-control w-auto" name="tipo">
                                                     <option value="1" <?=$pregunta['tipo']==1?'selected':''?>>A desarrollar</option>
                                                     <option value="2" <?=$pregunta['tipo']==2?'selected':''?>>Respuesta única</option>
                                                     <option value="3" <?=$pregunta['tipo']==3?'selected':''?>>Respuesta multiple</option>
                                                 </select>
-                                                <button type="button" class="btn btn-sm m-0 ml-2 btn-danger" name="eliminarPregunta" title="Eliminar pregunta">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="button" class="btn btn-sm m-0 ml-2 primary-dark-color white-text" name="eliminarPregunta" title="Eliminar pregunta">
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </button>  
                                             </div>
                                             <div class="form-group">
@@ -130,28 +139,28 @@ if(isset($_SESSION['accesoFormulario'])){
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_1" type="text" placeholder="Opción 1"
                                                            value="<?= isset($pregunta['opciones'][0])?$pregunta['opciones'][0]['texto']:""?>"/>
-                                                    <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][0]) && $pregunta['opciones'][0]['correcta']?'success':'danger'?>" opcion="1">
+                                                    <button type="button" class="opcion btn btn-opcion m-0 btn-<?=isset($pregunta['opciones'][0]) && $pregunta['opciones'][0]['correcta']?'success':'danger'?>" opcion="1">
                                                         <i class="fas fa-<?=isset($pregunta['opciones'][0]) && $pregunta['opciones'][0]['correcta']?'check':'times'?>"></i>
                                                     </button>
                                                 </div>
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_2" type="text" placeholder="Opción 2"
                                                         value="<?=isset($pregunta['opciones'][1])?$pregunta['opciones'][1]['texto']:""?>"/>
-                                                    <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][1]) && $pregunta['opciones'][1]['correcta']?'success':'danger'?>" opcion="2">
+                                                    <button type="button" class="opcion btn btn-opcion m-0 btn-<?=isset($pregunta['opciones'][1]) && $pregunta['opciones'][1]['correcta']?'success':'danger'?>" opcion="2">
                                                         <i class="fas fa-<?=isset($pregunta['opciones'][1]) && $pregunta['opciones'][1]['correcta']?'check':'times'?>"></i>
                                                     </button>                                                    
                                                 </div>
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_3" type="text" placeholder="Opción 3"
                                                         value="<?=isset($pregunta['opciones'][2])?$pregunta['opciones'][2]['texto']:""?>"/>
-                                                    <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][2]) && $pregunta['opciones'][2]['correcta']?'success':'danger'?>" opcion="3">
+                                                    <button type="button" class="opcion btn btn-opcion m-0 btn-<?=isset($pregunta['opciones'][2]) && $pregunta['opciones'][2]['correcta']?'success':'danger'?>" opcion="3">
                                                         <i class="fas fa-<?=isset($pregunta['opciones'][2]) && $pregunta['opciones'][2]['correcta']?'check':'times'?>"></i>
                                                     </button>                                                    
                                                 </div>
                                                 <div class="form-group d-flex col-12 col-sm-6">
                                                     <input class="form-control" name="opcion_4" type="text" placeholder="Opción 4"
                                                         value="<?=isset($pregunta['opciones'][3])?$pregunta['opciones'][3]['texto']:""?>"/>
-                                                    <button type="button" class="opcion btn btn-sm m-0 ml-1 btn-<?=isset($pregunta['opciones'][3]) && $pregunta['opciones'][3]['correcta']?'success':'danger'?>" opcion="4">
+                                                    <button type="button" class="opcion btn btn-opcion m-0 btn-<?=isset($pregunta['opciones'][3]) && $pregunta['opciones'][3]['correcta']?'success':'danger'?>" opcion="4">
                                                         <i class="fas fa-<?=isset($pregunta['opciones'][3]) && $pregunta['opciones'][3]['correcta']?'check':'times'?>"></i>
                                                     </button>                                                    
                                                 </div>

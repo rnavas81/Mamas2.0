@@ -9,13 +9,6 @@ if(session_status()!=PHP_SESSION_ACTIVE){
     session_start();
 }
 
-//CONSTANTES
-const ROL_ADMINISTRADOR = 1;
-const ROL_PROFESOR = 2;
-const ROL_ALUMNO = 3;
-const TIPO_ALUMNO = "alumno";
-const TIPO_PROFESOR = "profesor";
-
 // Punto de redirección del controlador
 // Si no hay punto de redirección va al punto de entrada
 $redireccion = null;

@@ -14,7 +14,7 @@ $usuarioActivo = null;
 if(isset($_SESSION['usuario'])) {
     $usuarioActivo = $_SESSION['usuario'];
 }
-$datosPreguntas = GestionExamenes::getPreguntasByIdUsuario($usuarioActivo->getId());
+$datosPreguntas = GestionExamenes::getPreguntasAlmacenByProfesor($usuarioActivo->getId());
 ?>
 <div class="modal" id="modalPreguntas" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
@@ -26,11 +26,20 @@ $datosPreguntas = GestionExamenes::getPreguntasByIdUsuario($usuarioActivo->getId
         </button>
       </div>
       <div class="modal-body">
+          <div class="d-flex border-bottom mb-3">
+              <!--<p class="col h5 m-0 p-0">Enunciado</p>-->
+              <input class="col form-control mb-2 mr-2" type="search" id="filtroPreguntas" />
+              <label>
+                Todas
+                <input class="align-self-center" type="checkbox" id="marcarTodas"/>                  
+              </label>
+          </div>          
       <?php 
-      foreach ($datosPreguntas as $pregunta) {?>
-          <div class="d-flex" data="<?=json_encode($pregunta)?>">
+      foreach ($datosPreguntas as $pregunta) {
+          ?>
+          <div class="d-flex pregunta-blk" >
               <p class="col"><?=$pregunta['enunciado']?></p>
-              <input type="checkbox" id="<?=$pregunta['id']?>"/>
+              <input data-datos="<?= str_replace("\"", "'", json_encode($pregunta))?>" name="pregunta-marcada" type="checkbox" id="<?=$pregunta['id']?>"/>
           </div>
       <?php }?>
       </div>
