@@ -73,10 +73,17 @@
     background: #fac76524;
     color: var(--primary-dark);
 }
+
 tr.desactivado {
     background-color: #d0d0e1;
     transition: 0.5s;
 }
 button,input[type='submit'],.btn {
     font-size: 1.2em !important;
+}
+.btn-opcion {
+    margin: 0;
+    padding: 0px;
+    width: 38px;
+    height: 38px;
 }

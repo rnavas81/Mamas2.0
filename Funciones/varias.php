@@ -45,3 +45,27 @@ function aleatorioAlphanumerico($length=8) {
     }
     return $random;    
 }
+/**
+ * Devuelve la ruta de vuelta del controlador 
+ * si existe en sesión.
+ * @return String
+ */
+function volver(){
+    $volver = null;
+    if(isset($_SESSION['volver'])){
+        $volver = $_SESSION['volver'];
+        unset($_SESSION['volver']);
+    } else {
+        if($_SESSION['usuarioAcceso']=='alumno'){
+            $volver = WEB_ENTRADA_ALUMNOS;
+        } elseif($_SESSION['usuarioAcceso']=='profesor'){
+            $volver = WEB_ENTRADA_PROFESORES;
+        } elseif($_SESSION['usuarioAcceso']=='administrador'){
+            $volver = WEB_ENTRADA_ADMINISTRADORES;
+        } else {
+            $volver = WEB_INDEX;
+        }
+    }
+    return $volver;
+    
+}

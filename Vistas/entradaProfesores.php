@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
@@ -20,20 +21,8 @@ $tipo = 'activos';
 if(isset($_SESSION['profesorTipo'])){
     $tipo = $_SESSION['profesorTipo'];
 }
-$tipoOpciones="profesorDashboard";
-/*
-switch ($tipo){
-    case 'activos':
-        $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
-        $tituloTabla="Activos";
-        break;
-    case 'desactivados':
-        $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
-        $tituloTabla="Desactivados";
-        break;    
-}*/
 $tituloTabla = 'Exámenes';
-$data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
+$data = GestionExamenes::getExamenesByProfesor($_SESSION['usuario']->getId());
 ?>
 <html>
     <head>
@@ -59,20 +48,22 @@ $data = GestionExamenes::getExamen($_SESSION['usuario']->getId());
     </head>
     <body>
         <?php
+        $tipoOpciones="profesorDashboard";
         require_once '../Componentes/cabecera.php';
         ?>
         <main>
             <div class="container-fluid">
                 <div class="row">
-                    <span class="col-12"><?=$msg?></span>
-                </div>
-                <div class="row">
                     <div class="btn-toolbar justify-content-between col-12" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="align-items-center btn-group" role="group" aria-label="Botones izquierda">
                             <span class="align-self-center h3 mb-0"><?=$tituloTabla?></span>
                         </div>
+                        <span class="col text-center h3 primary-dark-color-text"><?=$msg?></span>
                         <div class="btn-group" role="group" aria-label="Botones derecha">
                             <form action="<?=CTRL_EXAMENES?>" method="POST">
+                                <button name="nuevapregunta" type="submit" class="btn btn-primary btn-sm" title="Nueva Pregunta">
+                                    <i class="fas fa-question"></i>
+                                </button>
                                 <button name="nuevo" type="submit" class="btn btn-primary btn-sm" title="Nuevo examen">
                                     <i class="fas fa-plus"></i>
                                 </button>
