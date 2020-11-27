@@ -26,6 +26,8 @@ if(isset($_REQUEST['accion'])){
     $accion = "crear";
 }elseif(isset ($_REQUEST['modificar'])) {
     $accion = "modificar";
+}elseif(isset ($_REQUEST['modificarPerfil'])) {
+    $accion = "modificarPerfil";
 }
 
 switch ($accion) {
@@ -37,12 +39,7 @@ switch ($accion) {
         $apellidos = $_REQUEST['apellidos'];
         $fecha = $_REQUEST['fechaNacimiento'];
         $email = $_REQUEST['email'];
-        $rol = [];   
-        if($_SESSION['rolRegistro'] === 'profesor') {
-            $rol[] = 2;
-        } elseif ($_SESSION['rolRegistro'] === 'alumno') {
-            $rol[] = 3;        
-        }
+        $rol = [];
         $usuario = new Usuario(0, $dni, $nombre, $apellidos, $fecha, $email,$rol);
         unset($_SESSION['rolRegistro']);
         $duplicado = [
@@ -67,15 +64,7 @@ switch ($accion) {
     //Vuelve del formulario de usuario
     case 'volver':
         unset($_SESSION['datosFormulario']);
-        if($_SESSION['usuarioAcceso']=='alumno'){
-            $redireccion = WEB_ENTRADA_ALUMNOS;
-        } elseif($_SESSION['usuarioAcceso']=='profesor'){
-            $redireccion = WEB_ENTRADA_PROFESORES;
-        } elseif($_SESSION['usuarioAcceso']=='administrador'){
-            $redireccion = WEB_ENTRADA_ADMINISTRADORES;
-        } else {
-            $redireccion = WEB_INDEX;
-        }
+        $redireccion = volver();
         break;
     //Crea un nuevo usuario
     case 'crear':
@@ -140,18 +129,10 @@ switch ($accion) {
             ];
             $valid = $duplicado['dni']==0 && $duplicado['email']==0;
             if($valid) {
-                if(GestionUsuarios::updateUsuario($user)){
+                if(GestionUsuarios::updateUsuario($user,$password)){
                     $_SESSION['MSG_INFO']="Usuario modificado";
                     unset($_SESSION['datosFormulario']);
-                    if($_SESSION['usuarioAcceso']=='alumno'){
-                        $redireccion = WEB_ENTRADA_ALUMNOS;
-                    } elseif($_SESSION['usuarioAcceso']=='profesor'){
-                        $redireccion = WEB_ENTRADA_PROFESORES;
-                    } elseif($_SESSION['usuarioAcceso']=='administrador'){
-                        $redireccion = WEB_ENTRADA_ADMINISTRADORES;
-                    } else {
-                        $redireccion = WEB_INDEX;
-                    }                    
+                    $redireccion = volver();
                 } else {
                     $_SESSION['MSG_INFO']="Error al actualizar el usuario";
                     $_SESSION['datosFormulario']=$user;
@@ -161,6 +142,45 @@ switch ($accion) {
                 $_SESSION['MSG_INFO']="Error al recuperar el usuario";
                 $_SESSION['datosFormulario']=$user;
                 $redireccion = WEB_USUARIO_FORMULARIO;
+            }
+            
+        }
+        break;
+    case 'modificarPerfil':
+        $user = $_SESSION['usuario'];
+        $id = $user->getId();
+        if($user){
+            $dni = $_REQUEST['dni'];
+            $password = $_REQUEST['password'];
+            $nombre = $_REQUEST['nombre'];
+            $apellidos = $_REQUEST['apellidos'];
+            $fechaNacimiento = $_REQUEST['fechaNacimiento'];
+            $email = $_REQUEST['email'];
+            $user->setDni($dni);
+            $user->setEmail($email);
+            $user->setNombre($nombre);
+            $user->setApellidos($apellidos);
+            $user->setFechaNacimiento($fechaNacimiento);
+            $duplicado = [
+                'dni'=> GestionUsuarios::isDuplicado("dni", $dni,$id),
+                'email'=> GestionUsuarios::isDuplicado("email", $email,$id)
+            ];
+            $valid = $duplicado['dni']==0 && $duplicado['email']==0;
+            if($valid) {
+                if(GestionUsuarios::updateUsuario($user,$password)){
+                    $_SESSION['MSG_INFO']="Mis datos actualizados";
+                    $_SESSION['usuario']=$user;
+                    unset($_SESSION['datosFormulario']);
+                    $redireccion =volver();
+                } else {
+                    $_SESSION['MSG_INFO']="Error al actualizar mis datos";
+                    $_SESSION['datosFormulario']=$user;
+                    $redireccion = WEB_FORMULARIO_PERFIL;
+                }
+            } else {
+                $_SESSION['MSG_INFO']="Error al recuperar mis datos";
+                $_SESSION['datosFormulario']=$user;
+                $redireccion = WEB_FORMULARIO_PERFIL;
             }
             
         }
