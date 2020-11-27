@@ -289,5 +289,43 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-
+    
+    public static function saveRespuestasAlumno($idAlumno,$idExamen,$respuestas) {
+        $estabaAbierta=self::isAbierta();
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "INSERT INTO Alumno_examen_respuestas (idAlumno, idExamen,idPregunta, respuesta) VALUES ";        
+            $aux = [];
+            foreach ($respuestas as $index=>$respuesta) {
+                if(is_array($respuesta)) {                
+                    $aux[]= "(".$idAlumno.","
+                            . "".$idExamen.","
+                            . "".$index.","
+                            . "'".implode(',', $respuesta)."')";
+                } else {
+                    $aux[]= "(".$idAlumno.","
+                            . "".$idExamen.","
+                            . "".$index.","
+                            . "'".$respuesta."')";                    
+                }            
+                                
+            }
+            $query .= implode(',', $aux).';';
+            $query2 = "UPDATE Alumnos_examenes SET realizado=0 "
+                    . "WHERE idExamen=".$idExamen." AND idAlumno=".$idAlumno.";";
+            echo $query.'<br>'.$query2;                        
+            
+            self::$conexion->query($query);
+            
+            self::$conexion->query($query2);
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }
+    }
+    
 }

@@ -1,6 +1,4 @@
-
-
-$( function () {    
+$(function () {    
 
     $('.draggable').css('cursor', 'pointer');
     $('.draggable').disableSelection();
@@ -10,11 +8,7 @@ $( function () {
         revert: true,        
         stop: function(event, ui) {
             
-            var longitud = $(this).find("li").length;
-
-            console.log("Longitud: "+longitud);
-            
-            console.log("Nombre dragable: "+ui.item.attr("name"));                                                                                            
+            var longitud = $(this).find("li").length;                                                                                                       
             
             var longitud = $(this).find("li").length;                        
             
@@ -22,7 +16,21 @@ $( function () {
                 ui.item.remove();
             }
 
-            ui.item.removeClass("draggable");
+            
+            
+            
+            if(ui.item.hasClass("draggable")==true) {
+                ui.item.prepend("<div><a class='deleteBtn px-2 borderline'><i class='fas fa-times'></i></a></div>")
+                
+                console.log($(this).hasClass("correct"));
+                $('.deleteBtn').on('click', function(){
+                    console.log('Adios, respuesta '+$(this).parent().parent().attr('name')+' :(');
+                    $(this).parent().parent().remove();
+                });                
+                ui.item.attr("data-idPr",$(this).parent().parent().attr('id'));
+                ui.item.removeClass("draggable");
+                ui.item.addClass("respuesta");
+            }                        
         }
     });
     
@@ -31,5 +39,5 @@ $( function () {
         helper: "clone",
         revert: "invalid"       
     });
-
 });
+
