@@ -102,6 +102,14 @@ switch ($tipoOpciones) {
         </button>             
         <div class="ml-auto" id="navbarSupportedContent-333">                                        
             <ul class="navbar-nav ml-auto nav-flex-icons">
+                <?php
+                if(count($usuarioActivo->getRoles())>1 || $usuarioActivo->hasRol(ROL_ADMINISTRADOR)){?>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="<?=WEB_ENTRADA_MULTI?>" title="Cambiar de rol">
+                        <i class="fas fa-dice-d20 fa-spin"></i>
+                    </a>
+                </li>                    
+                <?php }?>
                 <li class="nav-item">
                     <a class="nav-link waves-effect waves-light" href="<?=CTRL_BASICO?>?accion=editarPrefil" title="Editar perfil">
                         <i class="fas fa-user-alt"></i>
