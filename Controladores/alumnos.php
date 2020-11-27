@@ -26,6 +26,8 @@ if(isset($_REQUEST['accion'])){
     $accion = "empezarExamen";
 } elseif(isset($_REQUEST['terminarExamen'])) {
     $accion ="realizarExamen";
+} elseif(isset ($_REQUEST['verExamen'])) {
+    $accion = "verExamen";
 }
 
 switch ($accion) {
@@ -43,6 +45,12 @@ switch ($accion) {
         $_SESSION['examenAct'] = $examen;
         $redireccion = WEB_EXAMEN_ALUMNO_REALIZA;
         break;
+    case "verExamen":
+        $id = $_REQUEST['id'];
+        $examen = GestionExamenes::getExamenById($id);
+        $_SESSION['examenAct'] = $examen;
+        $redireccion = WEB_EXAMEN_ALUMNO_REVISA;
+        break;        
     case "realizarExamen":
         $json=($_REQUEST['respuestasFin']);
         $datos = json_decode($json);

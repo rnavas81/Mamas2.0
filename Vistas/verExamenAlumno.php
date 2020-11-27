@@ -20,6 +20,7 @@ if (isset($_SESSION['MSG_INFO'])) {
 }
 
 $data = $_SESSION['examenAct'];
+$respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId(), $data['id']);
 
 if (isset($_SESSION['alumnoTipo'])) {
     $tipo = $_SESSION['alumnoTipo'];
@@ -81,7 +82,9 @@ $tipoOpciones = "alumnosDashboard";
                                     <?php
                                     if ($pregunta['tipo'] === 1) {
                                     ?>
-                                        <textarea class="form-control respuestaText" name="respuesta"></textarea>
+                                    <p class="form-control respuestaText" name="respuesta" readonly>
+                                        <?=$respuestas[$pregunta['id']]?>
+                                    </p>
                                     <?php
                                     }
                                     ?>
@@ -93,7 +96,7 @@ $tipoOpciones = "alumnosDashboard";
                                         <?php
                                         foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                         ?>
-                                        <li class="draggable borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                        <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
                                             <div class="col"><?= $opcionP['texto'] ?></div>
                                         </li>
                                         <?php
@@ -102,8 +105,17 @@ $tipoOpciones = "alumnosDashboard";
                                     </ul>
                                     <div class="form-group">
                                         <p>Repuesta</p>
-                                        <ul class="sortable form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas" data-max="1">
-
+                                        <ul class="sortable form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas">
+                                        <?php                                        
+                                        $arrResp = explode(',', $respuestas[$pregunta['id']]);
+                                        foreach ($arrResp as $key => $aux) {
+                                        ?>                                                
+                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta" name="<?=$key?>">
+                                                <?=$aux?>
+                                            </li>                                                
+                                        <?php
+                                        }
+                                        ?>
                                         </ul>
                                     </div>
                                     <?php
@@ -116,7 +128,7 @@ $tipoOpciones = "alumnosDashboard";
                                             <?php
                                             foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                             ?>
-                                            <li class="draggable borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
                                                 <div class="col"><?= $opcionP['texto'] ?></div>
                                             </li>
                                             <?php
@@ -125,8 +137,17 @@ $tipoOpciones = "alumnosDashboard";
                                         </ul>
                                         <div class="form-group">
                                             <p>Repuesta</p>
-                                            <ul class="sortable form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas" data-max="4">
-
+                                            <ul class="sortable form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas">
+                                            <?php                                            
+                                            $arrResp = explode(',', $respuestas[$pregunta['id']]);
+                                            foreach ($arrResp as $key => $aux) {
+                                            ?>                                                
+                                                <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta" name="<?=$key?>">
+                                                    <?=$aux?>
+                                                </li>                                                
+                                            <?php
+                                            }
+                                            ?>
                                             </ul>
                                         </div>                                                                           
                                     <?php
@@ -138,39 +159,7 @@ $tipoOpciones = "alumnosDashboard";
                                 }
                                 ?>
                             </ul>                                                        
-                        </div>
-                        <div class="row" role="group">
-                            
-                            <form type="POST" class="col" action="<?=CTRL_ALUMNOS?>">
-                                <input id="respuestasFin" name="respuestasFin" value="" type="hidden">
-                                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#confirmarTerminar">
-                                    Terminar
-                                </button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="confirmarTerminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">TERMINAR EXAMEN</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        <div class="modal-body text-center">
-                                            <p>Revise el examen antes de confirmar</p> 
-                                            ¿Desea terminar?
-                                        </div>
-                                        <div class="text-center pb-2">
-                                            <button id="terminarExamen" name="terminarExamen"  type="submit" class="btn btn-danger" title="Eliminar">
-                                                TERMINAR
-                                            </button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>                                             
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>                                                                                    
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -197,8 +186,5 @@ $tipoOpciones = "alumnosDashboard";
 <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
 <script type="text/javascript" src="../js/examenFormulario.js"></script>
 <script type="text/javascript" src="../js/varios.js"></script>
-<script type="text/javascript" src="../js/dragable.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="../js/recibirRespuestas.js"></script>
 
 </html>

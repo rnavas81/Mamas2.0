@@ -117,9 +117,9 @@ switch ($tipo){
                                     <?php 
                                     } else {
                                     ?>
-                                    <!--<button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Empezar">
-                                        <i class="fas fa-play-circle"></i>
-                                    </button> -->
+                                    <button name="verExamen" type="submit" class="btn btn-sm btn-primary mx-1 my-0" title="Ver">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
                                     <?php 
                                     }
                                     ?>

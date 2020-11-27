@@ -328,4 +328,30 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
+    public static function getRespuestasAlumno($idAlumno, $idExamen) {
+        $estabaAbierta=self::isAbierta();
+        $respuestas = [];
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "SELECT * FROM Alumno_examen_respuestas "
+                . "WHERE idAlumno=? AND idExamen=?";
+            
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("ii",$idAlumno,$idExamen);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $respuestas [$datos['idPregunta']]= $datos['respuesta'];
+            }
+                       
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+            return $respuestas;
+        }
+         
+    }
 }
