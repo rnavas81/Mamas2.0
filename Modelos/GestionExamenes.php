@@ -83,7 +83,7 @@ class GestionExamenes extends GestionDatos {
         $query = "SELECT e.* "
                 . "FROM Examenes e "
                 . "LEFT Join Alumnos_examenes r ON r.idExamen=e.id "
-                . "WHERE r.idAlumno =? AND r.realizado=? AND e.habilitado=1 "
+                . "WHERE r.idAlumno =? AND r.realizado=? AND e.habilitado=1 AND e.activo = 1 "
                 . "ORDER BY e.fechaInicio DESC";
         try {
             if(!$estaAbierta) {
@@ -519,5 +519,69 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-
+    
+    public static function saveRespuestasAlumno($idAlumno,$idExamen,$respuestas) {
+        $estabaAbierta=self::isAbierta();
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "INSERT INTO Alumno_examen_respuestas (idAlumno, idExamen,idPregunta, respuesta) VALUES ";        
+            $aux = [];
+            foreach ($respuestas as $index=>$respuesta) {
+                if(is_array($respuesta)) {                
+                    $aux[]= "(".$idAlumno.","
+                            . "".$idExamen.","
+                            . "".$index.","
+                            . "'".implode(',', $respuesta)."')";
+                } else {
+                    $aux[]= "(".$idAlumno.","
+                            . "".$idExamen.","
+                            . "".$index.","
+                            . "'".$respuesta."')";                    
+                }            
+                                
+            }
+            $query .= implode(',', $aux).';';
+            $query2 = "UPDATE Alumnos_examenes SET realizado=0 "
+                    . "WHERE idExamen=".$idExamen." AND idAlumno=".$idAlumno.";";
+            echo $query.'<br>'.$query2;                        
+            
+            self::$conexion->query($query);
+            
+            self::$conexion->query($query2);
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }
+    }
+    
+    public static function getRespuestasAlumno($idAlumno, $idExamen) {
+        $estabaAbierta=self::isAbierta();
+        $respuestas = [];
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "SELECT * FROM Alumno_examen_respuestas "
+                . "WHERE idAlumno=? AND idExamen=?";
+            
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("ii",$idAlumno,$idExamen);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $respuestas [$datos['idPregunta']]= $datos['respuesta'];
+            }
+                       
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+            return $respuestas;
+        }
+         
+    }
 }

@@ -36,6 +36,11 @@
 .primary-light-color {
     background-color: var(--primary-light) !important;    
 }
+
+.primary-light-color > .borderLine {
+    border-color: var(--primary-light) !important;
+}
+
 .primary-dark-color {
     background-color: var(--primary-dark) !important;    
 }
@@ -86,4 +91,10 @@ button,input[type='submit'],.btn {
     padding: 0px;
     width: 38px;
     height: 38px;
+}
+
+
+.borderLine {
+    border: 1px solid;
+    border-radius: 16px;
 }
