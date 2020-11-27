@@ -32,6 +32,12 @@ if(isset($_REQUEST['accion'])){
     $accion = "examenes";
 } elseif (isset ($_REQUEST['preguntas'])) {
     $accion = "preguntas";
+} elseif (isset ($_REQUEST['examenesActivos'])) {
+    $accion = "examenesActivos";
+} elseif (isset ($_REQUEST['verExamen'])) {
+    $accion = "verExamen";
+} elseif (isset ($_REQUEST['corregirExamen'])) {
+    $accion = "corregirExamen";
 }
 
 switch ($accion) {
@@ -61,6 +67,18 @@ switch ($accion) {
             $_SESSION['MSG_INFO']="Error al recuperar el examen";
             $redireccion=WEB_ENTRADA_PROFESORES;
         }
+        break;
+    case "examenesActivos":
+        $redireccion = WEB_EXAMEN_ACTIVO_PROFESOR;
+        break;
+    case "verExamen":
+        $_SESSION['idExamenAc'] = $_REQUEST['id'];
+        $redireccion = WEB_EXAMEN_ALUMNOS_EXAMEN_PROFESOR;
+        break;
+    case "corregirExamen":
+        
+        $_SESSION['idAlumnoAct'] = $_REQUEST['id'];
+        $redireccion = WEB_EXAMEN_CORREGIR;
         break;
     default:
         $redireccion = cerrarSesion();

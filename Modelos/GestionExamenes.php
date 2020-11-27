@@ -520,6 +520,12 @@ class GestionExamenes extends GestionDatos {
         
     }
     
+    /**
+     * Función que guarda las respuestas de un examen hecho por un alumno
+     * @param int $idAlumno Id del alumno que realiza el examen
+     * @param int $idExamen Id del examen que realiza el alumno
+     * @param arr[] $respuestas Respuestas del alumno
+     */
     public static function saveRespuestasAlumno($idAlumno,$idExamen,$respuestas) {
         $estabaAbierta=self::isAbierta();
         try {
@@ -558,6 +564,12 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
+    /**
+     * Función que recupera las respuestas de un examen realizado por el alumno
+     * @param int $idAlumno Id del alumno que revisa el examen
+     * @param int $idExamen Id del examen a revisar
+     * @return arr[]  Devuelve un array con las respuestas del examen a revisar
+     */
     public static function getRespuestasAlumno($idAlumno, $idExamen) {
         $estabaAbierta=self::isAbierta();
         $respuestas = [];
@@ -583,5 +595,37 @@ class GestionExamenes extends GestionDatos {
             return $respuestas;
         }
          
+    }
+    
+    /**
+     * Funcion que recupera el id de los alumnos con un examen de un profesor
+     * @param int $idProfesor Id del profesor actual
+     * @param int $idExamen Id del examen a buscar
+     * @return arr[] Devuelve un array con los id de los alumnos
+     */
+    public static function getAlumnosExamen($idProfesor,$idExamen) {
+        $estabaAbierta=self::isAbierta();
+        $alumnos=[];
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "SELECT a.idAlumno FROM alumnos_examenes a "
+                . "LEFT JOIN examenes e ON a.idExamen=e.id "
+                . "WHERE e.idProfesor=? AND a.idExamen=? AND a.realizado = 0";
+        
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("ii",$idProfesor,$idExamen);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $alumnos =[$datos['idAlumno']];        
+            }
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+            return $alumnos;
+        }
     }
 }

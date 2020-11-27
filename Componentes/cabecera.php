@@ -48,7 +48,8 @@ switch ($tipoOpciones) {
         $controladorAct = CTRL_PROFESORES;
         $opciones = [
           ['label'=>'Examenes','name'=>'examenes'],
-          ['label'=>'Preguntas','name'=>'preguntas'],          
+          ['label'=>'Preguntas','name'=>'preguntas'],
+          ['label'=>'Exámenes activos','name'=>'examenesActivos']
         ];
         break;
     case 'alumnosDashboard':

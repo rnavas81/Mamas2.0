@@ -24,9 +24,7 @@ if(isset($_SESSION['profesorTipo'])){
 }
 
 $data = $_SESSION['examenAct'];
-$respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId(), $_SESSION['idExamenAc']);
-
-
+$respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $data['id']);
 
 ?>
 
@@ -55,8 +53,8 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
 
 <body>
     <?php
-    require_once '../Componentes/cabecera.php';
     $tipoOpciones="profesorDashboard";
+    require_once '../Componentes/cabecera.php';
     ?>
 
     <main class="">
