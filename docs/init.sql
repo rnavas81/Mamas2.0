@@ -28,6 +28,7 @@ CREATE TABLE `Usuarios` (
   `password` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `fechaNacimiento` date,
   `email` varchar(500)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 CREATE TABLE `Usuarios_Roles` (
@@ -36,6 +37,7 @@ CREATE TABLE `Usuarios_Roles` (
     
     PRIMARY KEY (idUsuario,idRol)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 CREATE TABLE `Examenes` ( 
     `id` INT NOT NULL AUTO_INCREMENT , 
     `idProfesor` INT NOT NULL ,
@@ -45,7 +47,8 @@ CREATE TABLE `Examenes` (
     `descripcion` VARCHAR(1000), 
     `fechaInicio` TIMESTAMP , 
     `fechaFin` TIMESTAMP ,    
-    PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE `Examenes_Preguntas` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -53,6 +56,17 @@ CREATE TABLE `Examenes_Preguntas` (
   `enunciado` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `tipo` tinyint DEFAULT 0 NOT NULL,
   `opciones` text
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE TABLE `Examenes_Preguntas_Almacen` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `habilitado` tinyint NOT NULL DEFAULT '1',
+  `idProfesor` int NOT NULL,
+  `enunciado` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  `tipo` tinyint DEFAULT '1',
+  `opciones` text CHARACTER SET utf8 COLLATE utf8_spanish_ci
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 CREATE TABLE `Alumnos_examenes` ( 
@@ -60,4 +74,6 @@ CREATE TABLE `Alumnos_examenes` (
     `idExamen` INT NOT NULL , 
     `nota` INT NULL DEFAULT NULL , 
     `realizado` INT NOT NULL DEFAULT '0' , 
-    PRIMARY KEY (`idAlumno`, `idExamen`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
+    PRIMARY KEY (`idAlumno`, `idExamen`)
+
+) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
