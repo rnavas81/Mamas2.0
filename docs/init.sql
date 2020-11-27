@@ -77,3 +77,10 @@ CREATE TABLE `Alumnos_examenes` (
     PRIMARY KEY (`idAlumno`, `idExamen`)
 
 ) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
+
+CREATE TABLE `Mamas`.`Alumno_examen_respuestas` ( 
+    `idAlumno` INT NOT NULL , 
+    `idExamen` INT NOT NULL , 
+    `idPregunta` INT NOT NULL , 
+    `respuesta` TEXT NULL DEFAULT '' , 
+    PRIMARY KEY (`idAlumno`, `idExamen`, `idPregunta`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
