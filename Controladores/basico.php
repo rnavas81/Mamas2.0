@@ -24,6 +24,10 @@ $accion = null;
 $aux=null;
 if(isset($_REQUEST['accion'])){
     $accion = $_REQUEST['accion'];
+} elseif(isset ($_REQUEST['acceder'])) {
+    $accion = "acceder";
+} elseif(isset ($_REQUEST['accederMulti'])) {
+    $accion = "accederMulti";
 } elseif(isset ($_REQUEST['accederAlumnos'])) {
     $accion = "accederUsuario";
     $aux = TIPO_ALUMNO;
@@ -45,31 +49,31 @@ if(isset($_REQUEST['loginAlSubm'])) {
  * */
 switch ($accion) {
     //Comprueba el usuario y el tipo de acceso
-    case "accederUsuario":
+    case "acceder":
         $dni = $_REQUEST['dni'];
         $password = $_REQUEST['password'];
         $usuario = GestionUsuarios::canLogin($dni, $password);
         if($usuario){
-            try {
-                $_SESSION['usuarioAcceso'] = $aux;
-                if($aux==TIPO_ALUMNO && $usuario->hasRol(ROL_ALUMNO)){
-                    $redireccion = WEB_ENTRADA_ALUMNOS;
-                    $_SESSION['usuario']= $usuario;
-                } elseif($aux==TIPO_PROFESOR && $usuario->hasRol(ROL_PROFESOR)){
-                    $redireccion = WEB_ENTRADA_PROFESORES;
-                    $_SESSION['usuario']= $usuario;
-                } elseif($aux==TIPO_ADMINISTRADOR && $usuario->hasRol(ROL_ADMINISTRADOR)){
-                    $redireccion = WEB_ENTRADA_ADMINISTRADORES;
-                    $_SESSION['usuario']= $usuario;
-                } else {
+            $_SESSION['usuario']= $usuario;
+            switch (count($usuario->getRoles())){
+                case 0:
                     $redireccion = WEB_INDEX;
-                    unset($_SESSION['usuarioAcceso']);
-                    $_SESSION['MSG_INFO']="No tiene permisos para acceder";
-                }                
-            } catch (Exception $exc) {
-                unset($_SESSION['usuarioAcceso']);
-                $redireccion = WEB_INDEX;
-                $_SESSION['MSG_INFO']="Error en el acceso";
+                    break;
+                case 1:
+                    if($usuario->hasRol(TIPO_ADMINISTRADOR)) {
+                        $redireccion = WEB_ENTRADA_MULTI;
+                    } elseif($usuario->hasRol(TIPO_PROFESOR)){
+                        $_SESSION['usuarioAcceso']=TIPO_PROFESOR;
+                        $redireccion = WEB_ENTRADA_PROFESORES;
+                    } elseif($usuario->hasRol(TIPO_ALUMNO)) {
+                        $_SESSION['usuarioAcceso']=TIPO_ALUMNO;
+                        $redireccion = WEB_ENTRADA_ALUMNOS;
+                    } else {
+                        $redireccion = WEB_INDEX;
+                    }
+                default:
+                    $redireccion = WEB_ENTRADA_MULTI;
+                    break;
             }
         } else {
             $_SESSION['MSG_INFO']="Error al acceder al sistema";
@@ -88,6 +92,25 @@ switch ($accion) {
         Correo::enviar($email,$asunto,$cuerpo);
         $_SESSION['MSG_INFO']="Nueva clave generada y enviada";
         $redireccion = WEB_INDEX;
+        break;
+    // Salir del sistema
+    case "accederMulti":        
+        $usuario = $_SESSION['usuario'];
+        $aux = $_REQUEST['acceso'];
+        if($aux==ROL_ALUMNO && $usuario->hasRol(ROL_ALUMNO)){
+            $_SESSION['usuarioAcceso'] = TIPO_ALUMNO;
+            $redireccion = WEB_ENTRADA_ALUMNOS;
+        } elseif($aux==ROL_PROFESOR && $usuario->hasRol(ROL_PROFESOR)){
+            $_SESSION['usuarioAcceso'] = TIPO_PROFESOR;
+            $redireccion = WEB_ENTRADA_PROFESORES;
+        } elseif($aux==ROL_ADMINISTRADOR && $usuario->hasRol(ROL_ADMINISTRADOR)){
+            $_SESSION['usuarioAcceso'] = TIPO_ADMINISTRADOR;
+            $redireccion = WEB_ENTRADA_ADMINISTRADORES;
+        } else {
+            $redireccion = WEB_INDEX;
+            unset($_SESSION['usuarioAcceso']);
+            $_SESSION['MSG_INFO']="No tiene permisos para acceder";
+        }      
         break;
     // Salir del sistema
     case "salir":

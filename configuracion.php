@@ -33,6 +33,7 @@ const WEB_VISTAS = WEB_ROOT . DS . 'Vistas';
 const WEB_ENTRADA_ALUMNOS = WEB_VISTAS . DS . 'entradaAlumnos.php';
 const WEB_ENTRADA_PROFESORES = WEB_VISTAS . DS . 'entradaProfesores.php';
 const WEB_ENTRADA_ADMINISTRADORES = WEB_VISTAS . DS . 'entradaAdministradores.php';
+const WEB_ENTRADA_MULTI = WEB_VISTAS . DS . 'entradaMultiRol.php';
 const WEB_RECUPERAR = WEB_VISTAS . DS . 'recuperar.php';
 const WEB_REGISTRAR = WEB_VISTAS . DS . 'registrar.php';
 const WEB_USUARIO_FORMULARIO = WEB_VISTAS . DS . 'usuarioFormulario.php';

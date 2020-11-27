@@ -10,15 +10,6 @@ require_once '../configuracion.php';
  */
 function cerrarSesion() {
     $paginaSalir = WEB_INDEX;
-    if($_SESSION['usuarioAcceso']=='alumno'){
-        $paginaSalir = WEB_INDEX;
-    } elseif($_SESSION['usuarioAcceso']=='profesor'){
-        $paginaSalir = WEB_INDEX;
-    } elseif($_SESSION['usuarioAcceso']=='administrador'){
-        $paginaSalir = WEB_ADMIN;
-    } else {
-        $paginaSalir = WEB_INDEX;
-    }              
     unset(
         $_SESSION['rolRegistro'],
         $_SESSION['usuario'],
