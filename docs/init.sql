@@ -8,8 +8,8 @@ CREATE DATABASE IF NOT EXISTS Mamas
 USE Mamas;
 
 CREATE TABLE `Roles` (
-  `habilitado` tinyint NOT NULL DEFAULT '1',
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `habilitado` tinyint NOT NULL DEFAULT '1',
   `nombre` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `descripcion` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -20,8 +20,8 @@ INSERT INTO Roles (nombre,descripcion) VALUES
 ('Alumno','Permisos para realizar examenes y consultar notas');
 
 CREATE TABLE `Usuarios` (
-  `habilitado` tinyint NOT NULL DEFAULT '1',
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `habilitado` tinyint NOT NULL DEFAULT '1',
   `nombre` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `apellidos` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `dni` varchar(10) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -40,9 +40,9 @@ CREATE TABLE `Usuarios_Roles` (
 
 CREATE TABLE `Examenes` ( 
     `id` INT NOT NULL AUTO_INCREMENT , 
-    `idProfesor` INT NOT NULL ,
     `habilitado` TINYINT NOT NULL DEFAULT '1' ,
     `activo` TINYINT NOT NULL DEFAULT '0' ,
+    `idProfesor` INT NOT NULL ,
     `nombre` VARCHAR(500) NOT NULL,
     `descripcion` VARCHAR(1000), 
     `fechaInicio` TIMESTAMP , 
