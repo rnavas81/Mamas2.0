@@ -113,6 +113,11 @@ switch ($accion) {
         }      
         break;
     // Salir del sistema
+    case "editarPrefil":
+        $_SESSION['volver']=$_SERVER['HTTP_REFERER'];
+        $redireccion = WEB_FORMULARIO_PERFIL;
+        break;
+    // Salir del sistema
     case "salir":
     default:
         $redireccion = cerrarSesion();

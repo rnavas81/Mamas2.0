@@ -40,6 +40,7 @@ const WEB_USUARIO_FORMULARIO = WEB_VISTAS . DS . 'usuarioFormulario.php';
 const WEB_EXAMEN_FORMULARIO = WEB_VISTAS . DS . 'examenFormulario.php';
 const WEB_PREGUNTA_FORMULARIO= WEB_VISTAS . DS . 'preguntaFormulario.php';
 const WEB_PREGUNTAS = WEB_VISTAS . DS . 'preguntas.php';
+const WEB_FORMULARIO_PERFIL = WEB_VISTAS . DS . 'perfil.php';
 
 
 const HASH_CODE = "Esta es nuestra clave de encriptacion";

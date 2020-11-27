@@ -284,7 +284,7 @@ class GestionUsuarios extends GestionDatos {
         $queryUpdate.="WHERE id=".$usuario->getId();
         try {   
             if(!$estabaAbierta) self::abrirConexion();
-            if (self::$conexion->query($queryUpdate)) {
+            if(self::$conexion->query($queryUpdate)){
                 $queryBorrarRoles = "DELETE FROM Usuarios_Roles WHERE idUsuario=".$usuario->getId();
                 self::$conexion->query($queryBorrarRoles);
                 $queryRoles= "INSERT INTO Usuarios_Roles (idUsuario, idRol) VALUES ";
