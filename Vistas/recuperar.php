@@ -22,7 +22,7 @@ $tipo = isset($_REQUEST['tipo'])?$_REQUEST['tipo']:'';
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Mamas 2.0</title>
         <!-- Icono -->
-        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
         <!-- Google Fonts Roboto -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <!-- Font Awesome -->

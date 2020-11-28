@@ -394,7 +394,7 @@ class GestionExamenes extends GestionDatos {
                 while($pregunta = $resultado->fetch_assoc()){
                     $response[]=[
                         "id"=>$pregunta["id"],
-                        "enunciado"=>trim($pregunta["enunciado"]),
+                        "enunciado"=>trim(addslashes($pregunta["enunciado"])),
                         "tipo"=>$pregunta["tipo"],
                         "opciones"=> json_decode($pregunta["opciones"],true)
                     ];

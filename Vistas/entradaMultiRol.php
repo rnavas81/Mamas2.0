@@ -34,7 +34,7 @@ foreach ($roles as $rol) {
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Mamas 2.0</title>
         <!-- Icono -->
-        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <!-- Bootstrap core CSS -->
