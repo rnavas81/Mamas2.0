@@ -33,7 +33,7 @@ if(isset($_SESSION['MSG_INFO'])){
     <body class="fondo-pantalla">
         <main class="vw-100 vh-100">            
             <div class="login-top">
-                <span class="col-12 text-center"><?=$msg?></span>
+                <span class="text-center msg-info d-block h3-responsive"><?=$msg?></span>
             </div>
             <div class="container-fluid login-center d-flex align-items-center justify-content-center">
                 <div class="col-md-12 col-lg-6 pb-6">

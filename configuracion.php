@@ -43,6 +43,7 @@ const WEB_PREGUNTAS = WEB_VISTAS . DS . 'preguntas.php';
 const WEB_FORMULARIO_PERFIL = WEB_VISTAS . DS . 'perfil.php';
 const WEB_EXAMEN_ALUMNO_REALIZA = WEB_VISTAS . DS . 'realizarExamen.php';
 const WEB_EXAMEN_ALUMNO_REVISA = WEB_VISTAS . DS . 'verExamenAlumno.php';
+const WEB_ASIGNAR_EXAMEN = WEB_VISTAS . DS . 'asignarExamen.php';
 
 
 const HASH_CODE = "Esta es nuestra clave de encriptacion";

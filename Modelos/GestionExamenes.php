@@ -257,7 +257,8 @@ class GestionExamenes extends GestionDatos {
             if(!$estabaAbierta) self::abrirConexion();
             $stmt = self::$conexion->prepare($queryInsert);
             $stmt->bind_param("ssssiii",$nombre,$descripcion,$fechaInicio,$fechaFin,$activo,$id,$idProfesor);
-            if ($stmt->execute()) {
+            $response=$stmt->execute();
+            if ($response) {
                 $ids = [];
                 foreach ($data['preguntas'] as $pregunta) {
                     if($pregunta["id"]==0){//Guardar pregunta
@@ -270,17 +271,19 @@ class GestionExamenes extends GestionDatos {
                         self::insertPreguntaAlmacen($pregunta, $idProfesor);
                     }
                 }
-                $queryDelete="DELETE FROM Examenes_Preguntas WHERE id NOT IN(".implode(",", $ids).") AND idExamen=?;";
-                $stmt = self::$conexion->prepare($queryDelete);
-                $stmt->bind_param("i",$id);
-                $response=$stmt->execute();
+                if(count($ids)>0){
+                    $queryDelete="DELETE FROM Examenes_Preguntas WHERE id NOT IN(".implode(",", $ids).") AND idExamen=?;";
+                    exit($queryDelete);
+                    $stmt = self::$conexion->prepare($queryDelete);
+                    $stmt->bind_param("i",$id);
+                    $response=$stmt->execute();                    
+                }
             }
             $stmt->close();
             
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();   
             $response = false;
-            exit;
         } finally {
             if(!$estabaAbierta) self::cerrarConexion();
             return $response;
@@ -584,4 +587,92 @@ class GestionExamenes extends GestionDatos {
         }
          
     }
+    /**
+     * Devuelve los alumnos con un campo extra asignado
+     * Si ya está asignado al examen=1, si no 0
+     * @param Number $idExamen
+     * @return JSON encode
+     */
+    public static function getAsignacionAlumons($idExamen=0) {
+        $query = "SELECT u.*,"
+                . "(SELECT count(*) AS asignado "
+                    . "FROM Alumnos_examenes e "
+                    . "WHERE e.idAlumno=u.id AND e.idExamen=?) AS asignado "
+                . "FROM Usuarios u RIGHT JOIN Usuarios_Roles r ON r.idUsuario=u.id AND idRol=3 "
+                . "WHERE u.habilitado=1";
+        $estabaAbierta=self::isAbierta();
+        $response = false;
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("i",$idExamen);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $alumnos = [];
+            while($datos = $resultado->fetch_assoc()) {
+                $alumnos []= $datos;
+            }
+            $response = json_encode($alumnos);
+                       
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+            return $response;
+        }
+    }
+
+    public static function asignarExamen($ids=[],$idExamen=0) {
+        $estabaAbierta=self::isAbierta();
+        $response = false; 
+        $queryInsert = "INSERT INTO Alumnos_examenes"
+                . "(idAlumno,idExamen) VALUES (?,?) "
+                . "ON DUPLICATE KEY UPDATE idAlumno=?;";
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            foreach ($ids as $id) {
+                $stmt = self::$conexion->prepare($queryInsert);
+                $stmt->bind_param("iii",$id,$idExamen,$id);
+                $stmt->execute();
+                if(!empty($stmt->error))throw new Exception ($stmt->error);
+            }
+            $stmt->close();            
+            $response=true;
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+    }
+
+    public static function desasignarExamen($ids=[],$idExamen) {
+        $estabaAbierta=self::isAbierta();
+        $response = false;
+        $queryDelete = "DELETE FROM Alumnos_examenes "
+                . "WHERE idAlumno IN (".implode(",", $ids).") "
+                . "AND idExamen=? AND realizado=0;";
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $stmt = self::$conexion->prepare($queryDelete);
+            $stmt->bind_param("i",$idExamen);
+            $stmt->execute();
+            if(!empty($stmt->error))throw new Exception ($stmt->error);
+            $stmt->close();
+            $response=true;
+            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();   
+            $response = false;
+        } finally {
+            if(!$estabaAbierta) self::cerrarConexion();
+            return $response;
+        }
+    }
+
 }

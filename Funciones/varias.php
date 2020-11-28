@@ -17,6 +17,7 @@ function cerrarSesion() {
         $_SESSION['administradorTipo'],
         $_SESSION['accesoFormulario'],
         $_SESSION['datosFormulario'],
+        $_SESSION['datosExamen'],
         $_SESSION['usuarioAcceso']
     );
     return $paginaSalir;
