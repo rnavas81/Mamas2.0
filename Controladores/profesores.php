@@ -28,6 +28,8 @@ if(isset($_REQUEST['accion'])){
     $accion = "eliminarExamen";
 } elseif (isset ($_REQUEST['editarExamen'])) {
     $accion = "editarExamen";
+} elseif (isset ($_REQUEST['asignarExamen'])) {
+    $accion = "asignarExamen";
 } elseif (isset ($_REQUEST['examenes'])) {
     $accion = "examenes";
 } elseif (isset ($_REQUEST['preguntas'])) {
@@ -56,6 +58,18 @@ switch ($accion) {
         if($examen){
             $redireccion = WEB_EXAMEN_FORMULARIO;
             $_SESSION['datosFormulario']=$examen;
+            $_SESSION['accesoFormulario']="modificar";
+        } else {
+            $_SESSION['MSG_INFO']="Error al recuperar el examen";
+            $redireccion=WEB_ENTRADA_PROFESORES;
+        }
+        break;
+    case "asignarExamen":
+        $id = $_REQUEST["id"];
+        $examen = GestionExamenes::getExamenById($id);
+        if($examen){
+            $redireccion = WEB_ASIGNAR_EXAMEN;
+            $_SESSION['datosExamen']=$examen;
             $_SESSION['accesoFormulario']="modificar";
         } else {
             $_SESSION['MSG_INFO']="Error al recuperar el examen";

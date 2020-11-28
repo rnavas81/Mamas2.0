@@ -89,6 +89,12 @@ $data = GestionExamenes::getExamenesByProfesor($_SESSION['usuario']->getId());
                         <?php 
                         foreach ($data as $value) {
                             if($value->getIdProfesor()===$_SESSION['usuario']->getId()){  
+                                $asignar = true;
+                                if($value->getFechaInicio()!=null){
+                                     $fechaInicio = new DateTime($value->getFechaInicio());
+                                     $now = new DateTime();
+                                     $asignar = $fechaInicio>$now;
+                                }
                         ?>
                           <tr class="row <?=$value->getActivo()==0?'desactivado':''?>">
                           <th class="col-sm-6 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
@@ -98,24 +104,29 @@ $data = GestionExamenes::getExamenesByProfesor($_SESSION['usuario']->getId());
                               <form class="d-flex justify-content-end" action="<?=CTRL_PROFESORES?>" method="POST">
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />                                
                                 <?php 
+                                if($asignar){
+                                ?>
+                                <button name="asignarExamen" type="submit" class="btn mx-1 btn-blue btn-opcion px-2" title="Asignar">
+                                    <i class="fas fa-tasks"></i>
+                                </button>  
+                                <?php }
                                 if($value->getActivo()==0) {
                                 ?>
-                                <button name="activarExamen" type="submit" class="btn btn-sm btn-blue-grey mx-1 my-0" title="Activar">
+                                <button name="activarExamen" type="submit" class="btn mx-1 btn-blue-grey btn-opcion px-2" title="Activar">
                                     <i class="far fa-square"></i>
                                 </button>
                                 <?php
                                 } else {
                                 ?>
-                                <button name="desactivarExamen" type="submit" class="btn btn-sm btn-blue-grey mx-1 my-0" title="Desactivar">
+                                <button name="desactivarExamen" type="submit" class="btn mx-1 btn-blue-grey  btn-opcion px-2" title="Desactivar">
                                     <i class="fas fa-check-square"></i>
                                 </button>
                                 <?php                                
-                                }
-                                ?>
-                                <button name="editarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Editar">
+                                }?>
+                                <button name="editarExamen" type="submit" class="btn mx-1 btn-dark-green btn-opcion px-2" title="Editar">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>                                
-                                <button type="button" class="btn btn-sm btn-danger mx-1 my-0" data-toggle="modal" data-target="#modalEliminar" title="Eliminar">
+                                <button type="button" class="btn mx-1 btn-danger btn-opcion px-2" data-toggle="modal" data-target="#modalEliminar" title="Eliminar">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 <!-- Modal -->

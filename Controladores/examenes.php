@@ -39,6 +39,14 @@ if(isset($_REQUEST['accion'])){
     $accion = "eliminarPregunta";
 }elseif(isset ($_REQUEST['editarPregunta'])) {
     $accion = "editarPregunta";
+}elseif(isset ($_REQUEST['asignarTodos'])) {
+    $accion = "asignar";
+    $aux = 1;
+}elseif(isset ($_REQUEST['asignar'])) {
+    $accion = "asignar";
+    $aux = 0;
+}elseif(isset ($_REQUEST['desasignar'])) {
+    $accion = "desasignar";
 }
 
 switch ($accion) {
@@ -141,6 +149,39 @@ switch ($accion) {
             $_SESSION['MSG_INFO'] = "Error al eliminar la pregunta";
         }
         $redireccion = WEB_PREGUNTAS;
+        break;
+    // Asigna un alumno a un examen
+    // Si $aux es 0 asigna un alumno
+    // Si $aux es 1 asigna varios alumnos
+    case 'asignar':
+        $ids=[];
+        $idExamen = $_REQUEST['idExamen'];
+        if($aux==0){
+            $ids[]=$_REQUEST['idUsuario'];
+        } elseif($aux=1){
+            $ids = json_decode($_REQUEST['idsUsuario']);
+        }
+        if(GestionExamenes::asignarExamen($ids,$idExamen)){
+            $_SESSION['MSG_INFO']="Examen asignado";
+        } else {
+            $_SESSION['MSG_INFO']="Error al asignar el examen";
+        }
+        $redireccion = WEB_ASIGNAR_EXAMEN;
+        break;
+    case 'desasignar':
+        $ids=[];
+        $idExamen = $_REQUEST['idExamen'];
+        if($aux==0){
+            $ids[]=$_REQUEST['idUsuario'];
+        } elseif($aux=1){
+            $ids = json_decode($_REQUEST['idsUsuario']);
+        }
+        if(GestionExamenes::desasignarExamen($ids,$idExamen)){
+            $_SESSION['MSG_INFO']="Examen desasignado";
+        } else {
+            $_SESSION['MSG_INFO']="Error al desasignar el examen";
+        }
+        $redireccion = WEB_ASIGNAR_EXAMEN;
         break;
 }
 
