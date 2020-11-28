@@ -4,31 +4,6 @@
  * 
  */
 
-function cambiarTipoRespuestas(){
-    var padre = $(this).parent().parent();
-    const tipo = $(this).val();
-    if(tipo==2 || tipo==3){
-        $(padre).find(".opciones").removeClass('d-none');
-    } else {
-        $(padre).find(".opciones").addClass('d-none');
-    }
-}
-/**
- * Elimina una pregunta y reordena el resto de preguntas
- * @returns {undefined}
- */
-function eliminarPregunta() {
-    var pregunta = $(this).parent().parent();
-    $(pregunta).remove();
-    var preguntas = $("li[name='pregunta']");
-    for (var i = 0; i < preguntas.length; i++) {
-        let id = i+1;
-        $(preguntas[i]).attr("id",id);
-        $(preguntas[i]).find("[name='titulo']").text(`Pregunta ${id}`);
-    }
-    document.nextId-=1;
-}
-
 function accionRespuesta(){
     var padre = $(this).parent().parent();
     var pregunta = $(padre).parent();

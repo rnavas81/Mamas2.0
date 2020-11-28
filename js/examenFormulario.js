@@ -4,123 +4,6 @@
  * 
  */
 
-function cambiarTipoRespuestas(){
-    var padre = $(this).parent().parent();
-    const tipo = $(this).val();
-    if(tipo==2 || tipo==3){
-        $(padre).find(".opciones").removeClass('d-none');
-    } else {
-        $(padre).find(".opciones").addClass('d-none');
-    }
-}
-/**
- * Elimina una pregunta y reordena el resto de preguntas
- * @returns {undefined}
- */
-function eliminarPregunta() {
-    var pregunta = $(this).parent().parent();
-    $(pregunta).remove();
-    var preguntas = $("li[name='pregunta']");
-    for (var i = 0; i < preguntas.length; i++) {
-        let id = i+1;
-        $(preguntas[i]).attr("id",id);
-        $(preguntas[i]).find("[name='titulo']").text(`Pregunta ${id}`);
-    }
-    document.nextId-=1;
-}
-
-function accionRespuesta(){
-    var padre = $(this).parent().parent();
-    var pregunta = $(padre).parent();
-    const tipo = $(pregunta).find("[name='tipo']")[0].value;
-    if(tipo==1){
-        cambiarTipoRespuestas();
-    } else if(tipo==2){
-        var botones = padre.find(".opcion");
-        for (var i = 0; i < botones.length; i++) {
-            var $boton = $(botones[i]);
-            var hijo=$(botones[i]).find(".fas");
-            if(botones[i]==this){
-                $boton.removeClass('btn-danger');
-                $boton.addClass('btn-success');
-                $(hijo).removeClass("fa-times").addClass('fa-check');
-            } else {
-                $boton.removeClass('btn-success');
-                $boton.addClass('btn-danger');
-                $(hijo).removeClass("fa-check").addClass('fa-times');
-            }
-            $boton.append(hijo);
-        }        
-    } else if (tipo==3){
-        var i=$(this).find(".fas");
-        if($(this).hasClass("btn-danger")){
-            $(this).removeClass("btn-danger").addClass("btn-success");
-            $(i).removeClass("fa-times").addClass('fa-check');
-        } else {
-            $(this).removeClass("btn-success").addClass("btn-danger");
-            var i=$(this).find(".fas");
-            $(i).removeClass("fa-check").addClass('fa-times');
-        }
-    }
-}
-/**
- * Crea un nuevo elemento pregunta
- * @param {type} almacenar => variable para guardar en el almacen
- * @param {type} index Posición de la pregunta en la lista
- * @returns {Array}
- */
-function crearPregunta(index=0,almacenar=0){
-   var nuevo = $.parseHTML(
-    `<li class="list-group-item border p-2 mb-3" name="pregunta" data-id="0" data-almacenar="${almacenar}">
-        <div class="d-flex mb-2">
-            <p name="titulo" class="h5 col text-left">Pregunta ${index}</p>
-            <p class="h6 align-self-center mr-2">Tipo</p>
-            <select class="form-control w-auto" name="tipo">
-                <option value="1">A desarrollar</option>
-                <option value="2">Respuesta única</option>
-                <option value="3">Respuesta multiple</option>
-            </select>
-            <button type="button" class="btn btn-sm m-0 ml-2 primary-dark-color white-text" name="eliminarPregunta" title="Eliminar pregunta">
-                <i class="fas fa-trash-alt"></i>
-            </button>  
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="enunciado" type="text" placeholder="Enunciado"/>
-        </div>
-        <div class="form-row opciones d-none">
-            <div class="form-group d-flex col-12 col-sm-6">
-                <input class="form-control" name="opcion_1" type="text" placeholder="Opción 1"/>
-                <button type="button" class="opcion btn btn-opcion m-0 btn-success" opcion="1">
-                    <i class="fas fa-check"></i>
-                </button>                                                    
-            </div>
-            <div class="form-group d-flex col-12 col-sm-6">
-                <input class="form-control" name="opcion_2" type="text" placeholder="Opción 2"/>
-                <button type="button" class="opcion btn btn-opcion m-0 btn-danger" opcion="2">
-                    <i class="fas fa-times"></i>
-                </button>                                                    
-            </div>
-            <div class="form-group d-flex col-12 col-sm-6">
-                <input class="form-control" name="opcion_3" type="text" placeholder="Opción 3"/>
-                <button type="button" class="opcion btn btn-opcion m-0 btn-danger" opcion="3">
-                    <i class="fas fa-times"></i>
-                </button>                                                    
-            </div>
-            <div class="form-group d-flex col-12 col-sm-6">
-                <input class="form-control" name="opcion_4" type="text" placeholder="Opción 4"/>
-                <button type="button" class="opcion btn btn-opcion m-0 btn-danger" opcion="4">
-                    <i class="fas fa-times"></i>
-                </button>                                                    
-            </div>
-        </div>
-    </li>`);
-    
-    $(nuevo).find("[name='tipo']").on('change',cambiarTipoRespuestas);
-    $(nuevo).find(".opcion").on('click',accionRespuesta);
-    $(nuevo).find("[name='eliminarPregunta']").on('click',eliminarPregunta);
-    return nuevo;
-}
-
 /**
  * Recupera los datos del examen
  * Valida los datos
@@ -226,27 +109,18 @@ function agregarDelModal(){
     var marcados = $("input[name='pregunta-marcada']:checked");
     for (var i = 0; i < marcados.length; i++) {
         var $item = $(marcados[i]);
-        var datos = JSON.parse($item.data('datos').replaceAll("'",'"'));
+        //var datos = JSON.parse($item.data('datos').replaceAll("'",'"'));
+        var datos = JSON.parse($("#data-"+$item.attr('id')).text());
         const index = document.nextId;
-        var nuevo = crearPregunta(index);
-        document.nextId+=1;            
-        $(nuevo).find("[name='tipo']").val(datos.tipo);
-        $(nuevo).find("[name='enunciado']").val(datos.enunciado);
+        var opciones = [];
         for (var j = 0; j < datos.opciones.length; j++) {
             var opcion = datos.opciones[j];
-            $(nuevo).find(`[name=opcion_${j+1}`).val(opcion.texto);
-            var selector = `[opcion=${j+1}]`;
-            if(opcion.correcta){
-                $(nuevo).find(selector).removeClass("btn-danger").addClass("btn-success");
-                $(nuevo).find(`${selector} .fas`).removeClass("fa-times").addClass('fa-check');
-            } else {
-                $(nuevo).find(selector).removeClass("btn-success").addClass("btn-danger");
-                $(nuevo).find(`${selector} .fas`).removeClass("fa-check").addClass('fa-times');                    
-            }
+            opciones.push(new Opcion(opcion.texto,opcion.correcta,j+1));
         }
-        $(nuevo).find("select").change();
-        $("#lista-preguntas").append(nuevo);
-        $(nuevo).find("[name='enunciado']")[0].focus();
+        var p = new Pregunta(index,0,0,datos.enunciado,datos.tipo,opciones);
+        $("#lista-preguntas").append(p.html);
+        document.nextId+=1;
+        document.preguntas.push(p);
     }    
 }
 /**
@@ -284,18 +158,26 @@ function filtrarPreguntas(){
 }
 window.onload = () => {
     document.nextId = $("[name='pregunta']").length+1;
-    //Recoge el cambio de un tipo de pregunta para cambiar las posibles respuestas
-    $("[name='tipo']").change(cambiarTipoRespuestas);
-    //Cambia la opción valida de una respuesta unica
-    $(".opcion").click(accionRespuesta);
-    $("[name=eliminarPregunta]").click(eliminarPregunta);
+    document.preguntas = [];
+    for (var index in data) {
+        var datos=data[index];
+        var opciones = [];
+        for (var j = 0; j < datos.opciones.length; j++) {
+            var opcion = datos.opciones[j];
+            opciones.push(new Opcion(opcion.texto,opcion.correcta,j+1));
+        }
+        var p = new Pregunta(document.nextId,0,datos.id,datos.enunciado,datos.tipo,opciones);
+        $("#lista-preguntas").append(p.html);
+        document.nextId+=1;
+        document.preguntas.push(p);       
+    }
     //Agrega una pregunta
     $("#agregar").click(function(){
         const index = document.nextId;
-        var nuevo = crearPregunta(index,1);
-        $("#lista-preguntas").append(nuevo);
-        $(nuevo).find("[name='enunciado']")[0].focus();
+        var p = new Pregunta(index,1);
+        $("#lista-preguntas").append(p.html);
         document.nextId+=1;
+        document.preguntas.push(p);
     });
 
     $("#formExamen").on("submit",function(event){
