@@ -98,3 +98,10 @@ button,input[type='submit'],.btn {
     border: 1px solid;
     border-radius: 16px;
 }
+
+.borderLine.correcta {
+    border: 1px solid;
+    border-radius: 16px;
+    border-color: green !important;
+    color: green !important;
+}

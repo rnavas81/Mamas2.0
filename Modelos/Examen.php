@@ -13,9 +13,9 @@ class Examen {
     private $fechaFin;    
     private $habilitado;
     private $activo;
-    private $preguntas;
+    private $nota;
             
-    function __construct($id, $idProfesor, $nombre, $descripcion, $fechaInicio, $fechaFin, $habilitado, $activo, $preguntas=[]) {
+    function __construct($id, $idProfesor, $nombre, $descripcion, $fechaInicio, $fechaFin, $habilitado, $activo, $nota="") {
         $this->id = $id;
         $this->idProfesor = $idProfesor;
         $this->nombre = $nombre;
@@ -24,7 +24,7 @@ class Examen {
         $this->fechaFin = $fechaFin;
         $this->habilitado = $habilitado;
         $this->activo = $activo;
-        $this->preguntas = $preguntas;
+        $this->nota = $nota;
     }
 
     function getId() {
@@ -59,8 +59,8 @@ class Examen {
         return $this->activo;
     }
 
-    function getPreguntas() {
-        return $this->preguntas;
+    function getNota() {
+        return $this->nota;
     }
 
     function setId($id): void {
@@ -95,8 +95,8 @@ class Examen {
         $this->activo = $activo;
     }
 
-    function setPreguntas($preguntas): void {
-        $this->preguntas = $preguntas;
+    function setNota($nota): void {
+        $this->nota = $nota;
     }
 
 }

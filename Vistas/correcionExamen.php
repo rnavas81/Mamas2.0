@@ -86,18 +86,21 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                     <p class="form-control respuestaText" name="respuesta" readonly>
                                         <?=$respuestas[$pregunta['id']]?>
                                     </p>
+                                    <button type="button" class="btn btn-sm btn-dark-green my-0 float-right mr-5 btnCorrecion" title="Marcar como correcta">
+                                        <i class="fas fa-check"></i>
+                                    </button>
                                     <?php
                                     }
                                     ?>
 
                                     <?php
                                     if ($pregunta['tipo'] === 2) {
-                                        ?>
+                                        ?>                                    
                                     <ul class="form-row opciones px-3" name="lista">
                                         <?php
                                         foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                         ?>
-                                        <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                        <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> name="<?= ($indexP+1)?>">
                                             <div class="col"><?= $opcionP['texto'] ?></div>
                                         </li>
                                         <?php
@@ -106,12 +109,12 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                     </ul>
                                     <div class="form-group">
                                         <p>Repuesta</p>
-                                        <ul class="sortable form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas">
+                                        <ul class="sortable unica form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas">
                                         <?php                                        
                                         $arrResp = explode(',', $respuestas[$pregunta['id']]);
-                                        foreach ($arrResp as $key => $aux) {
+                                        foreach ($arrResp as $key => $aux) {                                            
                                         ?>                                                
-                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta" name="<?=$key?>">
+                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta <?=$pregunta['opciones'][$key]['correcta']?'correcta':''?>" name="<?=$key?>">
                                                 <?=$aux?>
                                             </li>                                                
                                         <?php
@@ -124,12 +127,13 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                     ?>
                                     <?php
                                     if ($pregunta['tipo'] === 3) {
-                                    ?>                                    
+                                    ?>    
+                                        <input class="multi-val" value="" type="hidden">
                                         <ul class="form-row opciones px-3 lista" name="lista">
                                             <?php
-                                            foreach ($pregunta['opciones'] as $indexP => $opcionP) {
-                                            ?>
-                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                            foreach ($pregunta['opciones'] as $indexP => $opcionP) {                                                
+                                            ?>                                            
+                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'corrOpt' : '' ?> name="<?= ($indexP+1)?>">
                                                 <div class="col"><?= $opcionP['texto'] ?></div>
                                             </li>
                                             <?php
@@ -137,13 +141,13 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                             ?>
                                         </ul>
                                         <div class="form-group">
-                                            <p>Repuesta</p>
+                                            <p>Repuesta</p>                                            
                                             <ul class="sortable form-row py-2 px-3 secondary-light-color primary-dark-color-text" name="respuestas">
                                             <?php                                            
                                             $arrResp = explode(',', $respuestas[$pregunta['id']]);
                                             foreach ($arrResp as $key => $aux) {
                                             ?>                                                
-                                                <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta" name="<?=$key?>">
+                                                <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta <?=$pregunta['opciones'][$key]['correcta']?'correcta':''?>" name="<?=$key?>">
                                                     <?=$aux?>
                                                 </li>                                                
                                             <?php
@@ -159,7 +163,38 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                     }
                                 }
                                 ?>
-                            </ul>                                                        
+                            </ul>                            
+                            <div class="row" role="group">                            
+                                <form type="POST" class="col" action="<?=CTRL_PROFESORES?>">
+                                    <input id="notasFin" name="notasFin" value="" type="hidden">
+                                    <button class="btn btn-primary btn-sm" type="button" id="terminarCorrecion" data-toggle="modal" data-target="#confirmarCorrecion">
+                                        Corregir
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="confirmarCorrecion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">TERMINAR CORRECION</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            <div class="modal-body text-center">
+                                                <p id="mensajeModal"></p> 
+                                                ¿Desea continuar?
+                                            </div>
+                                            <div class="text-center pb-2">
+                                                <button id="terminarExamen" name="terminarCorrecion"  type="submit" class="btn btn-danger" title="Eliminar">
+                                                    CONTINUAR
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>                                             
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>                                                                                    
+                            </div>
                         </div>                        
                     </div>
                 </div>
@@ -187,5 +222,6 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
 <script type="text/javascript" src="../js/bootstrap/sidebar.js"></script>
 <script type="text/javascript" src="../js/examenFormulario.js"></script>
 <script type="text/javascript" src="../js/varios.js"></script>
+<script type="text/javascript" src="../js/correcion.js"></script>
 
 </html>

@@ -27,7 +27,7 @@ class GestionExamenes extends GestionDatos {
                     $datos['fechaInicio'],
                     $datos['fechaFin'],
                     $datos['habilitado'],
-                    $datos['activo']
+                    $datos['activo'],
                     );
             
         } catch (Exception $ex) {
@@ -96,7 +96,21 @@ class GestionExamenes extends GestionDatos {
             while($datos = $resultado->fetch_assoc()) {
                 $examen = self::formaExamen($datos);
                 if($examen)$examenes[]=$examen;                
-            }            
+            }
+            $query2 = "SELECT nota , idExamen "
+                    . "FROM alumnos_examenes "
+                    . "WHERE idAlumno = ?";
+            $stmt = self::$conexion->prepare($query2);
+            $stmt->bind_param('i',$idAlumno);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                foreach ($examenes as $aux) {
+                    if($aux->getId()=== $datos['idExamen']) {
+                        $aux->setNota($datos['nota']);
+                    }
+                }
+            }
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();
             $examenes = false;
@@ -617,8 +631,8 @@ class GestionExamenes extends GestionDatos {
             $stmt->execute();
             $resultado = $stmt->get_result();
             while($datos = $resultado->fetch_assoc()) {
-                $alumnos =[$datos['idAlumno']];        
-            }
+                $alumnos []=$datos['idAlumno'];               
+            }            
         } catch (Exception $ex) {
             echo $ex->getTraceAsString(); 
         } finally {
@@ -627,5 +641,21 @@ class GestionExamenes extends GestionDatos {
             }
             return $alumnos;
         }
+    }
+    
+    public static function setNotaExamen($idAlumno,$idExamen,$nota) {
+        $estabaAbierta=self::isAbierta();
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "UPDATE Alumnos_examenes SET nota=".$nota." "
+                    . "WHERE idExamen=".$idExamen." AND idAlumno=".$idAlumno.";";
+            self::$conexion->query($query);
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }    
     }
 }

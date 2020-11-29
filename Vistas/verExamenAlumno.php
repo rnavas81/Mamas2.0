@@ -24,7 +24,7 @@ if(isset($_SESSION['profesorTipo'])){
 }
 
 $data = $_SESSION['examenAct'];
-$respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId(), $_SESSION['idExamenAc']);
+$respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId(), $data['id']);
 
 
 
@@ -55,8 +55,8 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
 
 <body>
     <?php
-    require_once '../Componentes/cabecera.php';
-    $tipoOpciones="profesorDashboard";
+    $tipoOpciones = "alumnosDashboard";
+    require_once '../Componentes/cabecera.php';  
     ?>
 
     <main class="">
@@ -99,7 +99,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
                                         <?php
                                         foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                         ?>
-                                        <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                        <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
                                             <div class="col"><?= $opcionP['texto'] ?></div>
                                         </li>
                                         <?php
@@ -131,7 +131,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
                                             <?php
                                             foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                             ?>
-                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
                                                 <div class="col"><?= $opcionP['texto'] ?></div>
                                             </li>
                                             <?php

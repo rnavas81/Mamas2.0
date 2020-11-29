@@ -31,7 +31,7 @@ $data = [];
 $data = GestionUsuarios::getUsuariosByRol(3);
 $tituloTabla="Alumnos";
 
-$alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SESSION['idExamenAc'])
+$alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SESSION['examenAct']['id']);
 
 ?>
 <html>
@@ -58,7 +58,7 @@ $alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SE
     </head>
     <body>
         <?php
-        $tipoOpciones="administradorDashboard";
+        $tipoOpciones="profesorDashboard";
         require_once '../Componentes/cabecera.php';
         ?>
         <main>
