@@ -41,6 +41,7 @@ switch ($tipoOpciones) {
           ['label'=>'Administradores','name'=>'datosAdministradores'],
           ['label'=>'Profesores','name'=>'datosProfesores'],
           ['label'=>'Alumnos','name'=>'datosAlumnos'],
+          ['label'=>'Nuevos usuarios','name'=>'datosNuevos'],
         ];
         $accion = CTRL_ADMIN;
         break;

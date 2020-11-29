@@ -273,7 +273,6 @@ class GestionExamenes extends GestionDatos {
                 }
                 if(count($ids)>0){
                     $queryDelete="DELETE FROM Examenes_Preguntas WHERE id NOT IN(".implode(",", $ids).") AND idExamen=?;";
-                    exit($queryDelete);
                     $stmt = self::$conexion->prepare($queryDelete);
                     $stmt->bind_param("i",$id);
                     $response=$stmt->execute();                    

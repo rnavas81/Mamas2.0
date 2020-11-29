@@ -83,21 +83,29 @@ class GestionUsuarios extends GestionDatos {
 
     /**
      * Recupera los usuarios que contengan un rol determinado
-     * @param int $rol
+     * @param int $rol Si null busca a los usuarios que no tengan ningún rol
      */
-    public function getUsuariosByRol($rol) {
+    public function getUsuariosByRol($rol=null) {
         $usuarios=[];
         $estabaAbierta=self::isAbierta();
-        $query="SELECT u.*,GROUP_CONCAT(r.idRol) AS roles "
+        if($rol!=null){
+            $query="SELECT u.*,GROUP_CONCAT(r.idRol) AS roles "
+                    . "FROM Usuarios u "
+                    . "RIGHT JOIN Usuarios_Roles r ON r.idUsuario=u.id AND r.idRol=? "
+                    . "WHERE u.habilitado=1 "
+                    . "GROUP BY u.id "
+                    . "ORDER BY u.apellidos,u.nombre,u.dni;";
+        } else {
+            $query="SELECT u.* "
                 . "FROM Usuarios u "
-                . "RIGHT JOIN Usuarios_Roles r ON r.idUsuario=u.id AND r.idRol=? "
-                . "WHERE u.habilitado=1 "
-                . "GROUP BY u.id "
-                . "ORDER BY u.apellidos,u.nombre,u.dni;";
+                . "WHERE u.id NOT IN (SELECT DISTINCT(idUsuario) FROM Usuarios_Roles) "
+                . "AND u.habilitado=1 "
+                . "ORDER BY u.apellidos,u.nombre,u.dni;";    
+        }
         try {
             if(!$estabaAbierta) self::abrirConexion();
             $stmt = self::$conexion->prepare($query);
-            $stmt->bind_param('i',$rol);
+            if($rol!=null)$stmt->bind_param('i',$rol);
             $stmt->execute();
             $resultado = $stmt->get_result();
             while($datos = $resultado->fetch_assoc()) {
@@ -163,16 +171,18 @@ class GestionUsuarios extends GestionDatos {
                 . "VALUES ('".$usuario->getNombre()."', '".$usuario->getApellidos()."', '".$usuario->getDni()."', '".$password."', '".$date."', '".$usuario->getEmail()."')";              
         try {   
             if(!$estabaAbierta) self::abrirConexion();
-            if (self::$conexion->query($query1)) {        
-                $id = self::$conexion->insert_id;
-                $query2= "INSERT INTO Usuarios_Roles (idUsuario, idRol) VALUES ";
-                foreach ($usuario->getRoles() as $key=>$rol) {
-                    if($key>0){
-                        $query2.=",";
-                    }
-                    $query2.= "(".$id.",".$rol.")";
-                }                                                                        
-                self::$conexion->query($query2);
+            if (self::$conexion->query($query1)) {
+                if(count($usuario->getRoles())>0){
+                    $id = self::$conexion->insert_id;
+                    $query2= "INSERT INTO Usuarios_Roles (idUsuario, idRol) VALUES ";
+                    foreach ($usuario->getRoles() as $key=>$rol) {
+                        if($key>0){
+                            $query2.=",";
+                        }
+                        $query2.= "(".$id.",".$rol.")";
+                    }                                                                        
+                    self::$conexion->query($query2);    
+                }
                 $response=true;
             }            
         } catch (Exception $ex) {

@@ -43,16 +43,17 @@ function aleatorioAlphanumerico($length=8) {
  * @return String
  */
 function volver(){
+    var_dump($_SESSION);
     $volver = null;
     if(isset($_SESSION['volver'])){
         $volver = $_SESSION['volver'];
         unset($_SESSION['volver']);
     } else {
-        if($_SESSION['usuarioAcceso']=='alumno'){
+        if($_SESSION['usuarioAcceso']==TIPO_ALUMNO){
             $volver = WEB_ENTRADA_ALUMNOS;
-        } elseif($_SESSION['usuarioAcceso']=='profesor'){
+        } elseif($_SESSION['usuarioAcceso']==TIPO_PROFESOR){
             $volver = WEB_ENTRADA_PROFESORES;
-        } elseif($_SESSION['usuarioAcceso']=='administrador'){
+        } elseif($_SESSION['usuarioAcceso']==TIPO_ADMINISTRADOR){
             $volver = WEB_ENTRADA_ADMINISTRADORES;
         } else {
             $volver = WEB_INDEX;

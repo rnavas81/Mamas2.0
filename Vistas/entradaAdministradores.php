@@ -22,12 +22,16 @@ if(isset($_SESSION['MSG_INFO'])){
 }
 $data = [];
 //Comprueba la sesión para cargar datos de administradores,profesores o alumnos
-$tipo = 'administradores';
+$tipo = 'nuevos';
 if(isset($_SESSION['administradorTipo'])){
     $tipo = $_SESSION['administradorTipo'];
 }
 $tituloTabla="";
 switch ($tipo){
+    case 'nuevos':
+        $data = GestionUsuarios::getUsuariosByRol();
+        $tituloTabla="Nuevos usuarios";
+        break;
     case 'administradores':
         $data = GestionUsuarios::getUsuariosByRol(1);
         $tituloTabla="Administradores";

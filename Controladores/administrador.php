@@ -34,6 +34,8 @@ if(isset($_REQUEST['accion'])){
     $accion = "datosProfesores";
 } elseif(isset ($_REQUEST['datosAlumnos'])) {
     $accion = "datosAlumnos";
+} elseif(isset ($_REQUEST['datosNuevos'])) {
+    $accion = "datosNuevos";
 }
 
 switch ($accion) {
@@ -53,15 +55,7 @@ switch ($accion) {
             $redireccion = WEB_USUARIO_FORMULARIO;
         } else {
             $_SESSION['MSG_INFO']="Error al recuperar al usuario";
-            if($_SESSION['usuarioAcceso']=='alumno'){
-                $redireccion = WEB_ENTRADA_ALUMNOS;
-            } elseif($_SESSION['usuarioAcceso']=='profesor'){
-                $redireccion = WEB_ENTRADA_PROFESORES;
-            } elseif($_SESSION['usuarioAcceso']=='administrador'){
-                $redireccion = WEB_ENTRADA_ADMINISTRADORES;
-            } else {
-                $redireccion = WEB_INDEX;
-            }
+            $redireccion = volver();
         }
         break;
     case "eliminarUsuario":
@@ -78,15 +72,7 @@ switch ($accion) {
             } else {
                 $_SESSION['MSG_INFO']="Error al recuperar al usuario";
             }
-            if($_SESSION['usuarioAcceso']=='alumno'){
-                $redireccion = WEB_ENTRADA_ALUMNOS;
-            } elseif($_SESSION['usuarioAcceso']=='profesor'){
-                $redireccion = WEB_ENTRADA_PROFESORES;
-            } elseif($_SESSION['usuarioAcceso']=='administrador'){
-                $redireccion = WEB_ENTRADA_ADMINISTRADORES;
-            } else {
-                $redireccion = WEB_INDEX;
-            }
+            $redireccion = volver();
         } else {
             $_SESSION['MSG_INFO']="No puedes eliminar tu propio usuario";
             $redireccion = WEB_ENTRADA_ADMINISTRADORES;
@@ -102,6 +88,10 @@ switch ($accion) {
         break;
     case "datosAlumnos":
         $_SESSION['administradorTipo']='alumnos';
+        $redireccion=WEB_ENTRADA_ADMINISTRADORES;
+        break;
+    case "datosNuevos":
+        $_SESSION['administradorTipo']='nuevos';
         $redireccion=WEB_ENTRADA_ADMINISTRADORES;
         break;
     // Salir del sistema
