@@ -79,15 +79,7 @@ switch ($accion) {
             if(GestionUsuarios::insertUsuario($nuevo)){
                 $_SESSION['MSG_INFO']="Usuario creado";
                 unset($_SESSION['datosFormulario']);
-                if($_SESSION['usuarioAcceso']=='alumno'){
-                    $redireccion = WEB_ENTRADA_ALUMNOS;
-                } elseif($_SESSION['usuarioAcceso']=='profesor'){
-                    $redireccion = WEB_ENTRADA_PROFESORES;
-                } elseif($_SESSION['usuarioAcceso']=='administrador'){
-                    $redireccion = WEB_ENTRADA_ADMINISTRADORES;
-                } else {
-                    $redireccion = WEB_INDEX;
-                }               
+                $redireccion = volver();
             } else {
                 $_SESSION['MSG_INFO']="Error al crear el usuario";
                 $_SESSION['datosFormulario']=$nuevo;
@@ -143,7 +135,6 @@ switch ($accion) {
                 $_SESSION['datosFormulario']=$user;
                 $redireccion = WEB_USUARIO_FORMULARIO;
             }
-            
         }
         break;
     case 'modificarPerfil':

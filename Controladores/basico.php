@@ -57,6 +57,7 @@ switch ($accion) {
             $_SESSION['usuario']= $usuario;
             switch (count($usuario->getRoles())){
                 case 0:
+                    $_SESSION['MSG_INFO']="Su perfil aún no está autorizado.\nPongase en contacto con el administrador";
                     $redireccion = WEB_INDEX;
                     break;
                 case 1:
@@ -93,7 +94,7 @@ switch ($accion) {
         $_SESSION['MSG_INFO']="Nueva clave generada y enviada";
         $redireccion = WEB_INDEX;
         break;
-    // Salir del sistema
+    // Acceso desde elección de rol del sistema
     case "accederMulti":        
         $usuario = $_SESSION['usuario'];
         $aux = $_REQUEST['acceso'];
@@ -107,9 +108,9 @@ switch ($accion) {
             $_SESSION['usuarioAcceso'] = TIPO_ADMINISTRADOR;
             $redireccion = WEB_ENTRADA_ADMINISTRADORES;
         } else {
-            $redireccion = WEB_INDEX;
             unset($_SESSION['usuarioAcceso']);
             $_SESSION['MSG_INFO']="No tiene permisos para acceder";
+            $redireccion = WEB_INDEX;
         }      
         break;
     // Salir del sistema
