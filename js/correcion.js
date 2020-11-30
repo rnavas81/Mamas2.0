@@ -1,19 +1,20 @@
-$('.btnCorrecion').on('click', function(){    
+$('.btnAcierto').on('click', function(){    
     var respuesta = $(this).siblings(".respuestaText");
-    respuesta.toggleClass('resp-corecta');
-    if(respuesta.hasClass('resp-corecta')) {
-        $(this).removeClass('btn-dark-green');
-        $(this).addClass('btn-danger');
-        $(this).children("i").removeClass("fa-check");
-        $(this).children("i").addClass("fa-times");
-        $(this).attr("title","Deshacer");
-    } else {
-        $(this).removeClass('btn-danger');
-        $(this).addClass('btn-dark-green');
-        $(this).children("i").removeClass("fa-times");
-        $(this).children("i").addClass("fa-check");
-        $(this).attr("title","Marcar como correcta");
-    }
+    respuesta.addClass('resp-corecta');
+    $(this).removeClass('btn-dark-green');
+    $(this).addClass('btn-grey');
+    $(this).siblings('.btnFallo').removeClass('btn-grey');
+    $(this).siblings('.btnFallo').addClass('btn-danger');
+    
+});
+
+$('.btnFallo').on('click', function(){    
+    var respuesta = $(this).siblings(".respuestaText");
+    respuesta.removeClass('resp-corecta');
+    $(this).removeClass('.btn-danger');
+    $(this).addClass('btn-grey');
+    $(this).siblings('.btnAcierto').removeClass('btn-grey');
+    $(this).siblings('.btnAcierto').addClass('btn-dark-green');
 });
 
 

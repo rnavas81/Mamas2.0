@@ -86,8 +86,11 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                     <p class="form-control respuestaText" name="respuesta" readonly>
                                         <?=$respuestas[$pregunta['id']]?>
                                     </p>
-                                    <button type="button" class="btn btn-sm btn-dark-green my-0 float-right mr-5 btnCorrecion" title="Marcar como correcta">
-                                        <i class="fas fa-check"></i>
+                                    <button type="button" class="btn btn-sm btn-dark-green my-0 float-right mr-5 btnAcierto" title="Marcar como correcta">
+                                        Correcta
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-grey my-0 float-right btnFallo" title="Marcar como incorrecta">
+                                        Incorrecta
                                     </button>
                                     <?php
                                     }
