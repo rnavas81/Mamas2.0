@@ -88,9 +88,10 @@ switch ($tipo){
                     <!--Table head-->
                         <thead>
                             <tr class="row">                            
-                                <th class="col-sm-6 text-center font-weight-bold">Nombre</th>                            
+                                <th class="col-sm-5 text-center font-weight-bold">Nombre</th>                            
                                 <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
                                 <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
+                                <th class="col-sm-1 text-center font-weight-bold">Notas</th>
                                 <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
                             </tr>
                         </thead>
@@ -101,9 +102,10 @@ switch ($tipo){
                         foreach ($data as $value) {                              
                         ?>
                         <tr class="row <?=$tipo=="desactivados"?'desactivado':''?>">
-                            <th class="col-sm-6 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
+                            <th class="col-sm-5 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
                             <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
                             <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
+                            <th class="col-sm-1 text-center font-weight-bold"><?=$value->getNota()?></th>
                             <td class="col-sm-2">
                                 <form class="d-flex justify-content-end" action="<?=CTRL_ALUMNOS?>" method="POST">
                                     <input type="hidden" value="<?=$value->getId()?>" name="id" />

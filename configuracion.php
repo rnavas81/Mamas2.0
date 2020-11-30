@@ -44,6 +44,9 @@ const WEB_FORMULARIO_PERFIL = WEB_VISTAS . DS . 'perfil.php';
 const WEB_EXAMEN_ALUMNO_REALIZA = WEB_VISTAS . DS . 'realizarExamen.php';
 const WEB_EXAMEN_ALUMNO_REVISA = WEB_VISTAS . DS . 'verExamenAlumno.php';
 const WEB_ASIGNAR_EXAMEN = WEB_VISTAS . DS . 'asignarExamen.php';
+const WEB_EXAMEN_ACTIVO_PROFESOR = WEB_VISTAS . DS . 'examenesActivos.php';
+const WEB_EXAMEN_ALUMNOS_EXAMEN_PROFESOR = WEB_VISTAS . DS . 'alumnosConExamen.php';
+const WEB_EXAMEN_CORREGIR = WEB_VISTAS . DS . 'correcionExamen.php';
 
 
 const HASH_CODE = "Esta es nuestra clave de encriptacion";

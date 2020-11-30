@@ -91,7 +91,7 @@ $tipoOpciones = "alumnosDashboard";
                                         <?php
                                         foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                         ?>
-                                        <li class="draggable borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                        <li class="draggable borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
                                             <div class="col"><?= $opcionP['texto'] ?></div>
                                         </li>
                                         <?php
@@ -114,7 +114,7 @@ $tipoOpciones = "alumnosDashboard";
                                             <?php
                                             foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                             ?>
-                                            <li class="draggable borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?> <?= $opcionP['correcta'] ? 'correcta' : '' ?>" name="<?= ($indexP+1)?>">
+                                            <li class="draggable borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
                                                 <div class="col"><?= $opcionP['texto'] ?></div>
                                             </li>
                                             <?php

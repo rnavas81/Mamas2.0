@@ -34,6 +34,14 @@ if(isset($_REQUEST['accion'])){
     $accion = "examenes";
 } elseif (isset ($_REQUEST['preguntas'])) {
     $accion = "preguntas";
+} elseif (isset ($_REQUEST['examenesActivos'])) {
+    $accion = "examenesActivos";
+} elseif (isset ($_REQUEST['verExamen'])) {
+    $accion = "verExamen";
+} elseif (isset ($_REQUEST['corregirExamen'])) {
+    $accion = "corregirExamen";
+} elseif (isset ($_REQUEST['terminarCorrecion'])) {
+    $accion = "terminarCorrecion";
 }
 
 switch ($accion) {
@@ -75,6 +83,25 @@ switch ($accion) {
             $_SESSION['MSG_INFO']="Error al recuperar el examen";
             $redireccion=WEB_ENTRADA_PROFESORES;
         }
+        break;
+    case "examenesActivos":
+        $redireccion = WEB_EXAMEN_ACTIVO_PROFESOR;
+        break;
+    case "verExamen":        
+        $examen = GestionExamenes::getExamenById($_REQUEST['id']);
+        $_SESSION['examenAct'] = $examen;
+        $redireccion = WEB_EXAMEN_ALUMNOS_EXAMEN_PROFESOR;
+        break;
+    case "corregirExamen":        
+        $_SESSION['idAlumnoAct'] = $_REQUEST['id'];
+        $redireccion = WEB_EXAMEN_CORREGIR;
+        break;
+    case "terminarCorrecion":
+        $idAlumno = $_SESSION['idAlumnoAct'];
+        $idExamen = $_SESSION['examenAct']['id'];
+        $nota = $_REQUEST['notasFin'];
+        GestionExamenes::setNotaExamen($idAlumno, $idExamen, $nota);
+        $redireccion = WEB_EXAMEN_ALUMNOS_EXAMEN_PROFESOR;
         break;
     default:
         $redireccion = cerrarSesion();

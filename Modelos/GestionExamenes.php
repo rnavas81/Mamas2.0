@@ -27,7 +27,7 @@ class GestionExamenes extends GestionDatos {
                     $datos['fechaInicio'],
                     $datos['fechaFin'],
                     $datos['habilitado'],
-                    $datos['activo']
+                    $datos['activo'],
                     );
             
         } catch (Exception $ex) {
@@ -96,7 +96,21 @@ class GestionExamenes extends GestionDatos {
             while($datos = $resultado->fetch_assoc()) {
                 $examen = self::formaExamen($datos);
                 if($examen)$examenes[]=$examen;                
-            }            
+            }
+            $query2 = "SELECT nota , idExamen "
+                    . "FROM alumnos_examenes "
+                    . "WHERE idAlumno = ?";
+            $stmt = self::$conexion->prepare($query2);
+            $stmt->bind_param('i',$idAlumno);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                foreach ($examenes as $aux) {
+                    if($aux->getId()=== $datos['idExamen']) {
+                        $aux->setNota($datos['nota']);
+                    }
+                }
+            }
         } catch (Exception $ex) {
             echo $ex->getTraceAsString();
             $examenes = false;
@@ -522,6 +536,12 @@ class GestionExamenes extends GestionDatos {
         
     }
     
+    /**
+     * Función que guarda las respuestas de un examen hecho por un alumno
+     * @param int $idAlumno Id del alumno que realiza el examen
+     * @param int $idExamen Id del examen que realiza el alumno
+     * @param arr[] $respuestas Respuestas del alumno
+     */
     public static function saveRespuestasAlumno($idAlumno,$idExamen,$respuestas) {
         $estabaAbierta=self::isAbierta();
         try {
@@ -560,6 +580,12 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
+    /**
+     * Función que recupera las respuestas de un examen realizado por el alumno
+     * @param int $idAlumno Id del alumno que revisa el examen
+     * @param int $idExamen Id del examen a revisar
+     * @return arr[]  Devuelve un array con las respuestas del examen a revisar
+     */
     public static function getRespuestasAlumno($idAlumno, $idExamen) {
         $estabaAbierta=self::isAbierta();
         $respuestas = [];
@@ -674,4 +700,52 @@ class GestionExamenes extends GestionDatos {
         }
     }
 
+    
+    /**
+     * Funcion que recupera el id de los alumnos con un examen de un profesor
+     * @param int $idProfesor Id del profesor actual
+     * @param int $idExamen Id del examen a buscar
+     * @return arr[] Devuelve un array con los id de los alumnos
+     */
+    public static function getAlumnosExamen($idProfesor,$idExamen) {
+        $estabaAbierta=self::isAbierta();
+        $alumnos=[];
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "SELECT a.idAlumno FROM alumnos_examenes a "
+                . "LEFT JOIN examenes e ON a.idExamen=e.id "
+                . "WHERE e.idProfesor=? AND a.idExamen=? AND a.realizado = 0";
+        
+            $stmt = self::$conexion->prepare($query);
+            $stmt->bind_param("ii",$idProfesor,$idExamen);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while($datos = $resultado->fetch_assoc()) {
+                $alumnos []=$datos['idAlumno'];               
+            }            
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+            return $alumnos;
+        }
+    }
+    
+    public static function setNotaExamen($idAlumno,$idExamen,$nota) {
+        $estabaAbierta=self::isAbierta();
+        try {
+            if(!$estabaAbierta) self::abrirConexion();
+            $query = "UPDATE Alumnos_examenes SET nota=".$nota." "
+                    . "WHERE idExamen=".$idExamen." AND idAlumno=".$idAlumno.";";
+            self::$conexion->query($query);
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString(); 
+        } finally {
+            if(!$estabaAbierta) {
+                self::cerrarConexion();
+            }
+        }    
+    }
 }
