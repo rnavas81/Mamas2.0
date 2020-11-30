@@ -9,10 +9,30 @@
     --secondary-light: #fffa95;
     --secondary-dark: #c49736;
 }
-@font-face {
+/*@font-face {
     name: 'Xanh Mono';
-    src: url(Fonts/Xanh_Mono/XanhMono-Regular.ttf);
+    src: url(Fonts/Xanh_Mono/XanhMono-Regular.ttf) format('truetype');
+}*/
+
+@font-face {
+    font-family: 'Xanh Mono-Regular';
+    src: url('Fonts/Xanh_Mono/xanhmono-regular-webfont.woff2') format('woff2'),
+         url('Fonts/Xanh_Mono/xanhmono-regular-webfont.woff') format('woff'),
+         url('Fonts/Xanh_Mono/XanhMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
 }
+
+@font-face {
+    font-family: 'Xanh Mono-Italic';
+    src: url('xanhmono-italic-webfont.woff2') format('woff2'),
+         url('xanhmono-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 @font-face {
     name: 'Roboto';
     src: url(Fonts/Roboto/Roboto-Regular.ttf);
@@ -20,8 +40,9 @@
     src: url(Fonts/Roboto/Roboto-Bold.ttf);
     src: url(Fonts/Roboto/Roboto-Medium.ttf);
 }
+
 * {
-    font-family: 'Xanh Mono', monospace,'Roboto' !important;
+    font-family: 'Xanh Mono-Regular', monospace,'Roboto' !important; 
 }
 
 .fondo-pantalla{
