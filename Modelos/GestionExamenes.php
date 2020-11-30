@@ -232,14 +232,17 @@ class GestionExamenes extends GestionDatos {
             if(!$estabaAbierta) self::abrirConexion();
             $stmt = self::$conexion->prepare($queryInsert);
             $stmt->bind_param("issssi",$idProfesor,$nombre,$descripcion,$fechaInicio,$fechaFin,$activo);
-            if ($stmt->execute()) {        
-                $idExamen = self::$conexion->insert_id;
-                foreach ($data['preguntas'] as $pregunta) {
-                    self::insertExamenPregunta($pregunta, $idExamen);
-                    if($pregunta['almacenar']==1){
-                        self::insertPreguntaAlmacen($pregunta, $idProfesor);
-                    }
+            if ($stmt->execute()) {
+                if(count($data['preguntas'])>0){
+                    $idExamen = self::$conexion->insert_id;
+                    foreach ($data['preguntas'] as $pregunta) {
+                        self::insertExamenPregunta($pregunta, $idExamen);
+                        if($pregunta['almacenar']==1){
+                            self::insertPreguntaAlmacen($pregunta, $idProfesor);
+                        }
+                    }                    
                 }
+                $response = true;
             }
             $stmt->close();
             

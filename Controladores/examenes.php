@@ -47,6 +47,8 @@ if(isset($_REQUEST['accion'])){
     $aux = 0;
 }elseif(isset ($_REQUEST['desasignar'])) {
     $accion = "desasignar";
+}elseif(isset ($_REQUEST['examenAleatorio'])) {
+    $accion = "examenAleatorio";
 }
 
 switch ($accion) {
@@ -182,6 +184,35 @@ switch ($accion) {
             $_SESSION['MSG_INFO']="Error al desasignar el examen";
         }
         $redireccion = WEB_ASIGNAR_EXAMEN;
+        break;
+    //Genera un examen aleatorio con las preguntas del almacen
+    case 'examenAleatorio':
+        $idProfesor=$_SESSION['usuario']->getId();
+        $now = new DateTime();
+        $data = [
+            'nombre'=> "Examen aleatorio",
+            'fechaInicio'=>$now->format("y-m-d h:i:s"),
+            'descripcion'=>'',
+            'activo'=>1,
+            'preguntas'=>[]
+        ];
+        $preguntas = GestionExamenes::getPreguntasAlmacenByProfesor($idProfesor);
+        $max = count($preguntas)>10?10:count($preguntas);
+        $ids = [];
+        for ($index = 0; $index < $max; $index++) {
+            do{
+                $random = random_int(0, count($preguntas)-1);
+            }while(in_array($random, $ids));
+            $ids[]=$random;
+            $preguntas[$random]['almacenar']=0;
+            $data['preguntas'][]=$preguntas[$random];
+        }
+        if(GestionExamenes::insertExamen($data,$idProfesor)){
+            $_SESSION['MSG_INFO'] = "Examen aleatorio generado";
+        } else {
+            $_SESSION['MSG_INFO'] = "Error al generar el examen aleatorio";
+        }
+        $redireccion = $_SERVER['HTTP_REFERER'];
         break;
 }
 
