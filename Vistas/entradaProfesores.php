@@ -62,6 +62,9 @@ $data = GestionExamenes::getExamenesByProfesor($_SESSION['usuario']->getId());
                                 <button name="nuevapregunta" type="submit" class="btn btn-primary btn-sm" title="Nueva Pregunta">
                                     <i class="fas fa-question"></i>
                                 </button>
+                                <button name="examenAleatorio" type="submit" class="btn btn-primary btn-sm" title="Genrear examen aleatorio">
+                                    <i class="fas fa-random"></i>
+                                </button>
                                 <button name="nuevo" type="submit" class="btn btn-primary btn-sm" title="Nuevo examen">
                                     <i class="fas fa-plus"></i>
                                 </button>
