@@ -65,19 +65,19 @@ switch ($tipoOpciones) {
 }
 
 ?>
-<nav id="sidebar" class="sticky-top primary-color">
-    <div id="dismiss" class="primary-dark-color">
+<nav id="sidebar" class="sticky-top primary-color" style="">
+<!--    <div id="dismiss" class="primary-dark-color">
         <i class="fas fa-arrow-left"></i>
     </div>
     <div class="sidebar-header primary-light-color">
         <h3>Mamas 2.0</h3>
-    </div>
+    </div>-->
     <form action="<?=$controladorAct?>" method="POST">
-        <ul class="list-unstyled components">
+        <ul class="list-unstyled components border-0">
             <p><?=$tituloMenu?></p>
             <?php 
             foreach ($opciones as $opcion) {?>
-            <li class="d-flex justify-content-center btn btn-block my-2">
+            <li class="d-flex justify-content-center btn btn-block my-2 py-0">
                 <input class="btn btn-sm shadow-none" type="submit" value="<?= $opcion['label'] ?>" name="<?= $opcion['name'] ?>" />
             </li>
             <?php }?>
@@ -85,9 +85,9 @@ switch ($tipoOpciones) {
     </form>
     <?php
     if($usuarioActivo){?>
-    <ul class="list-unstyled CTAs">
+    <ul class="list-unstyled CTAs border-0">
         <li>
-            <a href="<?=CTRL_BASICO?>?accion=salir" class="download">
+            <a href="<?=CTRL_BASICO?>?accion=salir" class="primary-dark-color">
                 Salir
             </a>
         </li>

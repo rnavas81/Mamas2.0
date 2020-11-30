@@ -62,15 +62,15 @@ if(isset($_SESSION['accesoFormulario'])){
         <link rel="stylesheet" href="../css/style.css" /> 
         
     </head>
-    <body>
+    <body class="fondo-pantalla">
         <?php
         $tipoOpciones="profesorDashboard";
         require_once '../Componentes/cabecera.php';
         ?>
         <main class="">
-            <div class="row mt-4">
+            <div class="row mt-5">
                 <div class="col-lg-2"></div>
-                <div class="col-lg-8">
+                <div class="col-lg-8 white p-5 border">
                     <div class="d-flex mb-2">
                         <p name="titulo" class="h5 col text-left"><?=$datos['id']==0?'Nueva pregunta':'Editar pregunta'?></p>
                         <p class="h6 align-self-center mr-2">Tipo</p>

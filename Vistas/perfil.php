@@ -56,7 +56,12 @@ $usuario = isset($_SESSION['datosFormulario'])?$_SESSION['datosFormulario']:$_SE
 
     <body class="fondo-pantalla">
         <?php
-        $tipoOpciones="administradorDashboard";
+        switch ($_SESSION['usuarioAcceso']) {
+            case TIPO_ADMINISTRADOR:$tipoOpciones = 'administradorDashboard'; break;
+            case TIPO_PROFESOR:     $tipoOpciones = 'profesorDashboard';      break;
+            case TIPO_ALUMNO:       $tipoOpciones = 'alumnosDashboard';       break;
+            default:break;
+        }
         require_once '../Componentes/cabecera.php';
         ?>
         <main class="py-5">

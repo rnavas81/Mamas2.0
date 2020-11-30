@@ -106,7 +106,7 @@ switch ($accion) {
         if($aux==ROL_ALUMNO && $usuario->hasRol(ROL_ALUMNO)){
             $_SESSION['usuarioAcceso'] = TIPO_ALUMNO;
             $redireccion = WEB_ENTRADA_ALUMNOS;
-        } elseif($aux==ROL_PROFESOR && ($usuario->hasRol(ROL_PROFESOR)) || $usuario->hasRol(ROL_ADMINISTRADOR)){
+        } elseif($aux==ROL_PROFESOR && ($usuario->hasRol(ROL_PROFESOR) || $usuario->hasRol(ROL_ADMINISTRADOR))){
             $_SESSION['usuarioAcceso'] = TIPO_PROFESOR;
             $redireccion = WEB_ENTRADA_PROFESORES;
         } elseif($aux==ROL_ADMINISTRADOR && $usuario->hasRol(ROL_ADMINISTRADOR)){
@@ -116,7 +116,7 @@ switch ($accion) {
             unset($_SESSION['usuarioAcceso']);
             $_SESSION['MSG_INFO']="No tiene permisos para acceder";
             $redireccion = WEB_INDEX;
-        }      
+        }
         break;
     // Salir del sistema
     case "editarPrefil":
