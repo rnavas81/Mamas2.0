@@ -62,6 +62,17 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
             <div class="d-flex">
                 <span id="msg" class="col-12 text-center"><?= $msg ?></span>
             </div>
+            <div class="row">
+                <div class="btn-toolbar justify-content-between col-12" role="toolbar" aria-label="Toolbar with button groups">                    
+                    <div class="btn-group" role="group" aria-label="Botones derecha">
+                        <form>                                
+                            <button name="volver" type="button" class="btn btn-primary btn-sm" onclick="history.go(-1);" title="Volver">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>                    
+            </div>            
             <div class="d-flex justify-content-center">
                 <div class="col-lg-10 col-md-10 col-sm-10 py-3">
                     <div class="container">

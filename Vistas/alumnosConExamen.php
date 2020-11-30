@@ -67,8 +67,15 @@ $alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SE
                         </div>
                         <div class="btn-group">
                             <span class="align-self-center"><?=$msg?></span>
-                        </div>                        
-                    </div>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Botones derecha">
+                            <form>                                
+                                <button name="volver" type="button" class="btn btn-primary btn-sm" onclick="history.go(-1);" title="Volver">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>                    
                 </div>                
                 <div class="container-fluid">                    
                     <!--Table-->

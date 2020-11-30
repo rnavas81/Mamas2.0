@@ -168,10 +168,13 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                 ?>
                             </ul>                            
                             <div class="row" role="group">                            
-                                <form type="POST" class="col" action="<?=CTRL_PROFESORES?>">
+                                <form type="POST" class="col text-center" action="<?=CTRL_PROFESORES?>">
                                     <input id="notasFin" name="notasFin" value="" type="hidden">
                                     <button class="btn btn-primary btn-sm" type="button" id="terminarCorrecion" data-toggle="modal" data-target="#confirmarCorrecion">
                                         Corregir
+                                    </button>
+                                    <button class="btn secondary-color btn-sm primary-dark-color-text" type="button" onclick="history.go(-1)" name="volver">
+                                       Cancelar
                                     </button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="confirmarCorrecion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
