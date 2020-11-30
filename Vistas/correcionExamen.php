@@ -67,7 +67,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                     <div class="container">
                         <!--Nombre del examen -->
                         <div class="form-group">
-                            <p class="form-control">
+                            <p class="form-control h-auto">
                                 <?= $data['nombre'] ?>
                             </p>
                         </div>

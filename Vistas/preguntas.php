@@ -87,10 +87,10 @@ $data = GestionExamenes::getPreguntasAlmacenByProfesor($_SESSION['usuario']->get
                             <td class="col-sm-2">
                                 <form class="d-flex justify-content-end" action="<?=CTRL_EXAMENES?>" method="POST">
                                     <input type="hidden" value="<?=$value['id']?>" name="id" /> 
-                                    <button name="abrirPregunta" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Editar">
+                                    <button name="abrirPregunta" type="submit" class="btn btn-sm btn-dark-green btn-opcion px-2 mx-1" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
-                                    <button name="eliminarPregunta" type="submit" class="btn btn-sm btn-danger mx-1 my-0" title="Eliminar">
+                                    <button name="eliminarPregunta" type="submit" class="btn btn-sm btn-danger btn-opcion px-2 mx-1" title="Eliminar">
                                       <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>

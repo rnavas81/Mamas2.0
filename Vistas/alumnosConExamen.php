@@ -26,9 +26,6 @@ if(isset($_SESSION['profesorTipo'])){
     $tipo = $_SESSION['profesorTipo'];
 }
 
-$data = [];
-
-$data = GestionUsuarios::getUsuariosByRol(3);
 $tituloTabla="Alumnos";
 
 $alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SESSION['examenAct']['id']);
@@ -81,36 +78,31 @@ $alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SE
                           <tr class="row">
                             <th class="col-sm-2 text-center font-weight-bold">DNI</th>
                             <th class="col-sm-3 text-center font-weight-bold">Nombre</th>
-                            <th class="col-sm-5 text-center font-weight-bold">Apellidos</th>
-                            <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
+                            <th class="col-sm-5 col-lg-6 text-center font-weight-bold">Apellidos</th>
+                            <th class="col-sm-2 col-lg-1 text-center font-weight-bold">Opciones</th>
                         </tr>
                       </thead>
                       <!--Table head-->
                       <!--Table body-->
                       <tbody>
                         <?php 
-                        foreach ($data as $value) {
-                            $muestra = false;
-                            foreach ($alumnos as $idAl) {
-                                if($idAl === $value->getId()) $muestra = true;
-                            }
-                            if($muestra) {
+                        foreach ($alumnos as $value) {
                             ?>
                         <tr class="row">
                           <th class="col-sm-2 text-uppercase" scope="row"><?=$value->getDni()?></th>
                           <td class="col-sm-3"><?=$value->getNombre()?></td>
-                          <td class="col-sm-5"><?=$value->getApellidos()?></td>
-                          <td class="col-sm-2">
+                          <td class="col-sm-5 col-lg-6"><?=$value->getApellidos()?></td>
+                          <td class="col-sm-2 col-lg-1">
                               <form class="d-flex justify-content-end" action="<?=CTRL_PROFESORES?>" method="POST">
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />                                
                                 <input type="hidden" value="<?=$value->getId()?>" name="id" />
-                                <button name="corregirExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Corregir">
+                                <button name="corregirExamen" type="submit" class="btn btn-sm btn-dark-green btn-opcion px-2 mx-1" title="Corregir">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>  
                             </form>
                           </td>                          
                         </tr>
-                            <?php }} ?>
+                        <?php } ?>
                       </tbody>
                       <!--Table body-->
                     </table>

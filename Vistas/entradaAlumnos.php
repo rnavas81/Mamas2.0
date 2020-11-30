@@ -27,11 +27,11 @@ if(isset($_SESSION['alumnoTipo'])){
 $tipoOpciones="alumnosDashboard";
 switch ($tipo){
     case 'activos':
-        $data = GestionExamenes::getExamenAlumno(1,$_SESSION['usuario']->getId());
+        $data = GestionExamenes::getExamenAlumno(0,$_SESSION['usuario']->getId());
         $tituloTabla="Examenes pendientes";
         break;
     case 'desactivados':
-        $data = GestionExamenes::getExamenAlumno(0,$_SESSION['usuario']->getId());
+        $data = GestionExamenes::getExamenAlumno(1,$_SESSION['usuario']->getId());
         $tituloTabla="Examenes realizados";
         break;    
 }
@@ -88,11 +88,11 @@ switch ($tipo){
                     <!--Table head-->
                         <thead>
                             <tr class="row">                            
-                                <th class="col-sm-5 text-center font-weight-bold">Nombre</th>                            
+                                <th class="col-sm-5 col-lg-6 text-center font-weight-bold">Nombre</th>                            
                                 <th class="col-sm-2 text-center font-weight-bold">Fecha Inicio</th>
                                 <th class="col-sm-2 text-center font-weight-bold">Fecha Fin</th>
                                 <th class="col-sm-1 text-center font-weight-bold">Notas</th>
-                                <th class="col-sm-2 text-center font-weight-bold">Opciones</th>
+                                <th class="col-sm-2 col-lg-1 text-center font-weight-bold">Opciones</th>
                             </tr>
                         </thead>
                         <!--Table head-->
@@ -102,23 +102,23 @@ switch ($tipo){
                         foreach ($data as $value) {                              
                         ?>
                         <tr class="row <?=$tipo=="desactivados"?'desactivado':''?>">
-                            <th class="col-sm-5 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
+                            <th class="col-sm-5 col-lg-6 text-uppercase" scope="row"><?=$value->getNombre()?></th>                          
                             <td class="col-sm-2 text-center"><?=$value->getFechaInicio()?></td>
                             <td class="col-sm-2 text-center"><?=$value->getFechaFin()?></td>
                             <th class="col-sm-1 text-center font-weight-bold"><?=$value->getNota()?></th>
-                            <td class="col-sm-2">
+                            <td class="col-sm-2 col-lg-1">
                                 <form class="d-flex justify-content-end" action="<?=CTRL_ALUMNOS?>" method="POST">
                                     <input type="hidden" value="<?=$value->getId()?>" name="id" />
                                     <?php 
                                     if($tipo=="activos"){
                                     ?>
-                                    <button name="empezarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 my-0" title="Empezar">
+                                    <button name="empezarExamen" type="submit" class="btn btn-sm btn-dark-green mx-1 btn-opcion px-2" title="Empezar">
                                         <i class="fas fa-play-circle"></i>
                                     </button> 
                                     <?php 
                                     } else {
                                     ?>
-                                    <button name="verExamen" type="submit" class="btn btn-sm btn-primary mx-1 my-0" title="Ver">
+                                    <button name="verExamen" type="submit" class="btn btn-sm btn-primary mx-1 btn-opcion px-2" title="Ver">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <?php 

@@ -8,6 +8,7 @@ require_once '../configuracion.php';
 require_once 'GestionDatos.php';
 require_once 'Examen.php';
 require_once 'Usuario.php';
+require_once 'GestionUsuarios.php';
 
 class GestionExamenes extends GestionDatos {
     
@@ -566,7 +567,7 @@ class GestionExamenes extends GestionDatos {
                                 
             }
             $query .= implode(',', $aux).';';
-            $query2 = "UPDATE Alumnos_examenes SET realizado=0 "
+            $query2 = "UPDATE Alumnos_examenes SET realizado=1 "
                     . "WHERE idExamen=".$idExamen." AND idAlumno=".$idAlumno.";";
             echo $query.'<br>'.$query2;                        
             
@@ -715,16 +716,17 @@ class GestionExamenes extends GestionDatos {
         $alumnos=[];
         try {
             if(!$estabaAbierta) self::abrirConexion();
-            $query = "SELECT a.idAlumno FROM alumnos_examenes a "
-                . "LEFT JOIN examenes e ON a.idExamen=e.id "
-                . "WHERE e.idProfesor=? AND a.idExamen=? AND a.realizado = 0";
-        
+            $query = "SELECT u.* FROM Alumnos_examenes a "
+                . "LEFT JOIN Examenes e ON a.idExamen=e.id "
+                . "RIGHT JOIN Usuarios u ON u.id = a.idAlumno AND u.habilitado=1 "
+                . "WHERE e.idProfesor=? AND a.idExamen=? AND a.realizado = 1";
             $stmt = self::$conexion->prepare($query);
             $stmt->bind_param("ii",$idProfesor,$idExamen);
             $stmt->execute();
             $resultado = $stmt->get_result();
             while($datos = $resultado->fetch_assoc()) {
-                $alumnos []=$datos['idAlumno'];               
+                $alumno = GestionUsuarios::formarUsuario($datos);
+                if($alumno)$alumnos []= $alumno;
             }            
         } catch (Exception $ex) {
             echo $ex->getTraceAsString(); 
