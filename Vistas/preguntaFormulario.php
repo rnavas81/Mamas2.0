@@ -50,8 +50,6 @@ if(isset($_SESSION['accesoFormulario'])){
         <title>Mamas 2.0</title>
         <?php  //Icono ?>
         <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <?php  //Google Fonts Roboto ?>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <?php //Font Awesome ?>
         <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <?php  //Bootstrap core ?>

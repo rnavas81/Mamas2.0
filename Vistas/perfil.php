@@ -41,8 +41,6 @@ $usuario = isset($_SESSION['datosFormulario'])?$_SESSION['datosFormulario']:$_SE
         <title>Mamas 2.0</title>
         <?php  //Icono ?>
         <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <?php  //Google Fonts Roboto ?>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <?php //Font Awesome ?>
         <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <?php  //Bootstrap core ?>
@@ -52,12 +50,11 @@ $usuario = isset($_SESSION['datosFormulario'])?$_SESSION['datosFormulario']:$_SE
         <!-- Para la cabecera -->
         <link rel="stylesheet" href="../css/sidebar.css" />
         <?php //Estilos propios ?>
-        <link rel="stylesheet" href="../css/validacion.css" /> 
         <link rel="stylesheet" href="../css/style.css" /> 
         
     </head>
 
-    <body onload="validacion()">
+    <body class="fondo-pantalla">
         <?php
         $tipoOpciones="administradorDashboard";
         require_once '../Componentes/cabecera.php';
@@ -71,7 +68,7 @@ $usuario = isset($_SESSION['datosFormulario'])?$_SESSION['datosFormulario']:$_SE
                     <div class="col-lg-3"></div>
                     <div class="col-md-12 col-lg-6 pb-5">
                         <div class="container">
-                            <form class="text-center border border-light p-5" id="formRegistro" name="formRegistro" action="<?=CTRL_USUARIOS?>" method="POST">
+                            <form class="text-center border border-light p-5 white" id="formRegistro" name="formRegistro" action="<?=CTRL_USUARIOS?>" method="POST">
                                 <p class="text-left">DNI</p>
                                 <input type="text" id="registroDni" name="dni" value="<?=$usuario->getDni()?>" 
                                        class="form-control mb-4 w-auto" placeholder="12345678A" pattern="[0-9]{8}[A-Za-z]{1}" 
@@ -101,9 +98,9 @@ $usuario = isset($_SESSION['datosFormulario'])?$_SESSION['datosFormulario']:$_SE
                                     <button class="btn primary-color my-4" type="submit" name="modificarPerfil">
                                        Modificar
                                     </button>
-                                    <button class="btn secondary-color primary-dark-color-text my-4" type="submit" name="volver">
-                                       Cancelar
-                                    </button>
+                                    <a class="btn secondary-color primary-dark-color-text my-4" href="<?= $_SESSION['volver'] ?>">
+                                        Volver
+                                    <a/>
                                 </div>
                             </form>
                         </div>

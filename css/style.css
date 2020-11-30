@@ -1,7 +1,6 @@
 /**
     Estilos propios
 */
-@import url('https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap');
 :root{
     --primary:#fa8165;
     --primary-light: #ffb293;
@@ -9,6 +8,17 @@
     --secondary:#fac765;
     --secondary-light: #fffa95;
     --secondary-dark: #c49736;
+}
+@font-face {
+    name: 'Xanh Mono';
+    src: url(Fonts/Xanh_Mono/XanhMono-Regular.ttf);
+}
+@font-face {
+    name: 'Roboto';
+    src: url(Fonts/Roboto/Roboto-Regular.ttf);
+    src: url(Fonts/Roboto/Roboto-Italic.ttf);
+    src: url(Fonts/Roboto/Roboto-Bold.ttf);
+    src: url(Fonts/Roboto/Roboto-Medium.ttf);
 }
 * {
     font-family: 'Xanh Mono', monospace,'Roboto' !important;

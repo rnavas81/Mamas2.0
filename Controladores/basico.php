@@ -61,19 +61,24 @@ switch ($accion) {
                     $redireccion = WEB_INDEX;
                     break;
                 case 1:
-                    if($usuario->hasRol(TIPO_ADMINISTRADOR)) {
+                    if($usuario->hasRol(ROL_ADMINISTRADOR)) {
                         $redireccion = WEB_ENTRADA_MULTI;
-                    } elseif($usuario->hasRol(TIPO_PROFESOR)){
+                    } elseif($usuario->hasRol(ROL_PROFESOR)){
                         $_SESSION['usuarioAcceso']=TIPO_PROFESOR;
                         $redireccion = WEB_ENTRADA_PROFESORES;
-                    } elseif($usuario->hasRol(TIPO_ALUMNO)) {
+                    } elseif($usuario->hasRol(ROL_ALUMNO)) {
                         $_SESSION['usuarioAcceso']=TIPO_ALUMNO;
                         $redireccion = WEB_ENTRADA_ALUMNOS;
                     } else {
                         $redireccion = WEB_INDEX;
                     }
-                default:
+                    break;
+                case 2:
+                case 3:
                     $redireccion = WEB_ENTRADA_MULTI;
+                    break;
+                default:
+                    $redireccion = WEB_INDEX;
                     break;
             }
         } else {

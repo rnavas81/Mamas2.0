@@ -43,7 +43,6 @@ function aleatorioAlphanumerico($length=8) {
  * @return String
  */
 function volver(){
-    var_dump($_SESSION);
     $volver = null;
     if(isset($_SESSION['volver'])){
         $volver = $_SESSION['volver'];

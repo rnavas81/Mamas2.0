@@ -54,8 +54,6 @@ switch ($tipo){
         <title>Mamas 2.0</title>
         <!-- Icono -->
         <link rel="icon" href="../img/mdb-favicon.ico" type="image/x-icon" />
-        <!-- Google Fonts Roboto -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="../css/fontawesome/css/all.min.css" />
         <!-- Bootstrap core CSS -->
