@@ -1,5 +1,6 @@
 <?php
 /*
+ * @author Rodrigo Navas / Darío León
  * Ventana modal con preguntas pregargadas
  */
 

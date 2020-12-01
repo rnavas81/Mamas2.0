@@ -1,6 +1,6 @@
 <?php 
 /**
- * @author Darío León
+ * @author Darío León / Rodrigo Navas
  * Componenete para generar un menú lateral y una barra de herramientas superior 
  * con un botón pàra desplegar el menú
  * 

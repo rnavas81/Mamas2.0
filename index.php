@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @author Rodrigo Navas
+ */
 require_once './configuracion.php';
 // Comprueba si la sesión está ya iniciada, si no la inicia
 if(session_status()!=PHP_SESSION_ACTIVE){

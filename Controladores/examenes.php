@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Rodrigo Navas / Darío León
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/Usuario.php';
 require_once '../Modelos/GestionUsuarios.php';

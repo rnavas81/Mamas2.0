@@ -3,7 +3,23 @@
  * Contiene las funciones necesarias para crear/modificar el formulario de preguntas de un examen
  * 
  */
-
+/**
+ * Muestra u oculta las opciones de respuesta en función del tipo de pregunta.
+ * @returns void
+ */
+function cambiarTipoRespuestas(){
+    var padre = $(this).parent().parent();
+    const tipo = $(this).val();
+    if(tipo==2 || tipo==3){
+        $(padre).find(".opciones").removeClass('d-none');
+    } else {
+        $(padre).find(".opciones").addClass('d-none');
+    }
+}
+/**
+ * Respuesta a la pulsación de un botón
+ * @returns {undefined}
+ */
 function accionRespuesta(){
     var padre = $(this).parent().parent();
     var pregunta = $(padre).parent();

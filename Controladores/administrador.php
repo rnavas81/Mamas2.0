@@ -1,7 +1,7 @@
 <?php
 /**
- * @author 
- * @create 
+ * @author Rodrigo Navas / Darío León
+ * 
  */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionUsuarios.php';
@@ -58,6 +58,7 @@ switch ($accion) {
             $redireccion = volver();
         }
         break;
+    //Elimina un usuario por id
     case "eliminarUsuario":
         $id = $_REQUEST['id'];
         $usuario = $_SESSION['usuario'];
@@ -78,18 +79,22 @@ switch ($accion) {
             $redireccion = WEB_ENTRADA_ADMINISTRADORES;
         }
         break;
+    //Redirige a entrada de administradores para mostrar la lista de usuarios administradores
     case "datosAdministradores":
         $_SESSION['administradorTipo']='administradores';
         $redireccion=WEB_ENTRADA_ADMINISTRADORES;
         break;
+    //Redirige a entrada de administradores para mostrar la lista de usuarios profesores
     case "datosProfesores":
         $_SESSION['administradorTipo']='profesores';
         $redireccion=WEB_ENTRADA_ADMINISTRADORES;
         break;
+    //Redirige a entrada de administradores para mostrar la lista de usuarios alumnos
     case "datosAlumnos":
         $_SESSION['administradorTipo']='alumnos';
         $redireccion=WEB_ENTRADA_ADMINISTRADORES;
         break;
+    //Redirige a entrada de administradores para mostrar la lista de usuarios sin ningún rol
     case "datosNuevos":
         $_SESSION['administradorTipo']='nuevos';
         $redireccion=WEB_ENTRADA_ADMINISTRADORES;

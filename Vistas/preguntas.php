@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @author Rodrigo Navas
+ * Listado de preguntas almacenadas para un profesor.
+ * 
+ * Podrá crear nuevas preguntas, modificar las preguntas existentes o eliminar pregutas.
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
 // Comprueba si la sesión está ya iniciada, si no la inicia

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @author Rodrigo Navas
+ * 
+ * Formulario para recuperar la contraseña mediante el email.
+ */
 require_once '../configuracion.php';
 // Comprueba si la sesión está ya iniciada, si no la inicia
 if(session_status()!=PHP_SESSION_ACTIVE){

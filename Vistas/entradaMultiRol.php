@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @author Rodrigo Navas
+ * Formulario para redirigir el acceso de un usuario con varios roles.
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/Usuario.php';
 require_once '../Modelos/GestionUsuarios.php';

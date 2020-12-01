@@ -10,6 +10,7 @@ require_once 'Usuario.php';
 
 class GestionUsuarios extends GestionDatos {
     /**
+     * @author Rodrigo Navas
      * Crea un objeto Usuario en base a datos
      * @param Array $datos
      * $datos[roles] debe ser un string con los idRol separado por comas
@@ -36,7 +37,12 @@ class GestionUsuarios extends GestionDatos {
             return $usuario;
         }        
     }
-    
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $password
+     * @return type
+     */
     private static function encriptarPassword($password){
         try {
             return hash('sha256',$password);    
@@ -83,6 +89,7 @@ class GestionUsuarios extends GestionDatos {
     }
 
     /**
+     * @author Rodrigo Navas
      * Recupera los usuarios que contengan un rol determinado
      * @param int $rol Si null busca a los usuarios que no tengan ningún rol
      */
@@ -159,6 +166,7 @@ class GestionUsuarios extends GestionDatos {
     }
     
     /**
+     * @author Rodrigo Navas/Darío León
      * 
      * @param type $usuario Objeto usuario con los datos a registrar
      * @param type $password Contraseña del usuario a registrar
@@ -195,6 +203,8 @@ class GestionUsuarios extends GestionDatos {
         }        
     }
     /**
+     * @author Rodrigo Navas
+     * 
      * Recupera un usuario por su id
      * @param Number $id
      * @return false/Usuario
@@ -227,6 +237,8 @@ class GestionUsuarios extends GestionDatos {
         }            
     }
     /**
+     * @author Rodrigo Navas
+     * 
      * Recupera los roles para los usuarios
      */
     public static function getRoles() {
@@ -256,7 +268,12 @@ class GestionUsuarios extends GestionDatos {
         }   
         
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $id
+     * @return type
+     */
     public static function eliminarUsuario($id=0) {
         $estabaAbierta=self::isAbierta();
         $hecho = false;
@@ -277,7 +294,13 @@ class GestionUsuarios extends GestionDatos {
         }        
         
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $usuario
+     * @param type $password
+     * @return boolean
+     */
     public static function updateUsuario($usuario,$password="") {
         $estabaAbierta=self::isAbierta();
         $hecho = false;
@@ -317,7 +340,13 @@ class GestionUsuarios extends GestionDatos {
         } 
         
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $email
+     * @param type $nueva
+     * @return boolean
+     */
     public static function setUsuarioPasswordByEmail($email, $nueva) {
         $persona = false;
         $estabaAbierta= GestionDatos::isAbierta();

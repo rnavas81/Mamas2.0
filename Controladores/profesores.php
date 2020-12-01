@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @author Rodrigo Navas / Darío León
+ * 
+ */
 require_once '../Modelos/GestionUsuarios.php';
 require_once '../Modelos/GestionExamenes.php';
 require_once '../Funciones/varias.php';

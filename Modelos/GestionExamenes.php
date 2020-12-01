@@ -2,7 +2,7 @@
 /**
  * Clase que se encarga de gestionar los examenes en la base de datos
  *
- * @author dario
+ * @author Darío / Rodrigo
  */
 require_once '../configuracion.php';
 require_once 'GestionDatos.php';
@@ -173,7 +173,12 @@ class GestionExamenes extends GestionDatos {
             }
         }
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $id
+     * @return boolean
+     */
     public static function getExamenById($id) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -222,7 +227,13 @@ class GestionExamenes extends GestionDatos {
             return $response;
         }
     }
-    
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $data
+     * @param type $idProfesor
+     * @return boolean
+     */
     public static function insertExamen($data,$idProfesor=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -259,7 +270,14 @@ class GestionExamenes extends GestionDatos {
             return $response;
         }
     }
-    
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $data
+     * @param type $id
+     * @param type $idProfesor
+     * @return boolean
+     */
     public static function updateExamen($data,$id=0, $idProfesor=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -366,7 +384,12 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-    
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $id
+     * @return boolean
+     */
     public static function getPreguntasByIdUsuario($id) {
         $estabaAbierta=self::isAbierta();
         $response = []; 
@@ -399,7 +422,12 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-    
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $idProfesor
+     * @return boolean
+     */
     public static function getPreguntasAlmacenByProfesor($idProfesor) {
         $estabaAbierta=self::isAbierta();
         $response = []; 
@@ -432,7 +460,12 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $id
+     * @return boolean
+     */
     public static function getPreguntaById($id) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -465,7 +498,13 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $data
+     * @param type $idProfesor
+     * @return boolean
+     */
     public static function insertPreguntaAlmacen($data, $idProfesor=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -490,7 +529,14 @@ class GestionExamenes extends GestionDatos {
             return $response;
         }
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $id
+     * @param type $data
+     * @param type $idProfesor
+     * @return boolean
+     */
     public static function updatePreguntaAlmacen($id,$data, $idProfesor=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -518,7 +564,13 @@ class GestionExamenes extends GestionDatos {
         }
         
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $id
+     * @param type $idProfesor
+     * @return boolean
+     */
     public static function deletePreguntaAlmacen($id, $idProfesor=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -668,7 +720,14 @@ class GestionExamenes extends GestionDatos {
             return $response;
         }
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $ids
+     * @param type $idExamen
+     * @return boolean
+     * @throws Exception
+     */
     public static function asignarExamen($ids=[],$idExamen=0) {
         $estabaAbierta=self::isAbierta();
         $response = false; 
@@ -693,7 +752,14 @@ class GestionExamenes extends GestionDatos {
             return $response;
         }
     }
-
+    /**
+     * @author Rodrigo Navas
+     * 
+     * @param type $ids
+     * @param type $idExamen
+     * @return boolean
+     * @throws Exception
+     */
     public static function desasignarExamen($ids=[],$idExamen) {
         $estabaAbierta=self::isAbierta();
         $response = false;

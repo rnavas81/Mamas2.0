@@ -2,7 +2,7 @@
 <?php
 /**
  * @author Rodrigo Navas
- * Pantalla de listados para administrador
+ * Pantalla de acceso para administrador
  * Contiene los listados de administradores, profesores y usuarios.
  * 
  */
