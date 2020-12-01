@@ -7,8 +7,8 @@ $(function (){
             multiResp = [];
             pregAct = $(this).parent().parent().attr('id');
             $(this).children().each(function(){
-                console.log($(this).text().trim());
-                multiResp.push($(this).text().trim());
+                console.log($(this).attr('name'));
+                multiResp.push($(this).attr('name'));
             });
             respuesta[pregAct] = multiResp;
         });        

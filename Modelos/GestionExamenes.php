@@ -547,6 +547,7 @@ class GestionExamenes extends GestionDatos {
      * @param arr[] $respuestas Respuestas del alumno
      */
     public static function saveRespuestasAlumno($idAlumno,$idExamen,$respuestas) {
+        $response = false;
         $estabaAbierta=self::isAbierta();
         try {
             if(!$estabaAbierta) self::abrirConexion();
@@ -562,25 +563,32 @@ class GestionExamenes extends GestionDatos {
                     $aux[]= "(".$idAlumno.","
                             . "".$idExamen.","
                             . "".$index.","
-                            . "'".$respuesta."')";                    
+                            . "'".addslashes($respuesta)."')";                    
                 }            
                                 
             }
             $query .= implode(',', $aux).';';
             $query2 = "UPDATE Alumnos_examenes SET realizado=1 "
                     . "WHERE idExamen=".$idExamen." AND idAlumno=".$idAlumno.";";
-            echo $query.'<br>'.$query2;                        
             
-            self::$conexion->query($query);
+            self::$conexion->query($query);            
             
-            self::$conexion->query($query2);
+            if(!empty(self::$conexion)) {
+                
+                self::$conexion->query($query2);
+                if(!empty(self::$conexion->error)){
+                    $response=true;
+                }
+            }
             
         } catch (Exception $ex) {
             echo $ex->getTraceAsString(); 
+            $response = false;
         } finally {
             if(!$estabaAbierta) {
                 self::cerrarConexion();
             }
+            return $response;
         }
     }
     
