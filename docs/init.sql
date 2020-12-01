@@ -72,13 +72,13 @@ CREATE TABLE `Examenes_Preguntas_Almacen` (
 CREATE TABLE `Alumnos_examenes` ( 
     `idAlumno` INT NOT NULL , 
     `idExamen` INT NOT NULL , 
-    `nota` INT NULL DEFAULT NULL , 
+    `nota` FLOAT(4,2) DEFAULT NULL , 
     `realizado` INT NOT NULL DEFAULT '0' , 
     PRIMARY KEY (`idAlumno`, `idExamen`)
 
 ) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
-CREATE TABLE `Mamas`.`Alumno_examen_respuestas` ( 
+CREATE TABLE `Alumno_examen_respuestas` ( 
     `idAlumno` INT NOT NULL , 
     `idExamen` INT NOT NULL , 
     `idPregunta` INT NOT NULL , 
