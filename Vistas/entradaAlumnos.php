@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @author Darío León
+ * Pantalla de inicio de un alummno
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
 require_once '../Modelos/Usuario.php';

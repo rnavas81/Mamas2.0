@@ -13,6 +13,7 @@ require_once 'GestionUsuarios.php';
 class GestionExamenes extends GestionDatos {
     
     /**
+     * @author Darío León
      * Crea un objeto Examen a partir de la base de datos
      * @param Array $datos
      * @return Examen
@@ -39,7 +40,7 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
-     * 
+     * @author Darío León
      * @param int $idProfesor id del profesor
      * @return Examen[] Devuelve un array de examenes
      */
@@ -74,6 +75,7 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
+     * @author Darío León
      * Recupera los examenes de un alumno segun se indique si están habilitados o no
      * @param type $activo estado de los examenes a buscar
      * @return Examen[] Devuelve un array de examenes
@@ -124,6 +126,7 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
+     * @author Darío León
      * Activa o desactiva el examen indicado por id
      * @param int $activar 0 para desactivar, 1 para activar
      * @param int $id id del examen a cambiar
@@ -148,6 +151,7 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
+     * @author dario
      * Funcion que borra el examen seleccionado (no se borra de la BBDD)
      * @param int $id Id del examen a borrar
      */
@@ -541,6 +545,7 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
+     * @author Darío León
      * Función que guarda las respuestas de un examen hecho por un alumno
      * @param int $idAlumno Id del alumno que realiza el examen
      * @param int $idExamen Id del examen que realiza el alumno
@@ -593,6 +598,7 @@ class GestionExamenes extends GestionDatos {
     }
     
     /**
+     * @author Darío León
      * Función que recupera las respuestas de un examen realizado por el alumno
      * @param int $idAlumno Id del alumno que revisa el examen
      * @param int $idExamen Id del examen a revisar
@@ -714,6 +720,7 @@ class GestionExamenes extends GestionDatos {
 
     
     /**
+     * @author Darío León
      * Funcion que recupera el id de los alumnos con un examen de un profesor
      * @param int $idProfesor Id del profesor actual
      * @param int $idExamen Id del examen a buscar
@@ -746,6 +753,13 @@ class GestionExamenes extends GestionDatos {
         }
     }
     
+    /**
+     * @author Darío León
+     * Función que pone nota al examen de un alumno
+     * @param int $idAlumno Id del alumno al que se le pone una nota
+     * @param int $idExamen Id del examen al que se pone nota
+     * @param float $nota Nota que se pone al examen (máximo dos decimales)
+     */
     public static function setNotaExamen($idAlumno,$idExamen,$nota) {
         $estabaAbierta=self::isAbierta();
         try {

@@ -48,6 +48,7 @@ class GestionUsuarios extends GestionDatos {
     }
     
     /**
+     * @author Darío/Rodrigo
      * Funcion para comprobar que los datos del login
      * son correctos
      * @param $dni DNI del usuario a comprobar
@@ -123,6 +124,7 @@ class GestionUsuarios extends GestionDatos {
         
     }
     /**
+     * @author Darío León
      * Función que comprueba si un valor de la tabla usuarios existe    
      * @param $campo Columna a buscar en la tabla
      * @param $valor Valor que se quiere comprobar

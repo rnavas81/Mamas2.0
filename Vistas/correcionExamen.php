@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
-
+/**
+ * @author Darío León
+ * Pantalla en la que un profesor podrá corregir un examen
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
 require_once '../Modelos/Usuario.php';
@@ -118,7 +122,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                         foreach ($arrResp as $key => $aux) {                                            
                                         ?>                                                
                                             <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta <?=$pregunta['opciones'][$key]['correcta']?'correcta':''?>" name="<?=$key?>">
-                                                <?=$aux?>
+                                                <div class="col"><?= $pregunta['opciones'][$key]['texto'] ?></div>
                                             </li>                                                
                                         <?php
                                         }
@@ -151,7 +155,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $da
                                             foreach ($arrResp as $key => $aux) {
                                             ?>                                                
                                                 <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta <?=$pregunta['opciones'][$key]['correcta']?'correcta':''?>" name="<?=$key?>">
-                                                    <?=$aux?>
+                                                    <div class="col"><?= $pregunta['opciones'][$key]['texto'] ?></div>
                                                 </li>                                                
                                             <?php
                                             }

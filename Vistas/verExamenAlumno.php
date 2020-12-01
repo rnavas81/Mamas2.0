@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
-
+/**
+ * @author Darío León
+ * Pantalla de visualización del examen realizado por el alumno
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
 require_once '../Modelos/Usuario.php';
@@ -105,7 +109,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
                                     if ($pregunta['tipo'] === 2) {
                                         ?>
                                     <ul class="form-row opciones px-3" name="lista">
-                                        <?php
+                                        <?php                                        
                                         foreach ($pregunta['opciones'] as $indexP => $opcionP) {
                                         ?>
                                         <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
@@ -122,14 +126,15 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
                                         $arrResp = explode(',', $respuestas[$pregunta['id']]);
                                         foreach ($arrResp as $key => $aux) {
                                         ?>                                                
-                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta" name="<?=$key?>">
-                                                <?=$aux?>
-                                            </li>                                                
+                                            <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
+                                                <div class="col"><?= $pregunta['opciones'][$key]['texto'] ?></div>
+                                            </li>                                              
                                         <?php
                                         }
                                         ?>
                                         </ul>
                                     </div>
+                                    exit;
                                     <?php
                                     }
                                     ?>
@@ -154,9 +159,9 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
                                             $arrResp = explode(',', $respuestas[$pregunta['id']]);
                                             foreach ($arrResp as $key => $aux) {
                                             ?>                                                
-                                                <li class="borderLine white form-group d-flex col-12 col-sm-6 respuesta" name="<?=$key?>">
-                                                    <?=$aux?>
-                                                </li>                                                
+                                                <li class="borderLine white form-group d-flex col-12 col-sm-6 order-<?=($indexP+1)?>" name="<?= ($indexP+1)?>">
+                                                    <div class="col"><?= $pregunta['opciones'][$key]['texto'] ?></div>
+                                                </li>                                                 
                                             <?php
                                             }
                                             ?>

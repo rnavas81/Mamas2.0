@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
-
+/**
+ * @author Darío León
+ * Pantalla en la que al alumno realizará un examen
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
 require_once '../Modelos/Usuario.php';

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @author Darío León
+ * Pantalla con los examenes activos del profesor donde podrá acceder a la correción
+ * 
+ */
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
 // Comprueba si la sesión está ya iniciada, si no la inicia
