@@ -68,7 +68,7 @@ if(isset($_SESSION['accesoFormulario'])){
         require_once '../Componentes/cabecera.php';
         ?>
         <main class="">
-            <div class="row mt-5">
+            <div class="d-flex mt-5">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8 white p-5 border">
                     <div class="d-flex mb-2">

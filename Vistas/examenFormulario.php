@@ -74,7 +74,7 @@ if(isset($_SESSION['accesoFormulario'])){
         <?php //Estilos propios ?>
         <link rel="stylesheet" href="../css/style.css" /> 
     </head>
-    <body>
+    <body class="fondo-pantalla">
         <?php
         $tipoOpciones="profesorDashboard";
         require_once '../Componentes/cabecera.php';
@@ -85,9 +85,9 @@ if(isset($_SESSION['accesoFormulario'])){
                     <span id="msg" class="col-12 text-center"><?=$msg?></span>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div class="col-lg-10 col-md-10 col-sm-10 py-3">
+                    <div class="col-lg-10 col-md-10 col-sm-10 py-3 white border">
                         <div class="container">
-                            <form class="text-center" id="formExamen" name="formExamen" action="<?=CTRL_EXAMENES?>" method="POST" novalidate>
+                            <form class="text-center white" id="formExamen" name="formExamen" action="<?=CTRL_EXAMENES?>" method="POST" novalidate>
                                 <input type="hidden" id="id" name="id" value="<?=$datos['id']?>"/>
                                 <input type="hidden" id="datos" name="datos" value="<?=json_encode($datos)?>"/>
                                 <div class="form-group">

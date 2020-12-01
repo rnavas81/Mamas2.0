@@ -63,7 +63,7 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
         
     </head>
 
-    <body onload="validacion()">
+    <body class="fondo-pantalla">
         <?php
         $tipoOpciones="administradorDashboard";
         require_once '../Componentes/cabecera.php';
@@ -77,7 +77,7 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
                     <div class="col-lg-3"></div>
                     <div class="col-md-12 col-lg-6 pb-5">
                         <div class="container">
-                            <form class="text-center border border-light p-5" id="formRegistro" name="formRegistro" action="<?=CTRL_USUARIOS?>" method="POST">
+                            <form class="text-center border border-light p-5 white" id="formRegistro" name="formRegistro" action="<?=CTRL_USUARIOS?>" method="POST">
                                 <input type="hidden" name="id" value="<?=$datos->getId()?>"/>
                                 <!-- <p class="h4 mb-4">Registro</p> -->
                                 <p class="text-left">DNI</p>
@@ -124,39 +124,19 @@ $roles = json_decode(GestionUsuarios::getRoles(),true);
                                 <div class="d-flex justify-content-around">
                                     <?php
                                     switch ($accesoFormulario) {
-                                        case "leer":?>
-                                    <button class="btn secondary-color primary-dark-color-text btn-block my-4" type="submit" name="volver">
-                                       Volver
-                                    </button>
-                                    <?php 
-                                        break;
                                         case "crear":?>
-                                    <button class="btn primary-color my-4" type="submit" name="crear">
-                                       Crear
-                                    </button>
-                                    <button class="btn secondary-color primary-dark-color-text my-4" type="submit" name="volver">
-                                       Cancelar
-                                    </button>
+                                    <button class="btn primary-color my-4" type="submit" name="crear">Crear</button>
                                     <?php 
                                         break;
                                         //La acción para leer será volver
                                         case "modificar":?>
-                                    <button class="btn primary-color my-4" type="submit" name="modificar">
-                                       Modificar
-                                    </button>
-                                    <button class="btn secondary-color primary-dark-color-text my-4" type="submit" name="volver">
-                                       Cancelar
-                                    </button>
+                                    <button class="btn primary-color my-4" type="submit" name="modificar">Modificar</button>
                                     <?php 
                                         break;
                                         //La acción por defecto será volver.
-                                        default:?>
-                                    <button class="btn secondary-color secondary-color primary-dark-color-text btn-block my-4" type="submit" name="volver">
-                                       Volver
-                                    </button>
-                                    <?php 
+                                        default:
                                         break;
-                                    }?>
+                                    }?><a class="btn secondary-color primary-dark-color-text my-4" href="<?=WEB_ENTRADA_ADMINISTRADORES?>">Volver</a>
                                 </div>
                             </form>
                         </div>
