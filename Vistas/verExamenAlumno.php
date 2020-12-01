@@ -133,8 +133,7 @@ $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['usuario']->getId()
                                         }
                                         ?>
                                         </ul>
-                                    </div>
-                                    exit;
+                                    </div>                                    
                                     <?php
                                     }
                                     ?>
