@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -54,6 +53,7 @@ if(isset($_SESSION['accesoFormulario'])){
     $accesoFormulario = $_SESSION['accesoFormulario'];
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <head>

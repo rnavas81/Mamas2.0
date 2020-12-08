@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -23,8 +22,8 @@ isset($_SESSION['usuario']) && ($_SESSION['usuario']->hasRol(1) || $_SESSION['us
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){
-   $msg= $_SESSION['MSG_INFO'];
-   unset($_SESSION['MSG_INFO']);
+    $msg= $_SESSION['MSG_INFO'];
+    unset($_SESSION['MSG_INFO']);
 }
 //Recupera los datos del formulario
 $datos = [
@@ -41,6 +40,7 @@ if(isset($_SESSION['accesoFormulario'])){
     $accesoFormulario = $_SESSION['accesoFormulario'];
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <head>

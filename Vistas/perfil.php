@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -32,6 +31,7 @@ $datos = null;
 $usuario = isset($_SESSION['datosFormulario'])?$_SESSION['datosFormulario']:$_SESSION['usuario'];
 
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <head>

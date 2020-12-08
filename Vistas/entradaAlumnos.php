@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Darío León
@@ -41,6 +40,7 @@ switch ($tipo){
         break;    
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

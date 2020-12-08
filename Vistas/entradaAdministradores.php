@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -31,21 +30,22 @@ switch ($tipo){
     case 'nuevos':
         $data = GestionUsuarios::getUsuariosByRol();
         $tituloTabla="Nuevos usuarios";
-        break;
+    break;
     case 'administradores':
         $data = GestionUsuarios::getUsuariosByRol(1);
         $tituloTabla="Administradores";
-        break;
+    break;
     case 'profesores':
         $data = GestionUsuarios::getUsuariosByRol(2);
         $tituloTabla="Profesores";
-        break;
+    break;
     case 'alumnos':
         $data = GestionUsuarios::getUsuariosByRol(3);
         $tituloTabla="Alumnos";
-        break;
+    break;
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

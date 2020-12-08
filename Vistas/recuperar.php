@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -20,6 +19,7 @@ if(isset($_SESSION['MSG_INFO'])){
 $tipo = isset($_REQUEST['tipo'])?$_REQUEST['tipo']:'';
 
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

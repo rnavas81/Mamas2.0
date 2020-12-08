@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Darío León
@@ -30,7 +29,7 @@ if (isset($_SESSION['alumnoTipo'])) {
 }
 $tipoOpciones = "alumnosDashboard";
 ?>
-
+<!DOCTYPE html>
 <html>
 
 <head>

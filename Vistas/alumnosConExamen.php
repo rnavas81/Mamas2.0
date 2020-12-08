@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Darío León
@@ -31,6 +30,7 @@ $tituloTabla="Alumnos";
 $alumnos = GestionExamenes::getAlumnosExamen($_SESSION['usuario']->getId(), $_SESSION['examenAct']['id']);
 
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

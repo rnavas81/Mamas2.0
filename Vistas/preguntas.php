@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -24,6 +23,7 @@ $usuario = $_SESSION['usuario'];
 $tituloTabla = 'Preguntas';
 $data = GestionExamenes::getPreguntasAlmacenByProfesor($_SESSION['usuario']->getId());
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

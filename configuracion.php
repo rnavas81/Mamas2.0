@@ -8,7 +8,7 @@
 const DS = DIRECTORY_SEPARATOR;
 
 //----------------------- BASE DE DATOS
-const _PATH = 'localhost';
+const _PATH = 'db-mamas';
 const _USER = 'mamas';
 const _PASS = 'Chubaca2020';
 const _DEFAULT = 'Mamas';

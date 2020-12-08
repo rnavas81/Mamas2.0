@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -32,6 +31,7 @@ foreach ($roles as $rol) {
     } 
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

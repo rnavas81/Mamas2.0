@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -16,6 +15,7 @@ if(isset($_SESSION['MSG_INFO'])){
     unset($_SESSION['MSG_INFO']);
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

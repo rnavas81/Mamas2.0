@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -31,6 +30,7 @@ if($response){
 }
 
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />

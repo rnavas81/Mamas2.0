@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Darío León
@@ -27,6 +26,7 @@ if (!isset($_SESSION['usuarioForm'])) {
     $usuario = $_SESSION['usuarioForm'];
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
     <head>

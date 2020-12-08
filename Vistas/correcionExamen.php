@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Darío León
@@ -31,7 +30,7 @@ $data = $_SESSION['examenAct'];
 $respuestas = GestionExamenes::getRespuestasAlumno($_SESSION['idAlumnoAct'], $data['id']);
 
 ?>
-
+<!DOCTYPE html>
 <html>
 
 <head>

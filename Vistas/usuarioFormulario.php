@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Rodrigo Navas
@@ -25,8 +24,8 @@ isset($_SESSION['usuario']) OR header("Location: ".CTRL_BASICO);
 //Recupera un posible mensaje a mostrar
 $msg = null;
 if(isset($_SESSION['MSG_INFO'])){
-   $msg= $_SESSION['MSG_INFO'];
-   unset($_SESSION['MSG_INFO']);
+    $msg= $_SESSION['MSG_INFO'];
+    unset($_SESSION['MSG_INFO']);
 }
 //Recupera los datos del formulario
 $datos = null;
@@ -41,6 +40,7 @@ if(isset($_SESSION['accesoFormulario'])){
 }
 $roles = json_decode(GestionUsuarios::getRoles(),true);
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <head>

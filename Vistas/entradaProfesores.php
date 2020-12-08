@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 require_once '../configuracion.php';
 require_once '../Modelos/GestionExamenes.php';
@@ -24,6 +23,7 @@ if(isset($_SESSION['profesorTipo'])){
 $tituloTabla = 'Exámenes';
 $data = GestionExamenes::getExamenesByProfesor($_SESSION['usuario']->getId());
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />
