@@ -21,7 +21,7 @@ const _PASSWORD_="Chubaca20";
 
 //----------------------- RUTAS WEB
 //ROOT
-const WEB_ROOT = DS . 'EjemplosPHP' . DS . 'Mamas2.0';
+define('WEB_ROOT', '');
 
 //CONTROLADORES
 const WEB_CTRL = WEB_ROOT.DS.'Controladores';
